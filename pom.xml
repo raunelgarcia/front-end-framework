@@ -35,6 +35,7 @@
       <artifactId>java-client</artifactId>
       <version>9.1.0</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/io.github.sridharbandi/java-a11y -->
     <dependency>
       <groupId>io.github.sridharbandi</groupId>
       <artifactId>java-a11y</artifactId>
@@ -60,8 +61,8 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-          <source>9</source>
-          <target>9</target>
+          <source>11</source>
+          <target>11</target>
         </configuration>
       </plugin>
     </plugins>
