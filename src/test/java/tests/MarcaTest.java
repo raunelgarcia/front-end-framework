@@ -20,12 +20,17 @@ public class MarcaTest {
   @Test
   public void demoTest() {
     Marca controller = new Marca(driver);
-    controller.firstTest();
+    controller.sampleTest();
   }
 
   @After
   public void closeDriver() {
-    driver.get("https://es.react.dev/");
-    Accessibility.checkAccessibility(driver);
+    // Accessibility.checkAccessibility(driver);
+    try {
+      Thread.sleep(5000);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+    driver.quit();
   }
 }

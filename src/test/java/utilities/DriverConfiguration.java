@@ -34,10 +34,12 @@ public class DriverConfiguration {
     MutableCapabilities capabilities = new DesiredCapabilities();
     capabilities.setCapability(PLATFORM_NAME, "Android");
     capabilities.setCapability("automationName", "UiAutomator2");
-    capabilities.setCapability("udid", "emulator-5554");
+    capabilities.setCapability("udid", LocalEnviroment.getUdid());
+    capabilities.setCapability("noReset", true);
     String apk = LocalEnviroment.getApk();
     if (apk != null && !apk.isEmpty()) {
-      capabilities.setCapability("app", Paths.get("src/test/apks/" + apk).toAbsolutePath().toString());
+      capabilities.setCapability(
+          "app", Paths.get("src/test/resources/" + apk).toAbsolutePath().toString());
     } else {
       capabilities.setCapability("appPackage", LocalEnviroment.getAppPackage());
       capabilities.setCapability("appActivity", LocalEnviroment.getAppActivity());
