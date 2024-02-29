@@ -13,8 +13,21 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <allure.version>2.25.0</allure.version>
+    <aspectj.version>1.9.21</aspectj.version>
   </properties>
-
+  <dependencyManagement>
+    <dependencies>
+      <!-- Add allure-bom to dependency management to ensure correct versions of all the dependencies are used -->
+      <dependency>
+        <groupId>io.qameta.allure</groupId>
+        <artifactId>allure-bom</artifactId>
+        <version>${allure.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
   <dependencies>
     <!-- https://mvnrepository.com/artifact/junit/junit -->
     <dependency>
@@ -66,6 +79,12 @@
       <version>7.15.0</version>
       <scope>test</scope>
     </dependency>
+    <!-- Add necessary Allure dependencies to dependencies section -->
+    <dependency>
+      <groupId>io.qameta.allure</groupId>
+      <artifactId>allure-junit4</artifactId>
+      <scope>test</scope>
+    </dependency>
 
   </dependencies>
   <build>
@@ -77,6 +96,31 @@
           <source>11</source>
           <target>11</target>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.2.5</version>
+        <configuration>
+          <testFailureIgnore>false</testFailureIgnore>
+          <argLine>
+            -Dfile.encoding=${project.build.sourceEncoding}
+            -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+          </argLine>
+          <properties>
+            <property>
+              <name>listener</name>
+              <value>io.qameta.allure.junit4.AllureJunit4</value>
+            </property>
+          </properties>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectj.version}</version>
+          </dependency>
+        </dependencies>
       </plugin>
     </plugins>
   </build>
