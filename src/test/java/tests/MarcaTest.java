@@ -20,7 +20,7 @@ public class MarcaTest {
   @Test
   public void demoTest() {
     Marca controller = new Marca(driver);
-    controller.sampleTest();
+    controller.acceptCookies();
   }
 
   @After

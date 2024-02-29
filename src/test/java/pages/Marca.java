@@ -9,18 +9,19 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import utilities.Direction;
-import utilities.Scroll;
 
 public class Marca {
   @FindBy(id = "ue-accept-notice-button")
   WebElement acceptCookies;
 
-  @FindBy(partialLinkText = "La UFC acelera su llegada a España")
+  @FindBy(partialLinkText = "El once de Simeone para cubrir la baja de Griezmann")
   @AndroidFindBy(
       xpath =
           "(//android.widget.LinearLayout[@resource-id=\"com.iphonedroid.marca:id/portadilla_container\"])[3]")
   WebElement randomNotice;
+
+  @FindBy(id = "buttonYes")
+  WebElement ageButton;
 
   private final WebDriver driver;
 
@@ -30,10 +31,14 @@ public class Marca {
     PageFactory.initElements(new AppiumFieldDecorator(driver, Duration.ofSeconds(1)), this);
   }
 
-  public void sampleTest() {
+  public void acceptCookies() {
     if (isVisible(acceptCookies)) acceptCookies.click();
-    Scroll.scrollToElement(randomNotice, Direction.UP, false, driver);
-    System.out.println("La noticia se ve? " + isVisible(randomNotice));
-    //randomNotice.click();
+  }
+
+  public void goToNotice() {
+    randomNotice.click();
+  }
+  public void acceptAge() {
+    if (isVisible(ageButton)) ageButton.click();
   }
 }

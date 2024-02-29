@@ -11,6 +11,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import utilities.enums.Direction;
 
 public class Scroll {
   public static void swipe(Direction direction, AppiumDriver driver) {
