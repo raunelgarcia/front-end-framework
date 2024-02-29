@@ -83,13 +83,13 @@ src/test/resources contains apks.
 
 If you want to generate reports with Allure, the framework is ready for it. Beforehand, some preliminary configurations need to be done.
 
-Install Allure in the project using the command npm install --save-dev allure-commandline
+Install Allure in the project using the command 'npm install --save-dev allure-commandline'
 
 Once it's installed, you can use Allure commands from the project directory. When the test is executed, the results will be saved in target/allure-results
 
-To generate HTML reports, you'll need to execute the command npx allure-commandline generate target/allure-results
+To generate HTML reports, you'll need to execute the command 'npx allure-commandline generate target/allure-results'
 
-And to view the report, run npx allure-commandline open allure-report
+And to view the report, run 'npx allure-commandline open allure-report'
 
 ### Contributors
 
