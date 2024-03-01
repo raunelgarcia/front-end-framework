@@ -27,7 +27,7 @@ public class MarcaTest {
   public void closeDriver() {
     // Accessibility.checkAccessibility(driver);
     try {
-      Thread.sleep(5000);
+      Thread.sleep(3000);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }

@@ -14,7 +14,7 @@ public class Marca {
   @FindBy(id = "ue-accept-notice-button")
   WebElement acceptCookies;
 
-  @FindBy(partialLinkText = "El once de Simeone para cubrir la baja de Griezmann")
+  @FindBy(partialLinkText = "El COE y Banco Santander ")
   @AndroidFindBy(
       xpath =
           "(//android.widget.LinearLayout[@resource-id=\"com.iphonedroid.marca:id/portadilla_container\"])[3]")
