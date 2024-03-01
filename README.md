@@ -52,10 +52,23 @@ Navigate to the directory where you cloned the repository and select it.
 You can set environment variables in IntelliJ IDEA by going to Run > Edit Configurations > Add JUNIT Configuration > Environment.
 
 ### Android Variables
-AppActivity=xxx;AppPackage=xxxx;Platform=Android;Udid=xxxx
+
+| Campo        | Valor        |
+|--------------|--------------|
+| AppActivity  | xxx          |
+| AppPackage   | xxxx         |
+| Platform     | Android      |
+| Udid         | xxxx         |
+
 
 ### Web Variables
-Accessibility=true;Platform=Web;Url=https://www.xxxx.com/
+
+| Campo          | Valor         |
+|----------------|---------------|
+| Accessibility | true          |
+| Platform       | Web           |
+| Url            | https://www.xxxx.com/ |
+
 
 ### Install Dependencies:
 
