@@ -43,4 +43,14 @@ public class MarcaSteps {
     }
     driver.quit();
   }
+
+  @When("I look for a notice")
+  public void iLookForANotice() {
+    controller.acceptCookies();
+  }
+
+  @Then("I should be able to see the notice")
+  public void iShouldBeAbleToSeeTheNotice() {
+
+  }
 }

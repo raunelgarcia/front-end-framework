@@ -11,10 +11,11 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class Marca {
+
   @FindBy(id = "ue-accept-notice-button")
   WebElement acceptCookies;
 
-  @FindBy(partialLinkText = "El COE y Banco Santander ")
+  @FindBy(partialLinkText = "La crisis de Alpine")
   @AndroidFindBy(
       xpath =
           "(//android.widget.LinearLayout[@resource-id=\"com.iphonedroid.marca:id/portadilla_container\"])[3]")
@@ -32,13 +33,22 @@ public class Marca {
   }
 
   public void acceptCookies() {
-    if (isVisible(acceptCookies)) acceptCookies.click();
+    if (isVisible(acceptCookies)) {
+      acceptCookies.click();
+    }
   }
 
   public void goToNotice() {
     randomNotice.click();
   }
+
   public void acceptAge() {
-    if (isVisible(ageButton)) ageButton.click();
+    if (isVisible(ageButton)) {
+      ageButton.click();
+    }
+  }
+
+  public boolean isNoticeShow() {
+    return isVisible(randomNotice);
   }
 }
