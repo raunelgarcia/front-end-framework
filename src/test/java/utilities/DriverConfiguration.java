@@ -15,10 +15,11 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 public class DriverConfiguration {
+
   public WebDriver getDriver() {
     if (Objects.equals(LocalEnviroment.getPlatform(), "Web")) {
       WebDriver driver = congifureWebDriver();
-      //driver.manage().window().maximize();
+      driver.manage().window().setSize(LocalEnviroment.getResolution());
       driver.get(LocalEnviroment.getUrl());
       return driver;
     } else if (Objects.equals(LocalEnviroment.getPlatform(), "Android")) {
@@ -29,7 +30,9 @@ public class DriverConfiguration {
       } catch (MalformedURLException e) {
         throw new RuntimeException(e);
       }
-    } else return null;
+    } else {
+      return null;
+    }
   }
 
   private WebDriver congifureWebDriver() {
