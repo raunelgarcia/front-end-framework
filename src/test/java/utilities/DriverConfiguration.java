@@ -10,13 +10,15 @@ import java.util.Objects;
 import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 public class DriverConfiguration {
   public WebDriver getDriver() {
     if (Objects.equals(LocalEnviroment.getPlatform(), "Web")) {
-      ChromeDriver driver = new ChromeDriver();
-      driver.manage().window().maximize();
+      WebDriver driver = congifureWebDriver();
+      //driver.manage().window().maximize();
       driver.get(LocalEnviroment.getUrl());
       return driver;
     } else if (Objects.equals(LocalEnviroment.getPlatform(), "Android")) {
@@ -28,6 +30,18 @@ public class DriverConfiguration {
         throw new RuntimeException(e);
       }
     } else return null;
+  }
+
+  private WebDriver congifureWebDriver() {
+    WebDriver driver = null;
+    if (Objects.equals(LocalEnviroment.getBrowser(), "edge")) {
+      driver = new EdgeDriver();
+    } else if (Objects.equals(LocalEnviroment.getBrowser(), "firefox")) {
+      driver = new FirefoxDriver();
+    } else {
+      driver = new ChromeDriver();
+    }
+    return driver;
   }
 
   private MutableCapabilities fillCapabilities() {

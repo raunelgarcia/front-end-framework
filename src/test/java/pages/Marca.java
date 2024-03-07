@@ -15,7 +15,7 @@ public class Marca {
   @FindBy(id = "ue-accept-notice-button")
   WebElement acceptCookies;
 
-  @FindBy(partialLinkText = "La crisis de Alpine")
+  @FindBy(partialLinkText = "Nuevo varapalo para Nadal")
   @AndroidFindBy(
       xpath =
           "(//android.widget.LinearLayout[@resource-id=\"com.iphonedroid.marca:id/portadilla_container\"])[3]")

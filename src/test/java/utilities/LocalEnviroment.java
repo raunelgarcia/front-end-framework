@@ -3,6 +3,7 @@ package utilities;
 import java.util.Objects;
 
 public class LocalEnviroment {
+
   public static String getPlatform() {
     return System.getenv("Platform");
   }
@@ -27,6 +28,10 @@ public class LocalEnviroment {
     return System.getenv("AppActivity");
   }
 
+  public static String getBrowser() {
+    return System.getenv("Browser");
+  }
+
   public static boolean getAccessibility() {
     String accessibility = System.getenv("Accessibility");
     return accessibility != null && accessibility.equalsIgnoreCase("true");
@@ -34,7 +39,6 @@ public class LocalEnviroment {
 
   public static boolean isMobile() {
     String platform = System.getenv("Platform");
-    if (Objects.equals(platform, "Android")) return true;
-    else return false;
+    return Objects.equals(platform, "Android");
   }
 }
