@@ -6,7 +6,6 @@ import io.cucumber.java.After;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.qameta.allure.Allure;
 import org.openqa.selenium.WebDriver;
 import pages.Marca;
 import utilities.Accessibility;
