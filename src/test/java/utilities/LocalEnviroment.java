@@ -40,22 +40,8 @@ public class LocalEnviroment {
     return accessibility != null && accessibility.equalsIgnoreCase("true");
   }
 
-  public static Dimension getResolution() {
-    String dimensionString = System.getenv("Resolution");
-    if (dimensionString != null && !dimensionString.isEmpty()) {
-      String[] dimensionParts = dimensionString.split("x");
-      if (dimensionParts.length == 2) {
-        try {
-          int width = Integer.parseInt(dimensionParts[0]);
-          int height = Integer.parseInt(dimensionParts[1]);
-          return new Dimension(width, height);
-        } catch (NumberFormatException e) {
-          System.err.println("Error parsing screen resolution from environment variable. Using random resolution.");
-        }
-      }
-    }
-    // If environment variable is not defined or invalid, return a random resolution
-    return getRandomResolution().getDimension();
+  public static String getResolution() {
+    return System.getenv("Resolution");
   }
 
   public static boolean isMobile() {

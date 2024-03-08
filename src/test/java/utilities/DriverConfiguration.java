@@ -13,13 +13,14 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import utilities.enums.ScreenResolution;
 
 public class DriverConfiguration {
 
   public WebDriver getDriver() {
     if (Objects.equals(LocalEnviroment.getPlatform(), "Web")) {
       WebDriver driver = congifureWebDriver();
-      driver.manage().window().setSize(LocalEnviroment.getResolution());
+      driver.manage().window().setSize(ScreenResolution.setResolution());
       driver.get(LocalEnviroment.getUrl());
       return driver;
     } else if (Objects.equals(LocalEnviroment.getPlatform(), "Android")) {
