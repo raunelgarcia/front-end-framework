@@ -56,7 +56,7 @@ public class DriverConfiguration {
 
   private MutableCapabilities fillCapabilities() {
     MutableCapabilities capabilities = new DesiredCapabilities();
-    capabilities.setCapability(PLATFORM_NAME, "Android");
+    capabilities.setCapability(PLATFORM_NAME, LocalEnviroment.getPlatform());
     capabilities.setCapability("automationName", "UiAutomator2");
     capabilities.setCapability("udid", LocalEnviroment.getUdid());
     capabilities.setCapability("noReset", true);
