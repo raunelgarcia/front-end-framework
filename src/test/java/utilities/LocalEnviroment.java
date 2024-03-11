@@ -37,7 +37,7 @@ public class LocalEnviroment {
 
   public static boolean getAccessibility() {
     String accessibility = System.getenv("Accessibility");
-    return accessibility != null && accessibility.equalsIgnoreCase("true");
+    return Objects.nonNull(accessibility) && accessibility.equalsIgnoreCase("true");
   }
 
   public static String getResolution() {

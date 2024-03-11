@@ -1,5 +1,6 @@
 package utilities.enums;
 
+import java.util.Objects;
 import java.util.Random;
 import org.openqa.selenium.Dimension;
 import utilities.LocalEnviroment;
@@ -20,7 +21,7 @@ public enum ScreenResolution {
 
   public static Dimension setResolution() {
     String dimensionString = LocalEnviroment.getResolution();
-    if (dimensionString != null && !dimensionString.isEmpty()) {
+    if (Objects.nonNull(dimensionString) && !dimensionString.isEmpty()) {
       String[] dimensionParts = dimensionString.split("x");
       if (dimensionParts.length == 2) {
         try {

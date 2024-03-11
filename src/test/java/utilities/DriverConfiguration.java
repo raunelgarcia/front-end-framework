@@ -19,7 +19,7 @@ public class DriverConfiguration {
 
   public WebDriver getDriver() {
     if (Objects.equals(LocalEnviroment.getPlatform(), "Web")) {
-      WebDriver driver = congifureWebDriver();
+      WebDriver driver = configureWebDriver();
       driver.manage().window().setSize(ScreenResolution.setResolution());
       driver.get(LocalEnviroment.getUrl());
       return driver;
@@ -36,17 +36,23 @@ public class DriverConfiguration {
     }
   }
 
-  private WebDriver congifureWebDriver() {
-    WebDriver driver = null;
-    if (Objects.equals(LocalEnviroment.getBrowser(), "edge")) {
-      driver = new EdgeDriver();
-    } else if (Objects.equals(LocalEnviroment.getBrowser(), "firefox")) {
-      driver = new FirefoxDriver();
-    } else {
-      driver = new ChromeDriver();
+  private WebDriver configureWebDriver() {
+    WebDriver driver;
+    String browser = LocalEnviroment.getBrowser();
+    switch (browser) {
+      case "edge":
+        driver = new EdgeDriver();
+        break;
+      case "firefox":
+        driver = new FirefoxDriver();
+        break;
+      default:
+        driver = new ChromeDriver();
+        break;
     }
     return driver;
   }
+
 
   private MutableCapabilities fillCapabilities() {
     MutableCapabilities capabilities = new DesiredCapabilities();
@@ -55,7 +61,7 @@ public class DriverConfiguration {
     capabilities.setCapability("udid", LocalEnviroment.getUdid());
     capabilities.setCapability("noReset", true);
     String apk = LocalEnviroment.getApk();
-    if (apk != null && !apk.isEmpty()) {
+    if (Objects.nonNull(apk) && !apk.isEmpty()) {
       capabilities.setCapability(
           "app", Paths.get("src/test/resources/" + apk).toAbsolutePath().toString());
     } else {
