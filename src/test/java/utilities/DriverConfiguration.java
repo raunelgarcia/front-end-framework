@@ -18,12 +18,12 @@ import utilities.enums.ScreenResolution;
 public class DriverConfiguration {
 
   public WebDriver getDriver() {
-    if (Objects.equals(LocalEnviroment.getPlatform(), "Web")) {
+    if (LocalEnviroment.getPlatform().equalsIgnoreCase("Web")) {
       WebDriver driver = configureWebDriver();
       driver.manage().window().setSize(ScreenResolution.setResolution());
       driver.get(LocalEnviroment.getUrl());
       return driver;
-    } else if (Objects.equals(LocalEnviroment.getPlatform(), "Android")) {
+    } else if (LocalEnviroment.getPlatform().equalsIgnoreCase("Android")) {
       try {
         URL url = new URL("http://127.0.0.1:4723");
         return new AndroidDriver(url, fillCapabilities());
@@ -38,7 +38,7 @@ public class DriverConfiguration {
 
   private WebDriver configureWebDriver() {
     WebDriver driver;
-    String browser = LocalEnviroment.getBrowser();
+    String browser = LocalEnviroment.getBrowser().toLowerCase();
     switch (browser) {
       case "edge":
         driver = new EdgeDriver();

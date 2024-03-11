@@ -46,6 +46,6 @@ public class LocalEnviroment {
 
   public static boolean isMobile() {
     String platform = System.getenv("Platform");
-    return Objects.equals(platform, "Android");
+    return Objects.nonNull(platform) && platform.equalsIgnoreCase("Android");
   }
 }

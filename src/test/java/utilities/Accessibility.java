@@ -3,12 +3,13 @@ package utilities;
 import io.github.sridharbandi.AxeRunner;
 import io.github.sridharbandi.HtmlCsRunner;
 import java.io.IOException;
-import java.util.Objects;
 import org.openqa.selenium.WebDriver;
 
 public class Accessibility {
+
   public static void checkAccessibility(WebDriver driver) {
-    if (LocalEnviroment.getAccessibility() && Objects.equals(LocalEnviroment.getPlatform(), "Web")) {
+    if (LocalEnviroment.getAccessibility() && LocalEnviroment.getPlatform()
+        .equalsIgnoreCase("Web")) {
       HtmlCsRunner htmlCsRunner = new HtmlCsRunner(driver);
       try {
         htmlCsRunner.execute();
@@ -20,7 +21,8 @@ public class Accessibility {
   }
 
   public static void checkAccessibilityAxe(WebDriver driver) {
-    if (LocalEnviroment.getAccessibility() && Objects.equals(LocalEnviroment.getPlatform(), "Web")) {
+    if (LocalEnviroment.getAccessibility() && LocalEnviroment.getPlatform()
+        .equalsIgnoreCase("Web")) {
       AxeRunner axeRunner = new AxeRunner(driver);
       try {
         axeRunner.execute();
