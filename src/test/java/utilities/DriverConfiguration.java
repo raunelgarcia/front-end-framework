@@ -38,7 +38,12 @@ public class DriverConfiguration {
 
   private WebDriver configureWebDriver() {
     WebDriver driver;
-    String browser = LocalEnviroment.getBrowser().toLowerCase();
+    String browser = LocalEnviroment.getBrowser();
+    if (browser == null) {
+      browser = "chrome";
+    } else {
+      browser = browser.toLowerCase();
+    }
     switch (browser) {
       case "edge":
         driver = new EdgeDriver();
