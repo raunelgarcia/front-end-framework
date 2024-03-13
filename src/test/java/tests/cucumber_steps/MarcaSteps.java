@@ -3,6 +3,7 @@ package tests.cucumber_steps;
 import static org.junit.Assert.assertTrue;
 
 import io.cucumber.java.After;
+import io.cucumber.java.AfterAll;
 import io.cucumber.java.AfterStep;
 import io.cucumber.java.Scenario;
 import io.cucumber.java.en.Given;
@@ -52,9 +53,7 @@ public class MarcaSteps {
   @AfterStep
   public void afterStep(Scenario scenario) {
     if (scenario.isFailed()) {
-      //Screenshot.captureScreenshot(driver);
       AllureReport.attachScreenshot(driver);
-
     }
   }
 
