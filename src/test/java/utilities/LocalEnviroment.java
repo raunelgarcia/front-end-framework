@@ -1,9 +1,6 @@
 package utilities;
 
-import static utilities.enums.ScreenResolution.getRandomResolution;
-
 import java.util.Objects;
-import org.openqa.selenium.Dimension;
 
 public class LocalEnviroment {
 

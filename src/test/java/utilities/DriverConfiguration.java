@@ -7,20 +7,23 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.Objects;
+
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import utilities.enums.ScreenResolution;
 
 public class DriverConfiguration {
 
   public WebDriver getDriver() {
     if (LocalEnviroment.getPlatform().equalsIgnoreCase("Web")) {
       WebDriver driver = configureWebDriver();
-      driver.manage().window().setSize(ScreenResolution.setResolution());
+      Dimension windowResolution = ScreenResolution.getResolutionFromEnv();
+      if (Objects.nonNull(windowResolution))
+        driver.manage().window().setSize(windowResolution);
       driver.get(LocalEnviroment.getUrl());
       return driver;
     } else if (LocalEnviroment.getPlatform().equalsIgnoreCase("Android")) {
