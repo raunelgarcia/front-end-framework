@@ -33,7 +33,7 @@ public class ScreenResolution {
   }
 
   private static boolean isValidResolution(String resolution, String browser) throws IllegalStateException {
-    Map<String, Map<String, Map<String, List<String>>>> allowableResolutions = loadAllowableResolutionsFromYamlFile();
+    Map<String, Map<String, Map<String, List<String>>>> allowableResolutions = loadAllowedResolutions();
 
     if (Objects.isNull(allowableResolutions))
       throw new IllegalStateException("The \"allowable-resolutions.yaml\" file could not be located or loaded");
@@ -41,7 +41,7 @@ public class ScreenResolution {
     return allowableResolutions.get("browsers").get(browser).get("resolutions").contains(resolution);
   }
 
-  public static Map<String, Map<String, Map<String, List<String>>>> loadAllowableResolutionsFromYamlFile() {
+  public static Map<String, Map<String, Map<String, List<String>>>> loadAllowedResolutions() {
     Yaml yaml = new Yaml();
     try (InputStream inputStream = ScreenResolution.class
             .getClassLoader()

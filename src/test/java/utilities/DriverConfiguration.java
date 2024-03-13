@@ -22,8 +22,9 @@ public class DriverConfiguration {
     if (LocalEnviroment.getPlatform().equalsIgnoreCase("Web")) {
       WebDriver driver = configureWebDriver();
       Dimension windowResolution = ScreenResolution.getResolutionFromEnv();
-      if (Objects.nonNull(windowResolution))
+      if (Objects.nonNull(windowResolution)) {
         driver.manage().window().setSize(windowResolution);
+      }
       driver.get(LocalEnviroment.getUrl());
       return driver;
     } else if (LocalEnviroment.getPlatform().equalsIgnoreCase("Android")) {
@@ -42,7 +43,7 @@ public class DriverConfiguration {
   private WebDriver configureWebDriver() {
     WebDriver driver;
     String browser = LocalEnviroment.getBrowser();
-    if (browser == null) {
+    if (Objects.isNull(browser)) {
       browser = "chrome";
     } else {
       browser = browser.toLowerCase();

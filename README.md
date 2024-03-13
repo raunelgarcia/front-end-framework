@@ -53,6 +53,8 @@ You can set environment variables in IntelliJ IDEA by going to Run > Edit Config
 
 ### Android Variables
 
+AppActivity=xxxx;AppPackage=xxxx;Platform=Android;Udid=xxxx
+
 | Campo          | Valor   |
 |----------------|---------|
 | AppActivity    | xxxx    |
@@ -63,11 +65,15 @@ You can set environment variables in IntelliJ IDEA by going to Run > Edit Config
 
 ### Web Variables
 
-| Campo          | Valor                 |
-|----------------|-----------------------|
+Accessibility=xxxx;Platform=Web;Url=xxxx;Browser=xxxx;Resolution=xxxx;
+
+| Campo         | Valor                 |
+|---------------|-----------------------|
 | Accessibility | true                  |
-| Platform       | Web                   |
-| Url            | https://www.xxxx.com/ |
+| Platform      | Web                   |
+| Url           | https://www.xxxx.com/ |
+| Browser       | xxxx                  |
+| Resolution    | xxxx                  |
 
 
 ### Install Dependencies:
