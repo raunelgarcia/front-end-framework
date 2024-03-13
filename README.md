@@ -1,4 +1,4 @@
-### Web and Mobile Automated Testing Repository
+## Web and Mobile Automated Testing Repository
 
 This repository contains automated tests for both web and mobile applications. With the use of environment variables in IntelliJ IDEA, you can easily switch between running tests for web or mobile platforms. Also is integrated with axe-core tools to easily check web accessibility violations while running an automated web script.
 
@@ -18,7 +18,7 @@ Step 2: Install Appium
 
 Install Appium globally using npm (Node Package Manager). Open your terminal or command prompt and run the following command: 
 
-npm install -g appium
+`npm install -g appium`
 
 Step 3: Install Appium Dependencies
 
@@ -26,7 +26,7 @@ Appium has specific dependencies for different mobile development platforms. Ins
 
 ### Android
 Install Android Studio following the instructions on https://developer.android.com/studio/install.
-Set up ANDROID_HOME and JAVA_HOME environment variables correctly.
+Set up `ANDROID_HOME` and `JAVA_HOME` environment variables correctly.
 
 Step 4: Set Up Emulators or Physical Devices
 
@@ -34,12 +34,12 @@ Use Virtual Device Manager tool from Android Studio to start a customized Androi
 
 Step 5: Start Appium Server
 
-Run on terminal the command: appium to start appium server
+Run on terminal the command: `appium` to start appium server
 
 ### IDE Configuration Steps
 Clone the Repository:
 
-git clone https://github.com/raunelgarcia/mobile-framework.git
+`git clone https://github.com/raunelgarcia/mobile-framework.git`
 
 Open Project in IntelliJ IDEA:
 
@@ -52,10 +52,29 @@ Navigate to the directory where you cloned the repository and select it.
 You can set environment variables in IntelliJ IDEA by going to Run > Edit Configurations > Add JUNIT Configuration > Environment.
 
 ### Android Variables
-AppActivity=xxx;AppPackage=xxxx;Platform=Android;Udid=xxxx
+
+AppActivity=xxxx;AppPackage=xxxx;Platform=Android;Udid=xxxx
+
+| Campo          | Valor   |
+|----------------|---------|
+| AppActivity    | xxxx    |
+| AppPackage     | xxxx    |
+| Platform       | Android |
+| Udid           | xxxx    |
+
 
 ### Web Variables
-Accessibility=true;Platform=Web;Url=https://www.xxxx.com/
+
+Accessibility=xxxx;Platform=Web;Url=xxxx;Browser=xxxx;Resolution=xxxx;
+
+| Campo         | Valor                 |
+|---------------|-----------------------|
+| Accessibility | true                  |
+| Platform      | Web                   |
+| Url           | https://www.xxxx.com/ |
+| Browser       | xxxx                  |
+| Resolution    | xxxx                  |
+
 
 ### Install Dependencies:
 
@@ -74,9 +93,22 @@ Run Tests:
 You can now run the automated tests either for web or mobile platforms based on the environment variable you've set.
 
 ### Test Structure
+
 src/test/java contains all the test classes.
 
-src/test/resources contains apks.
+src/test/resources contains apks and features for Cucumber.
+
+### Using Allure Reports
+
+If you want to generate reports with Allure, the framework is ready for it. Beforehand, some preliminary configurations need to be done.
+
+Install Allure in the project using the command `npm install --save-dev allure-commandline`
+
+Once it's installed, you can use Allure commands from the project directory. When the test is executed, the results will be saved in target/allure-results
+
+To generate HTML reports, you'll need to execute the command `npx allure-commandline generate target/allure-results`
+
+And to view the report, run `npx allure-commandline open allure-report`
 
 ### Contributors
 
