@@ -9,6 +9,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import strategies.WaitStrategy;
+import utilities.Constants;
+import utilities.Constants.Time;
 
 public class Marca {
 
@@ -43,6 +46,7 @@ public class Marca {
   }
 
   public void acceptAge() {
+    WaitStrategy.waitForVisibility(ageButton, driver, Time.HIGH_TIMEOUT);
     if (isVisible(ageButton)) {
       ageButton.click();
     }
