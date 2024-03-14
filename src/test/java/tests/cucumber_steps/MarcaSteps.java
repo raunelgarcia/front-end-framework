@@ -11,8 +11,11 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
 import pages.Marca;
+import strategies.WaitStrategy;
 import utilities.Accessibility;
 import utilities.AllureReport;
+import utilities.Constants;
+import utilities.Constants.Time;
 import utilities.DriverConfiguration;
 import utilities.Screenshot;
 
@@ -61,11 +64,7 @@ public class MarcaSteps {
   public void closeDriver() {
     Accessibility.checkAccessibility(driver);
     AllureReport.fillReportInfo();
-    try {
-      Thread.sleep(5000);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
+    WaitStrategy.waitSeconds(Constants.Time.LOW_TIMEOUT);
     driver.quit();
   }
 }
