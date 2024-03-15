@@ -14,31 +14,25 @@ public class ScreenResolution {
   }
 
   public static Dimension getResolutionFromEnv() throws IllegalStateException {
-    String browser = LocalEnviroment.getBrowser().toLowerCase();
-    String envResolution = LocalEnviroment.getResolution();
+    String browser = LocalEnviroment.getBrowser();
 
-    if (Objects.isNull(envResolution))
-      return null;
+    Dimension resolution = LocalEnviroment.getResolution();
 
-    String[] envResolutionComponents = envResolution.split("x");
-
-    Dimension resolution = new Dimension(Integer.parseInt(envResolutionComponents[0]),
-            Integer.parseInt(envResolutionComponents[1]));
-
-    if (!isValidResolution(envResolution, browser))
+    if (!isValidResolution(resolution, browser))
       throw new IllegalStateException("The resolution specified by the \"Resolution\" environment variable is not " +
               "valid for the browser specified by the \"Browser\" environment variable");
 
     return resolution;
   }
 
-  private static boolean isValidResolution(String resolution, String browser) throws IllegalStateException {
+  private static boolean isValidResolution(Dimension resolution, String browser) throws IllegalStateException {
     Map<String, Map<String, Map<String, List<String>>>> allowableResolutions = loadAllowedResolutions();
 
     if (Objects.isNull(allowableResolutions))
       throw new IllegalStateException("The \"allowable-resolutions.yaml\" file could not be located or loaded");
 
-    return allowableResolutions.get("browsers").get(browser).get("resolutions").contains(resolution);
+    return allowableResolutions.get("browsers").get(browser).get("resolutions").
+            contains(resolution.getWidth() + "x" + resolution.getHeight());
   }
 
   public static Map<String, Map<String, Map<String, List<String>>>> loadAllowedResolutions() {
@@ -52,3 +46,7 @@ public class ScreenResolution {
     }
   }
 }
+
+
+
+
