@@ -22,7 +22,9 @@ public class Screenshot {
       String timestamp = dateFormat.format(new Date());
       String screenshotPath = screenshotDir + "screenshot_" + timestamp + ".png";
 
-      Files.copy(screenshotFile.toPath(), new File(screenshotPath).toPath(),
+      Files.copy(
+          screenshotFile.toPath(),
+          new File(screenshotPath).toPath(),
           StandardCopyOption.REPLACE_EXISTING);
 
       System.out.println("Screenshot stored in: " + screenshotPath);
@@ -30,5 +32,4 @@ public class Screenshot {
       System.err.println("Error while taking screenshot: " + e.getMessage());
     }
   }
-
 }
