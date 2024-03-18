@@ -1,6 +1,7 @@
 package tests.cucumber_steps;
 
 import static org.junit.Assert.assertTrue;
+import static pages.BasePage.waitSeconds;
 
 import io.cucumber.java.After;
 import io.cucumber.java.AfterStep;
@@ -10,7 +11,6 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
 import pages.Marca;
-import strategies.WaitStrategy;
 import utilities.Accessibility;
 import utilities.AllureReport;
 import utilities.Constants;
@@ -58,7 +58,7 @@ public class MarcaSteps {
   public void closeDriver() {
     Accessibility.checkAccessibility(driver);
     AllureReport.fillReportInfo();
-    WaitStrategy.waitSeconds(Constants.Time.LOW_TIMEOUT);
+    waitSeconds(Constants.Time.LOW_TIMEOUT);
     driver.quit();
   }
 }

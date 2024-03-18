@@ -1,8 +1,5 @@
 package pages;
 
-import static strategies.VisibilityStrategy.*;
-import static strategies.WaitStrategy.*;
-
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import java.time.Duration;
@@ -12,7 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import utilities.Constants.Time;
 
-public class Marca {
+public class Marca extends BasePage {
 
   @FindBy(id = "ue-accept-notice-button")
   WebElement acceptCookies;
