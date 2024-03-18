@@ -46,8 +46,7 @@ public class Marca {
   }
 
   public void acceptAge() {
-    waitForVisibility(ageButton, driver);
-    ageButton.click();
+    clickWhenVisible(ageButton, driver);
   }
 
   public boolean isNoticeShow() {
