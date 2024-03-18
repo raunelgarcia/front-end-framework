@@ -3,7 +3,6 @@ package tests.cucumber_steps;
 import static org.junit.Assert.assertTrue;
 
 import io.cucumber.java.After;
-import io.cucumber.java.AfterAll;
 import io.cucumber.java.AfterStep;
 import io.cucumber.java.Scenario;
 import io.cucumber.java.en.Given;
@@ -11,10 +10,11 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
 import pages.Marca;
+import strategies.WaitStrategy;
 import utilities.Accessibility;
 import utilities.AllureReport;
+import utilities.Constants;
 import utilities.DriverConfiguration;
-import utilities.Screenshot;
 
 public class MarcaSteps {
 
@@ -32,7 +32,6 @@ public class MarcaSteps {
   public void iNavigateToANewsArticle() {
     controller.acceptCookies();
     controller.goToNotice();
-    // controller.acceptAge();
   }
 
   @Then("I should be able to see if the article contains an image")
@@ -46,7 +45,8 @@ public class MarcaSteps {
   }
 
   @Then("I should be able to see the notice")
-  public void iShouldBeAbleToSeeTheNotice() {}
+  public void iShouldBeAbleToSeeTheNotice() {
+  }
 
   @AfterStep
   public void afterStep(Scenario scenario) {
@@ -59,11 +59,7 @@ public class MarcaSteps {
   public void closeDriver() {
     Accessibility.checkAccessibility(driver);
     AllureReport.fillReportInfo();
-    try {
-      Thread.sleep(5000);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
+    WaitStrategy.waitSeconds(Constants.Time.LOW_TIMEOUT);
     driver.quit();
   }
 }
