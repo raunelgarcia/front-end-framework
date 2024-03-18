@@ -8,6 +8,7 @@ import org.openqa.selenium.Dimension;
 import org.yaml.snakeyaml.Yaml;
 
 public class ScreenResolution {
+
   private ScreenResolution() {
     throw new AssertionError("This class should not be instantiated.");
   }
@@ -16,7 +17,9 @@ public class ScreenResolution {
     String browser = LocalEnviroment.getBrowser().toLowerCase();
     String envResolution = LocalEnviroment.getResolution();
 
-    if (Objects.isNull(envResolution)) return null;
+    if (Objects.isNull(envResolution)) {
+      return null;
+    }
 
     String[] envResolutionComponents = envResolution.split("x");
 
@@ -25,10 +28,11 @@ public class ScreenResolution {
             Integer.parseInt(envResolutionComponents[0]),
             Integer.parseInt(envResolutionComponents[1]));
 
-    if (!isValidResolution(envResolution, browser))
+    if (!isValidResolution(envResolution, browser)) {
       throw new IllegalStateException(
           "The resolution specified by the \"Resolution\" environment variable is not "
               + "valid for the browser specified by the \"Browser\" environment variable");
+    }
 
     return resolution;
   }
@@ -38,9 +42,10 @@ public class ScreenResolution {
     Map<String, Map<String, Map<String, List<String>>>> allowableResolutions =
         loadAllowedResolutions();
 
-    if (Objects.isNull(allowableResolutions))
+    if (Objects.isNull(allowableResolutions)) {
       throw new IllegalStateException(
           "The \"allowable-resolutions.yaml\" file could not be located or loaded");
+    }
 
     return allowableResolutions
         .get("browsers")

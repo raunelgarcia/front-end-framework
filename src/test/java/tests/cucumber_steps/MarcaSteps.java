@@ -35,7 +35,6 @@ public class MarcaSteps {
   public void iNavigateToANewsArticle() {
     controller.acceptCookies();
     controller.goToNotice();
-    // controller.acceptAge();
   }
 
   @Then("I should be able to see if the article contains an image")
@@ -49,7 +48,8 @@ public class MarcaSteps {
   }
 
   @Then("I should be able to see the notice")
-  public void iShouldBeAbleToSeeTheNotice() {}
+  public void iShouldBeAbleToSeeTheNotice() {
+  }
 
   @AfterStep
   public void afterStep(Scenario scenario) {

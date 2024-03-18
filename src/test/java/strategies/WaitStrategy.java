@@ -31,7 +31,8 @@ public class WaitStrategy {
   }
 
   public static void waitForVisibility(WebElement element, WebDriver driver) {
-    waitFor(ExpectedConditions.visibilityOf(element), driver, Time.HIGH_TIMEOUT, ChronoUnit.SECONDS, true);
+    waitFor(ExpectedConditions.visibilityOf(element), driver, Time.HIGH_TIMEOUT, ChronoUnit.SECONDS,
+        true);
   }
 
   public static void waitForAnimationToFinish() {
