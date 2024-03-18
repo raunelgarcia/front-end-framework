@@ -7,7 +7,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.Objects;
-
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.WebDriver;

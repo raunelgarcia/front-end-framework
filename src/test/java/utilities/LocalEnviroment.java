@@ -1,10 +1,9 @@
 package utilities;
 
-import org.openqa.selenium.Dimension;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Objects;
+import org.openqa.selenium.Dimension;
 
 public class LocalEnviroment {
 
