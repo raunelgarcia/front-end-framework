@@ -14,7 +14,7 @@ import utilities.Constants.Time;
 
 public class Marca {
 
-  @FindBy(id = "ue-accept-notice-button-BAD")
+  @FindBy(id = "ue-accept-notice-button")
   WebElement acceptCookies;
 
   @FindBy(partialLinkText = "Noticia que no existe")
@@ -30,8 +30,8 @@ public class Marca {
 
   public Marca(WebDriver driver) {
     this.driver = driver;
-    PageFactory.initElements(new AppiumFieldDecorator(driver, Duration.ofSeconds(Time.LOW_TIMEOUT)),
-        this);
+    PageFactory.initElements(
+        new AppiumFieldDecorator(driver, Duration.ofSeconds(Time.LOW_TIMEOUT)), this);
   }
 
   public void acceptCookies() {

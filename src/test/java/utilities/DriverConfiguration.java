@@ -24,7 +24,7 @@ public class DriverConfiguration {
       if (Objects.nonNull(windowResolution)) {
         driver.manage().window().setSize(windowResolution);
       }
-      driver.get(LocalEnviroment.getUrl().toString());
+      driver.get(LocalEnviroment.getUrl());
       return driver;
     } else if (LocalEnviroment.getPlatform().equalsIgnoreCase("Android")) {
       try {
@@ -42,7 +42,11 @@ public class DriverConfiguration {
   private WebDriver configureWebDriver() {
     WebDriver driver;
     String browser = LocalEnviroment.getBrowser();
-
+    if (Objects.isNull(browser)) {
+      browser = "chrome";
+    } else {
+      browser = browser.toLowerCase();
+    }
     switch (browser) {
       case "edge":
         driver = new EdgeDriver();
@@ -54,7 +58,6 @@ public class DriverConfiguration {
         driver = new ChromeDriver();
         break;
     }
-
     return driver;
   }
 
@@ -67,7 +70,7 @@ public class DriverConfiguration {
     String apk = LocalEnviroment.getApk();
     if (Objects.nonNull(apk) && !apk.isEmpty()) {
       capabilities.setCapability(
-              "app", Paths.get("src/test/resources/" + apk).toAbsolutePath().toString());
+          "app", Paths.get("src/test/resources/" + apk).toAbsolutePath().toString());
     } else {
       capabilities.setCapability("appPackage", LocalEnviroment.getAppPackage());
       capabilities.setCapability("appActivity", LocalEnviroment.getAppActivity());
@@ -76,4 +79,3 @@ public class DriverConfiguration {
     return capabilities;
   }
 }
-
