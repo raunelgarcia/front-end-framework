@@ -17,14 +17,14 @@ public class LocalEnviroment {
     }
   }
 
-  static String browser = (Objects.nonNull(System.getenv("Browser")))
+  private static final String browser = (Objects.nonNull(System.getenv("Browser")))
           ? LocalEnviroment.getBrowser().toLowerCase()
           : "chrome";
 
-  static boolean accesibility = Objects.nonNull(System.getenv("Accessibility"))
+  private static final boolean accesibility = Objects.nonNull(System.getenv("Accessibility"))
           && System.getenv("Accessibility").equalsIgnoreCase("true");
 
-  static Dimension resolution;
+  private static final Dimension resolution;
   static {
     String[] envResolutionComponents = System.getenv("Resolution").split("x");
     resolution = new Dimension(Integer.parseInt(envResolutionComponents[0]),
