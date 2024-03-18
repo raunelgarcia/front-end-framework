@@ -45,8 +45,7 @@ public class MarcaSteps {
   }
 
   @Then("I should be able to see the notice")
-  public void iShouldBeAbleToSeeTheNotice() {
-  }
+  public void iShouldBeAbleToSeeTheNotice() {}
 
   @AfterStep
   public void afterStep(Scenario scenario) {
