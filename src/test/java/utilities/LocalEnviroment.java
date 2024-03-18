@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public class LocalEnviroment {
 
-  static URL url = null;
+  private static URL url = null;
   static {
     try {
       url = new URL(System.getenv("Url"));
@@ -73,7 +73,8 @@ public class LocalEnviroment {
 
   public static boolean isMobile() {
     String platform = System.getenv("Platform");
-    return Objects.nonNull(platform) && platform.equalsIgnoreCase("Android");
+    return Objects.nonNull(platform) && platform.equalsIgnoreCase("Android")
+            || platform.equalsIgnoreCase("IOS");
   }
 }
 
