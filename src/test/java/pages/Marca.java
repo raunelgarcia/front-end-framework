@@ -1,6 +1,7 @@
 package pages;
 
-import static strategies.VisibilityStrategy.isVisible;
+import static strategies.VisibilityStrategy.*;
+import static strategies.WaitStrategy.*;
 
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
@@ -9,7 +10,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import strategies.WaitStrategy;
 import utilities.Constants;
 import utilities.Constants.Time;
 
@@ -31,7 +31,7 @@ public class Marca {
 
   public Marca(WebDriver driver) {
     this.driver = driver;
-    this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
+    //this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
     PageFactory.initElements(new AppiumFieldDecorator(driver, Duration.ofSeconds(1)), this);
   }
 
@@ -46,10 +46,8 @@ public class Marca {
   }
 
   public void acceptAge() {
-    WaitStrategy.waitForVisibility(ageButton, driver, Time.HIGH_TIMEOUT);
-    if (isVisible(ageButton)) {
-      ageButton.click();
-    }
+    waitForVisibility(ageButton, driver);
+    ageButton.click();
   }
 
   public boolean isNoticeShow() {

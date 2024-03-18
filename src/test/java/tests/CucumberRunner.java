@@ -9,18 +9,30 @@ import org.junit.AfterClass;
 import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(
-    features = "src/test/resources/features",
-    glue = "tests/cucumber_steps"
-)
+@CucumberOptions(features = "src/test/resources/features", glue = "tests/cucumber_steps")
 public class CucumberRunner {
 
   @AfterClass
   public static void runAllureReport() {
+
+    String projectDirectory = Paths.get("").toAbsolutePath().toString();
+    String[] command;
+
+    String osName = System.getProperty("os.name").toLowerCase();
+    if (osName.contains("win")) {
+      command =
+          new String[] {
+            "cmd", "/c", "npx allure generate target/allure-results --clean && npx allure open"
+          };
+    } else {
+      command =
+          new String[] {
+            "/bin/bash", "-c", "npx allure generate target/allure-results --clean; npx allure open"
+          };
+    }
+
     try {
-      String projectDirectory = Paths.get("").toAbsolutePath().toString();
-      ProcessBuilder processBuilder = new ProcessBuilder("cmd", "/c",
-          "npx allure-commandline generate target/allure-results --clean && npx allure-commandline open allure-report");
+      ProcessBuilder processBuilder = new ProcessBuilder(command);
       processBuilder.directory(new File(projectDirectory));
       processBuilder.start();
     } catch (IOException e) {
