@@ -1,12 +1,12 @@
 package strategies;
 
 import static java.lang.System.currentTimeMillis;
-import static java.lang.Thread.sleep;
 
 import exceptions.FrameworkTimeoutException;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalUnit;
+import java.util.concurrent.TimeUnit;
 import javax.annotation.Nullable;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -16,22 +16,25 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
+import utilities.Constants.Time;
 
 public class WaitStrategy {
-  public static void waitForProcess(int milliSeconds) {
+
+  public static void waitSeconds(long seconds) {
     try {
-      sleep(milliSeconds);
+      TimeUnit.SECONDS.sleep(seconds);
     } catch (InterruptedException e) {
       Thread.currentThread().interrupt();
     }
   }
 
   public static void waitForVisibility(WebElement element, WebDriver driver) {
-    waitFor(ExpectedConditions.visibilityOf(element), driver, 8, ChronoUnit.SECONDS, true);
+    waitFor(ExpectedConditions.visibilityOf(element), driver, Time.HIGH_TIMEOUT, ChronoUnit.SECONDS,
+        true);
   }
 
   public static void waitForAnimationToFinish() {
-    waitForProcess(1250);
+    waitSeconds(Time.LOW_TIMEOUT);
   }
 
   public static <K> void waitFor(

@@ -58,7 +58,6 @@ public class DriverConfiguration {
     return driver;
   }
 
-
   private MutableCapabilities fillCapabilities() {
     MutableCapabilities capabilities = new DesiredCapabilities();
     capabilities.setCapability(PLATFORM_NAME, LocalEnviroment.getPlatform());

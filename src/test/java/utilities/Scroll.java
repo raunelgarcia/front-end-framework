@@ -14,6 +14,7 @@ import org.openqa.selenium.WebElement;
 import utilities.enums.Direction;
 
 public class Scroll {
+
   public static void swipe(Direction direction, AppiumDriver driver) {
     swipe(direction, 0.3, 0.7, driver);
   }
@@ -90,9 +91,9 @@ public class Scroll {
   public static void scrollToElement(
       WebElement element, Direction direction, boolean minScroll, WebDriver driver) {
     while (!isVisible(element)) {
-      if (LocalEnviroment.isMobile())
+      if (LocalEnviroment.isMobile()) {
         swipe(direction, 0.4, minScroll ? 0.5 : 0.6, (AppiumDriver) driver);
-      else {
+      } else {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollBy(0,200)");
       }
