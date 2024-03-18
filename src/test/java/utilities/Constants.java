@@ -10,5 +10,4 @@ public class Constants {
     public static final long SUPER_HIGH_TIMEOUT = 12;
     public static final long PRO_TIMEOUT = 29;
   }
-
 }

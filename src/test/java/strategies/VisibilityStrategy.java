@@ -3,7 +3,6 @@ package strategies;
 import java.util.function.Supplier;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import utilities.Constants.Time;
 
 public class VisibilityStrategy {
 

@@ -20,11 +20,15 @@ public class CucumberRunner {
 
     String osName = System.getProperty("os.name").toLowerCase();
     if (osName.contains("win")) {
-      command = new String[]{"cmd", "/c",
-          "npx allure generate target/allure-results --clean && npx allure open"};
+      command =
+          new String[] {
+            "cmd", "/c", "npx allure generate target/allure-results --clean && npx allure open"
+          };
     } else {
-      command = new String[]{"/bin/bash", "-c",
-          "npx allure generate target/allure-results --clean; npx allure open"};
+      command =
+          new String[] {
+            "/bin/bash", "-c", "npx allure generate target/allure-results --clean; npx allure open"
+          };
     }
 
     try {

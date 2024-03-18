@@ -1,8 +1,8 @@
 package strategies;
 
 import static java.lang.System.currentTimeMillis;
-import static java.lang.Thread.sleep;
 
+import exceptions.FrameworkTimeoutException;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalUnit;
@@ -16,8 +16,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
-import exceptions.FrameworkTimeoutException;
-import utilities.Constants;
 import utilities.Constants.Time;
 
 public class WaitStrategy {

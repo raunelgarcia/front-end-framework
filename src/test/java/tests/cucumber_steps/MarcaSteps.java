@@ -3,7 +3,6 @@ package tests.cucumber_steps;
 import static org.junit.Assert.assertTrue;
 
 import io.cucumber.java.After;
-import io.cucumber.java.AfterAll;
 import io.cucumber.java.AfterStep;
 import io.cucumber.java.Scenario;
 import io.cucumber.java.en.Given;
@@ -15,9 +14,7 @@ import strategies.WaitStrategy;
 import utilities.Accessibility;
 import utilities.AllureReport;
 import utilities.Constants;
-import utilities.Constants.Time;
 import utilities.DriverConfiguration;
-import utilities.Screenshot;
 
 public class MarcaSteps {
 
