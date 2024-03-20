@@ -18,7 +18,7 @@ import org.yaml.snakeyaml.Yaml;
 
 public class DriverConfiguration {
 
-  public WebDriver getDriver() {
+  public static WebDriver getDriver() {
     if (LocalEnviroment.getPlatform().equalsIgnoreCase("Web")) {
       WebDriver driver = configureWebDriver();
       Dimension windowResolution = ScreenResolution.getResolutionFromEnv();
@@ -40,7 +40,7 @@ public class DriverConfiguration {
     }
   }
 
-  private WebDriver configureWebDriver() {
+  private static WebDriver configureWebDriver() {
     WebDriver driver;
     String browser = LocalEnviroment.getBrowser();
 
@@ -58,7 +58,7 @@ public class DriverConfiguration {
     return driver;
   }
 
-  private MutableCapabilities fillCapabilities() {
+  private static MutableCapabilities fillCapabilities() {
     Map<String, Map<String, String>> enviroment = loadCapabilities();
     Map<String, String> capabilitiesYaml = enviroment.get("capabilities");
     Map<String, String> capabilitiesApkYaml = enviroment.get("capabilitiesApk");

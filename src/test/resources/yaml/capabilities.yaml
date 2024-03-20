@@ -5,5 +5,5 @@ capabilities:
   apk:
   appium:newCommandTimeout:
 capabilitiesApk:
-  appPackage:
-  appActivity:
+  appPackage: "com.google.android.deskclock"
+  appActivity: "com.android.deskclock.DeskClock"
