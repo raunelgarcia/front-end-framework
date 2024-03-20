@@ -1,11 +1,11 @@
 package utilities;
 
-import static org.openqa.selenium.remote.CapabilityType.PLATFORM_NAME;
-
 import io.appium.java_client.android.AndroidDriver;
+
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.file.Paths;
+import java.util.Map;
 import java.util.Objects;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.MutableCapabilities;
@@ -14,6 +14,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.yaml.snakeyaml.Yaml;
 
 public class DriverConfiguration {
 
@@ -58,20 +59,36 @@ public class DriverConfiguration {
   }
 
   private MutableCapabilities fillCapabilities() {
+    Map<String, Map<String, String>> enviroment = loadCapabilities();
+    Map<String, String> capabilitiesYaml = enviroment.get("capabilities");
+    Map<String, String> capabilitiesApkYaml = enviroment.get("capabilitiesApk");
+
     MutableCapabilities capabilities = new DesiredCapabilities();
-    capabilities.setCapability(PLATFORM_NAME, LocalEnviroment.getPlatform());
-    capabilities.setCapability("automationName", "UiAutomator2");
-    capabilities.setCapability("udid", LocalEnviroment.getUdid());
-    capabilities.setCapability("noReset", true);
-    String apk = LocalEnviroment.getApk();
-    if (Objects.nonNull(apk) && !apk.isEmpty()) {
-      capabilities.setCapability(
-          "app", Paths.get("src/test/resources/" + apk).toAbsolutePath().toString());
-    } else {
-      capabilities.setCapability("appPackage", LocalEnviroment.getAppPackage());
-      capabilities.setCapability("appActivity", LocalEnviroment.getAppActivity());
+    for (Map.Entry<String, String> entry : capabilitiesYaml.entrySet()) {
+      String capabilityName = entry.getKey();
+      String capabilityValue = entry.getValue();
+      if (Objects.nonNull(capabilityValue) && !capabilityValue.isEmpty()) {
+        capabilities.setCapability(capabilityName, capabilityValue);
+      }
+    } if (Objects.isNull(capabilities.getCapability("apk"))) {
+      for (Map.Entry<String, String> entry : capabilitiesApkYaml.entrySet()) {
+        capabilities.setCapability(entry.getKey(), entry.getValue());
+      }
     }
+    capabilities.setCapability("platformName", LocalEnviroment.getPlatform());
 
     return capabilities;
+  }
+
+  public static Map<String, Map<String, String>> loadCapabilities() {
+    Yaml yaml = new Yaml();
+    try (InputStream inputStream =
+                 DriverConfiguration.class
+                         .getClassLoader()
+                         .getResourceAsStream("yaml/capabilities.yaml")) {
+      return yaml.load(inputStream);
+    } catch (Exception e) {
+      throw new IllegalStateException("Failed to load or parse the YAML file", e);
+    }
   }
 }
