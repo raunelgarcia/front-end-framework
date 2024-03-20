@@ -1,0 +1,8 @@
+capabilities:
+  automationName: 'UiAutomator2'
+  udid: ''
+  noRest: 'true'
+  apk: ''
+capabilitiesApk:
+  appPackage: ''
+  appActivity: ''
