@@ -1,5 +1,7 @@
 package utilities;
 
+import static utilities.Constants.Time.GMAIL_DOMAIN;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -19,22 +21,34 @@ public class Generator {
     return sb.toString();
   }
 
+  public static String generateRandomString(int length, String characterString) {
+    Random random = new Random();
+    StringBuilder sb = new StringBuilder(length);
+    for (int i = 0; i < length; i++) {
+      int randomIndex = random.nextInt(characterString.length());
+      sb.append(characterString.charAt(randomIndex));
+    }
+    return sb.toString();
+  }
+
+  public static String generateRandomString(int minLength, int maxLength) {
+    Random random = new Random();
+    int length = minLength + random.nextInt(maxLength - minLength + 1);
+    StringBuilder sb = new StringBuilder(length);
+    for (int i = 0; i < length; i++) {
+      int randomIndex = random.nextInt(CHARACTERS.length());
+      sb.append(CHARACTERS.charAt(randomIndex));
+    }
+    return sb.toString();
+  }
+
   public static int generateRandomInt(int min, int max) {
     Random random = new Random();
     return random.nextInt((max - min) + 1) + min;
   }
 
-  public static String generateRandomEmail() {
-    return (generateRandomString(8) + "@" + generateRandomString(5) + ".com").toLowerCase();
-  }
-
-  public static String generateRandomPhoneNumber() {
-    StringBuilder phoneNumber = new StringBuilder();
-    Random random = new Random();
-    for (int i = 0; i < 9; i++) {
-      phoneNumber.append(random.nextInt(10));
-    }
-    return phoneNumber.toString();
+  public static String generateRandomEmail(int minLength, int maxLength) {
+    return (generateRandomString(minLength, maxLength) + GMAIL_DOMAIN).toLowerCase();
   }
 
   public static String generateRandomDate(int startYear, int endYear) {
@@ -49,6 +63,17 @@ public class Generator {
     int day =
         ThreadLocalRandom.current().nextInt(1, LocalDate.of(year, month, 1).lengthOfMonth() + 1);
     return LocalDate.of(year, month, day);
+  }
+
+  public static String getCurrentDate() {
+    LocalDate currentDate = LocalDate.now();
+    return currentDate.toString();
+  }
+
+  public static String getCurrentDate(String pattern) {
+    LocalDate currentDate = LocalDate.now();
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+    return currentDate.format(formatter);
   }
 
   public static <T> T getRandomElement(List<T> list) {
