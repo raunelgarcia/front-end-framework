@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class Generator {
   private static final String CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -49,20 +48,6 @@ public class Generator {
 
   public static String generateRandomEmail(int minLength, int maxLength) {
     return (generateRandomString(minLength, maxLength) + GMAIL_DOMAIN).toLowerCase();
-  }
-
-  public static String generateRandomDate(int startYear, int endYear) {
-    LocalDate randomDate = generateRandomDateObject(startYear, endYear);
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-    return randomDate.format(formatter);
-  }
-
-  private static LocalDate generateRandomDateObject(int startYear, int endYear) {
-    int year = ThreadLocalRandom.current().nextInt(startYear, endYear + 1);
-    int month = ThreadLocalRandom.current().nextInt(1, 13);
-    int day =
-        ThreadLocalRandom.current().nextInt(1, LocalDate.of(year, month, 1).lengthOfMonth() + 1);
-    return LocalDate.of(year, month, day);
   }
 
   public static String getCurrentDate() {
