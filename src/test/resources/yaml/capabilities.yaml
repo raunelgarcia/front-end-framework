@@ -1,8 +1,9 @@
 capabilities:
   automationName: 'UiAutomator2'
-  udid: ''
+  udid:
   noRest: 'true'
-  apk: ''
+  apk:
+  appium:newCommandTimeout:
 capabilitiesApk:
-  appPackage: ''
-  appActivity: ''
+  appPackage:
+  appActivity:
