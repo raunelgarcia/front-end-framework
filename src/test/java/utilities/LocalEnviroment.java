@@ -12,6 +12,8 @@ public class LocalEnviroment {
 
   static final String resolution = System.getenv("Resolution");
 
+  static final String accessibility = System.getenv("Accessibility");
+
   public static String getPlatform() {
     return platform;
   }
@@ -49,7 +51,6 @@ public class LocalEnviroment {
   }
 
   public static boolean getAccessibility() {
-    String accessibility = System.getenv("Accessibility");
     return Objects.nonNull(accessibility) && accessibility.equalsIgnoreCase("true");
   }
 
