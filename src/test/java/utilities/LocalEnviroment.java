@@ -4,12 +4,32 @@ import java.util.Objects;
 
 public class LocalEnviroment {
 
+  static final String platform = System.getenv("Platform");
+
+  static final String url = System.getenv("Url");
+
+  static final String browser = System.getenv("Browser");
+
+  static final String resolution = System.getenv("Resolution");
+
   public static String getPlatform() {
-    return System.getenv("Platform");
+    return platform;
   }
 
   public static String getUrl() {
-    return System.getenv("Url");
+    return url;
+  }
+
+  public static String getBrowser() {
+    if (Objects.nonNull(browser)) {
+      return browser.toLowerCase();
+    } else {
+      return "chrome";
+    }
+  }
+
+  public static String getResolution() {
+    return resolution;
   }
 
   public static String getUdid() {
@@ -28,17 +48,9 @@ public class LocalEnviroment {
     return System.getenv("AppActivity");
   }
 
-  public static String getBrowser() {
-    return System.getenv("Browser");
-  }
-
   public static boolean getAccessibility() {
     String accessibility = System.getenv("Accessibility");
     return Objects.nonNull(accessibility) && accessibility.equalsIgnoreCase("true");
-  }
-
-  public static String getResolution() {
-    return System.getenv("Resolution");
   }
 
   public static boolean isMobile() {
