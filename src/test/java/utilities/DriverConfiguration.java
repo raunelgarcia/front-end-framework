@@ -18,7 +18,7 @@ import org.yaml.snakeyaml.Yaml;
 
 public class DriverConfiguration {
 
-  public static WebDriver getDriver() {
+  public WebDriver getDriver() {
     if (LocalEnviroment.getPlatform().equalsIgnoreCase("Web")) {
       WebDriver driver = configureWebDriver();
       Dimension windowResolution = ScreenResolution.getResolutionFromEnv();
@@ -40,7 +40,7 @@ public class DriverConfiguration {
     }
   }
 
-  private static WebDriver configureWebDriver() {
+  private WebDriver configureWebDriver() {
     WebDriver driver;
     String browser = LocalEnviroment.getBrowser();
 
