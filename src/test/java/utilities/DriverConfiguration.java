@@ -19,8 +19,8 @@ public class DriverConfiguration {
 
   public WebDriver getDriver() {
     if (LocalEnviroment.getPlatform().equalsIgnoreCase("Web")) {
-      WebDriver driver = configureWebDriver();
       Dimension windowResolution = ScreenResolution.getResolutionFromEnv();
+      WebDriver driver = configureWebDriver();
       if (Objects.nonNull(windowResolution)) {
         driver.manage().window().setSize(windowResolution);
       }
@@ -42,11 +42,7 @@ public class DriverConfiguration {
   private WebDriver configureWebDriver() {
     WebDriver driver;
     String browser = LocalEnviroment.getBrowser();
-    if (Objects.isNull(browser)) {
-      browser = "chrome";
-    } else {
-      browser = browser.toLowerCase();
-    }
+
     switch (browser) {
       case "edge":
         driver = new EdgeDriver();
