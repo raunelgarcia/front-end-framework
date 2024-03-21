@@ -19,7 +19,6 @@ public class Accessibility {
       try {
         htmlCsRunner.execute();
         htmlCsRunner.generateHtmlReport();
-        moveHtmlReportToAccessibilityDirectory("target/java-a11y/");
       } catch (IOException e) {
         throw new RuntimeException(e);
       }
@@ -33,7 +32,6 @@ public class Accessibility {
       try {
         axeRunner.execute();
         axeRunner.generateHtmlReport();
-        moveHtmlReportToAccessibilityDirectory("target/java-a11y/");
       } catch (IOException e) {
         throw new RuntimeException(e);
       }
