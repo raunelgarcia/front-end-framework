@@ -12,6 +12,18 @@ public class LocalEnviroment {
     return System.getenv("Url");
   }
 
+  public static String getBrowser() {
+    if (Objects.nonNull(System.getenv("Browser"))) {
+      return System.getenv("Browser").toLowerCase();
+    } else {
+      return "chrome";
+    }
+  }
+
+  public static String getResolution() {
+    return System.getenv("Resolution");
+  }
+
   public static String getUdid() {
     return System.getenv("Udid");
   }
@@ -28,22 +40,14 @@ public class LocalEnviroment {
     return System.getenv("AppActivity");
   }
 
-  public static String getBrowser() {
-    return System.getenv("Browser");
-  }
-
   public static boolean getAccessibility() {
-    String accessibility = System.getenv("Accessibility");
-    return Objects.nonNull(accessibility) && accessibility.equalsIgnoreCase("true");
-  }
-
-  public static String getResolution() {
-    return System.getenv("Resolution");
+    return Objects.nonNull(System.getenv("Accessibility"))
+            && System.getenv("Accessibility").equalsIgnoreCase("true");
   }
 
   public static boolean isMobile() {
     String platform = System.getenv("Platform");
     return Objects.nonNull(platform) && platform.equalsIgnoreCase("Android")
-        || platform.equalsIgnoreCase("IOS");
+            || platform.equalsIgnoreCase("IOS");
   }
 }
