@@ -23,6 +23,10 @@ public class ScreenResolution {
 
     String[] envResolutionComponents = envResolution.split("x");
 
+    if (envResolutionComponents.length != 2) {
+      throw new IllegalStateException("Invalid resolution format");
+    }
+
     Dimension resolution =
         new Dimension(
             Integer.parseInt(envResolutionComponents[0]),
@@ -37,7 +41,7 @@ public class ScreenResolution {
     return resolution;
   }
 
-  private static boolean isValidResolution(String resolution, String browser)
+  public static boolean isValidResolution(String resolution, String browser)
       throws IllegalStateException {
     Map<String, Map<String, Map<String, List<String>>>> allowableResolutions =
         loadAllowedResolutions();
@@ -54,7 +58,7 @@ public class ScreenResolution {
         .contains(resolution);
   }
 
-  public static Map<String, Map<String, Map<String, List<String>>>> loadAllowedResolutions() {
+  private static Map<String, Map<String, Map<String, List<String>>>> loadAllowedResolutions() {
     Yaml yaml = new Yaml();
     try (InputStream inputStream =
         ScreenResolution.class

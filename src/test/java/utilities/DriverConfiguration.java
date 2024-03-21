@@ -20,8 +20,8 @@ public class DriverConfiguration {
 
   public WebDriver getDriver() {
     if (LocalEnviroment.getPlatform().equalsIgnoreCase("Web")) {
-      WebDriver driver = configureWebDriver();
       Dimension windowResolution = ScreenResolution.getResolutionFromEnv();
+      WebDriver driver = configureWebDriver();
       if (Objects.nonNull(windowResolution)) {
         driver.manage().window().setSize(windowResolution);
       }
