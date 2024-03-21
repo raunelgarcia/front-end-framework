@@ -28,42 +28,42 @@ public class ScreenResolution {
     }
 
     Dimension resolution =
-            new Dimension(
-                    Integer.parseInt(envResolutionComponents[0]),
-                    Integer.parseInt(envResolutionComponents[1]));
+        new Dimension(
+            Integer.parseInt(envResolutionComponents[0]),
+            Integer.parseInt(envResolutionComponents[1]));
 
     if (!isValidResolution(envResolution, browser)) {
       throw new IllegalStateException(
-              "The resolution specified by the \"Resolution\" environment variable is not "
-                      + "valid for the browser specified by the \"Browser\" environment variable");
+          "The resolution specified by the \"Resolution\" environment variable is not "
+              + "valid for the browser specified by the \"Browser\" environment variable");
     }
 
     return resolution;
   }
 
   public static boolean isValidResolution(String resolution, String browser)
-          throws IllegalStateException {
+      throws IllegalStateException {
     Map<String, Map<String, Map<String, List<String>>>> allowableResolutions =
-            loadAllowedResolutions();
+        loadAllowedResolutions();
 
     if (Objects.isNull(allowableResolutions)) {
       throw new IllegalStateException(
-              "The \"allowable-resolutions.yaml\" file could not be located or loaded");
+          "The \"allowable-resolutions.yaml\" file could not be located or loaded");
     }
 
     return allowableResolutions
-            .get("browsers")
-            .get(browser)
-            .get("resolutions")
-            .contains(resolution);
+        .get("browsers")
+        .get(browser)
+        .get("resolutions")
+        .contains(resolution);
   }
 
   private static Map<String, Map<String, Map<String, List<String>>>> loadAllowedResolutions() {
     Yaml yaml = new Yaml();
     try (InputStream inputStream =
-                 ScreenResolution.class
-                         .getClassLoader()
-                         .getResourceAsStream("yaml/allowable-resolutions.yaml")) {
+        ScreenResolution.class
+            .getClassLoader()
+            .getResourceAsStream("yaml/allowable-resolutions.yaml")) {
       return yaml.load(inputStream);
     } catch (Exception e) {
       throw new IllegalStateException("Failed to load or parse the YAML file", e);
