@@ -42,12 +42,12 @@ public class LocalEnviroment {
 
   public static boolean getAccessibility() {
     return Objects.nonNull(System.getenv("Accessibility"))
-            && System.getenv("Accessibility").equalsIgnoreCase("true");
+        && System.getenv("Accessibility").equalsIgnoreCase("true");
   }
 
   public static boolean isMobile() {
     String platform = System.getenv("Platform");
     return Objects.nonNull(platform) && platform.equalsIgnoreCase("Android")
-            || platform.equalsIgnoreCase("IOS");
+        || platform.equalsIgnoreCase("IOS");
   }
 }
