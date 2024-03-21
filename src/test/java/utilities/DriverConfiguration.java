@@ -21,9 +21,7 @@ public class DriverConfiguration {
     if (LocalEnviroment.getPlatform().equalsIgnoreCase("Web")) {
       Dimension windowResolution = ScreenResolution.getResolutionFromEnv();
       WebDriver driver = configureWebDriver();
-      if (Objects.nonNull(windowResolution)) {
-        driver.manage().window().setSize(windowResolution);
-      }
+      driver.manage().window().setSize(windowResolution);
       driver.get(LocalEnviroment.getUrl());
       return driver;
     } else if (LocalEnviroment.getPlatform().equalsIgnoreCase("Android")) {
