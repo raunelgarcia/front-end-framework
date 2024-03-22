@@ -1,7 +1,6 @@
 package utilities;
 
 import io.appium.java_client.android.AndroidDriver;
-
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -68,6 +67,11 @@ public class DriverConfiguration {
         capabilities.setCapability(capabilityName, capabilityValue);
       }
       capabilities.setCapability("platformName", LocalEnviroment.getPlatform());
+      capabilities.setCapability("platformName", LocalEnviroment.getPlatform());
+      capabilities.setCapability("udid", LocalEnviroment.getUdid());
+      capabilities.setCapability("app", LocalEnviroment.getApk());
+      capabilities.setCapability("appActivity", LocalEnviroment.getAppActivity());
+      capabilities.setCapability("appPackage", LocalEnviroment.getAppPackage());
     }
 
     return capabilities;
