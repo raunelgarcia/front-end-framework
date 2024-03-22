@@ -42,7 +42,7 @@ public class LocalEnviroment {
 
   public static boolean getAccessibility() {
     return Objects.nonNull(System.getenv("Accessibility"))
-            && System.getenv("Accessibility").equalsIgnoreCase("true");
+        && System.getenv("Accessibility").equalsIgnoreCase("true");
   }
 
   public static boolean isMobile() {
