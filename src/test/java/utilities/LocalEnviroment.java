@@ -50,4 +50,23 @@ public class LocalEnviroment {
     return Objects.nonNull(platform) && platform.equalsIgnoreCase("Android")
         || platform.equalsIgnoreCase("IOS");
   }
+
+  public static String getLanguage() {
+    String language = System.getenv("Language");
+    if (Objects.isNull(language)) {
+      throw new IllegalArgumentException("Language environment variable not found");
+    }
+    if (!language.matches("[a-zA-Z]{2}-[a-zA-Z]{2}")) {
+      throw new IllegalArgumentException("Invalid language format. It should be xx-XX");
+    }
+    return language;
+  }
+
+  public static String getLanguageCode() {
+    return getLanguage().split("-")[0];
+  }
+
+  public static String getCountryCode() {
+    return getLanguage().split("-")[1];
+  }
 }
