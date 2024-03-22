@@ -22,9 +22,7 @@ public class DriverConfiguration {
     if (LocalEnviroment.getPlatform().equalsIgnoreCase("Web")) {
       Dimension windowResolution = ScreenResolution.getResolutionFromEnv();
       WebDriver driver = configureWebDriver();
-      if (Objects.nonNull(windowResolution)) {
-        driver.manage().window().setSize(windowResolution);
-      }
+      driver.manage().window().setSize(windowResolution);
       driver.get(LocalEnviroment.getUrl());
       return driver;
     } else if (LocalEnviroment.getPlatform().equalsIgnoreCase("Android")) {
@@ -61,7 +59,6 @@ public class DriverConfiguration {
   private static MutableCapabilities fillCapabilities() {
     Map<String, Map<String, String>> enviroment = loadCapabilities();
     Map<String, String> capabilitiesYaml = enviroment.get("capabilities");
-    Map<String, String> capabilitiesApkYaml = enviroment.get("capabilitiesApk");
 
     MutableCapabilities capabilities = new DesiredCapabilities();
     for (Map.Entry<String, String> entry : capabilitiesYaml.entrySet()) {
@@ -70,12 +67,8 @@ public class DriverConfiguration {
       if (Objects.nonNull(capabilityValue) && !capabilityValue.isEmpty()) {
         capabilities.setCapability(capabilityName, capabilityValue);
       }
-    } if (Objects.isNull(capabilities.getCapability("apk"))) {
-      for (Map.Entry<String, String> entry : capabilitiesApkYaml.entrySet()) {
-        capabilities.setCapability(entry.getKey(), entry.getValue());
-      }
+      capabilities.setCapability("platformName", LocalEnviroment.getPlatform());
     }
-    capabilities.setCapability("platformName", LocalEnviroment.getPlatform());
 
     return capabilities;
   }
@@ -85,7 +78,7 @@ public class DriverConfiguration {
     try (InputStream inputStream =
                  DriverConfiguration.class
                          .getClassLoader()
-                         .getResourceAsStream("yaml/capabilities.yaml")) {
+                         .getResourceAsStream("yaml/mobileConfiguration.yaml")) {
       return yaml.load(inputStream);
     } catch (Exception e) {
       throw new IllegalStateException("Failed to load or parse the YAML file", e);
