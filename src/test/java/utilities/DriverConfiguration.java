@@ -6,12 +6,16 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
 import java.util.Objects;
+
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.yaml.snakeyaml.Yaml;
 
@@ -27,7 +31,7 @@ public class DriverConfiguration {
     } else if (LocalEnviroment.getPlatform().equalsIgnoreCase("Android")) {
       try {
         URL url = new URL("http://127.0.0.1:4723");
-        return new AndroidDriver(url, fillCapabilities());
+        return new AndroidDriver(url, fillCapabilitiesAndroid());
 
       } catch (MalformedURLException e) {
         throw new RuntimeException(e);
@@ -43,21 +47,27 @@ public class DriverConfiguration {
 
     switch (browser) {
       case "edge":
+        EdgeOptions edgeOptions = new EdgeOptions();
+        edgeOptions.merge(fillCapabilitiesWeb());
         driver = new EdgeDriver();
         break;
       case "firefox":
-        driver = new FirefoxDriver();
+        FirefoxOptions firefoxOptions = new FirefoxOptions();
+        firefoxOptions.merge(fillCapabilitiesWeb());
+        driver = new FirefoxDriver(firefoxOptions);
         break;
       default:
-        driver = new ChromeDriver();
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.merge(fillCapabilitiesWeb());
+        driver = new ChromeDriver(chromeOptions);
         break;
     }
     return driver;
   }
 
-  private static MutableCapabilities fillCapabilities() {
-    Map<String, Map<String, String>> enviroment = loadCapabilities();
-    Map<String, String> capabilitiesYaml = enviroment.get("capabilities");
+  private static MutableCapabilities fillCapabilitiesAndroid() {
+    Map<String, Map<String, String>> environment = loadCapabilitiesAndroid();
+    Map<String, String> capabilitiesYaml = environment.get("capabilities");
 
     MutableCapabilities capabilities = new DesiredCapabilities();
     for (Map.Entry<String, String> entry : capabilitiesYaml.entrySet()) {
@@ -77,12 +87,39 @@ public class DriverConfiguration {
     return capabilities;
   }
 
-  public static Map<String, Map<String, String>> loadCapabilities() {
+  private static MutableCapabilities fillCapabilitiesWeb() {
+    Map<String, Map<String, String>> environment = loadCapabilitiesWeb();
+    Map<String, String> capabilitiesYaml = environment.get("options");
+
+    MutableCapabilities capabilitiesWeb = new DesiredCapabilities();
+    for (Map.Entry<String, String> entry : capabilitiesYaml.entrySet()) {
+      String capabilityName = entry.getKey();
+      String capabilityValue = entry.getValue();
+      if (Objects.nonNull(capabilityValue) && !capabilityValue.isEmpty()) {
+        capabilitiesWeb.setCapability(capabilityName, capabilityValue);
+      }
+    }
+    return capabilitiesWeb;
+  }
+
+  public static Map<String, Map<String, String>> loadCapabilitiesAndroid() {
     Yaml yaml = new Yaml();
     try (InputStream inputStream =
                  DriverConfiguration.class
                          .getClassLoader()
                          .getResourceAsStream("yaml/mobileConfiguration.yaml")) {
+      return yaml.load(inputStream);
+    } catch (Exception e) {
+      throw new IllegalStateException("Failed to load or parse the YAML file", e);
+    }
+  }
+
+  public static Map<String, Map<String, String>> loadCapabilitiesWeb() {
+    Yaml yaml = new Yaml();
+    try (InputStream inputStream =
+                 DriverConfiguration.class
+                         .getClassLoader()
+                         .getResourceAsStream("yaml/webConfiguration.yaml")) {
       return yaml.load(inputStream);
     } catch (Exception e) {
       throw new IllegalStateException("Failed to load or parse the YAML file", e);
