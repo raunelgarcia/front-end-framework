@@ -8,8 +8,8 @@ public class LocalEnviroment {
     return System.getenv("Platform");
   }
 
-  public static String getUrl() {
-    return System.getenv("Url");
+  public static String getApplication() {
+    return System.getenv("Application");
   }
 
   public static String getBrowser() {
@@ -49,5 +49,9 @@ public class LocalEnviroment {
     String platform = System.getenv("Platform");
     return Objects.nonNull(platform) && platform.equalsIgnoreCase("Android")
         || platform.equalsIgnoreCase("IOS");
+  }
+
+  public static String getApplicationUrl() {
+
   }
 }
