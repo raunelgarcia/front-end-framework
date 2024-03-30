@@ -4,11 +4,14 @@ import io.appium.java_client.android.AndroidDriver;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Map;
 import java.util.Objects;
 
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.MutableCapabilities;
+import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -19,6 +22,7 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.yaml.snakeyaml.Yaml;
 
+
 public class DriverConfiguration {
 
   public WebDriver getDriver() {
@@ -26,7 +30,11 @@ public class DriverConfiguration {
       Dimension windowResolution = ScreenResolution.getResolutionFromEnv();
       WebDriver driver = configureWebDriver();
       driver.manage().window().setSize(windowResolution);
+      Instant startTime = Instant.now();
       driver.get(LocalEnviroment.getUrl());
+      Instant endTime = Instant.now();
+      Duration duration = Duration.between(startTime, endTime);
+      System.out.println("PageLoad time: " + duration.toMillis() + " milliseconds");
       return driver;
     } else if (LocalEnviroment.getPlatform().equalsIgnoreCase("Android")) {
       try {
@@ -47,19 +55,13 @@ public class DriverConfiguration {
 
     switch (browser) {
       case "edge":
-        EdgeOptions edgeOptions = new EdgeOptions();
-        edgeOptions.merge(fillCapabilitiesWeb());
-        driver = new EdgeDriver();
+        driver = new EdgeDriver((EdgeOptions) getOptions(browser));
         break;
       case "firefox":
-        FirefoxOptions firefoxOptions = new FirefoxOptions();
-        firefoxOptions.merge(fillCapabilitiesWeb());
-        driver = new FirefoxDriver(firefoxOptions);
+        driver = new FirefoxDriver((FirefoxOptions) getOptions(browser));
         break;
       default:
-        ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.merge(fillCapabilitiesWeb());
-        driver = new ChromeDriver(chromeOptions);
+        driver = new ChromeDriver((ChromeOptions) getOptions(browser));
         break;
     }
     return driver;
@@ -67,10 +69,10 @@ public class DriverConfiguration {
 
   private static MutableCapabilities fillCapabilitiesAndroid() {
     Map<String, Map<String, String>> environment = loadCapabilitiesAndroid();
-    Map<String, String> capabilitiesYaml = environment.get("capabilities");
+    Map<String, String> androidCapabilitiesYaml = environment.get("capabilities");
 
     MutableCapabilities capabilities = new DesiredCapabilities();
-    for (Map.Entry<String, String> entry : capabilitiesYaml.entrySet()) {
+    for (Map.Entry<String, String> entry : androidCapabilitiesYaml.entrySet()) {
       String capabilityName = entry.getKey();
       String capabilityValue = entry.getValue();
       if (Objects.nonNull(capabilityValue) && !capabilityValue.isEmpty()) {
@@ -86,20 +88,36 @@ public class DriverConfiguration {
 
     return capabilities;
   }
+  public static MutableCapabilities getOptions(String browser) {
+    MutableCapabilities options;
+    Map<String, Map<String, String>> capabilities = loadCapabilitiesWeb();
+    Map<String, String> webCapabilities = capabilities.get("options");
 
-  private static MutableCapabilities fillCapabilitiesWeb() {
-    Map<String, Map<String, String>> environment = loadCapabilitiesWeb();
-    Map<String, String> capabilitiesYaml = environment.get("options");
+    String pageLoadStrategyValue = webCapabilities.get("pageLoadStrategy");
+    String pageLoadTimeOutValue = webCapabilities.get("pageLoadTimeout");
 
-    MutableCapabilities capabilitiesWeb = new DesiredCapabilities();
-    for (Map.Entry<String, String> entry : capabilitiesYaml.entrySet()) {
-      String capabilityName = entry.getKey();
-      String capabilityValue = entry.getValue();
-      if (Objects.nonNull(capabilityValue) && !capabilityValue.isEmpty()) {
-        capabilitiesWeb.setCapability(capabilityName, capabilityValue);
-      }
+    switch (browser) {
+      case "edge":
+        EdgeOptions edgeOptions = new EdgeOptions();
+        edgeOptions.setPageLoadStrategy(PageLoadStrategy.valueOf(pageLoadStrategyValue));
+        edgeOptions.setPageLoadTimeout(Duration.ofSeconds(Integer.parseInt(pageLoadTimeOutValue)));
+        options = edgeOptions;
+        break;
+      case "firefox":
+        FirefoxOptions firefoxOptions = new FirefoxOptions();
+        firefoxOptions.setPageLoadStrategy(PageLoadStrategy.valueOf(pageLoadStrategyValue));
+        firefoxOptions.setPageLoadTimeout(Duration.ofSeconds(Integer.parseInt(pageLoadTimeOutValue)));
+        options = firefoxOptions;
+        break;
+      default:
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.setPageLoadStrategy(PageLoadStrategy.valueOf(pageLoadStrategyValue));
+        chromeOptions.setPageLoadTimeout(Duration.ofSeconds(Integer.parseInt(pageLoadTimeOutValue)));
+
+        options = chromeOptions;
+        break;
     }
-    return capabilitiesWeb;
+    return options;
   }
 
   public static Map<String, Map<String, String>> loadCapabilitiesAndroid() {
