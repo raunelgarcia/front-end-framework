@@ -62,19 +62,28 @@ AppActivity=xxxx;AppPackage=xxxx;Platform=Android;Udid=xxxx
 | Platform       | Android |
 | Udid           | xxxx    |
 
+#### Notes 
+
+- The variables cannot be null and must be provided with valid values for the tests to function correctly.
+
 
 ### Web Variables
 
 Accessibility=xxxx;Platform=Web;Url=xxxx;Browser=xxxx;Resolution=xxxx;
 
-| Campo         | Valor                 |
-|---------------|-----------------------|
-| Accessibility | true                  |
-| Platform      | Web                   |
-| Url           | https://www.xxxx.com/ |
-| Browser       | xxxx                  |
-| Resolution    | xxxx                  |
+| Campo         | Valor                                |
+|---------------|--------------------------------------|
+| Accessibility | true                                 |
+| Platform      | Web                                  |
+| Application   | xxxx                                 |
+| Browser       | xxxx (default: chrome,can be null)   |
+| Resolution    | xxxx (default:1024x768, can be null) |
 
+#### Notes
+
+- The 'Browser' variable can take the value of 'null', in which case the default browser used for testing is 'chrome'.
+- The 'Resolution' variable can also be 'null', in which case the default value screenResolution used for testing is '1024x768'.
+- The remaining variables ('Accessibility', 'Platform' and 'Application') cannot be null and must be provided with valid values for the tests to function correctly.
 
 ### Install Dependencies:
 
@@ -104,11 +113,9 @@ If you want to generate reports with Allure, the framework is ready for it. Befo
 
 Install Allure in the project using the command `npm install --save-dev allure-commandline`
 
-Once it's installed, you can use Allure commands from the project directory. When the test is executed, the results will be saved in target/allure-results
+Once it's installed and when the test is executed, the results will be saved in target/allure-results. A browser window will open automatically, displaying the Allure report.
+Tests that encountered errors will have an error message displayed in the description section along with a screenshot pointing the location of the error.
 
-To generate HTML reports, you'll need to execute the command `npx allure-commandline generate target/allure-results`
-
-And to view the report, run `npx allure-commandline open allure-report`
 
 ### Contributors
 
