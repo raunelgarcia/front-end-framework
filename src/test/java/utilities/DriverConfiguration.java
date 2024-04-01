@@ -52,16 +52,30 @@ public class DriverConfiguration {
   private WebDriver configureWebDriver() {
     WebDriver driver;
     String browser = LocalEnviroment.getBrowser();
+    Map<String, Map<String, String>> capabilities = loadCapabilitiesWeb();
+    Map<String, String> webCapabilities = capabilities.get("general options");
+
+    String pageLoadStrategyValue = webCapabilities.get("pageLoadStrategy");
+    String pageLoadTimeOutValue = webCapabilities.get("pageLoadTimeout");
 
     switch (browser) {
       case "edge":
-        driver = new EdgeDriver((EdgeOptions) getOptions(browser));
+        EdgeOptions edgeOptions = new EdgeOptions();
+        edgeOptions.setPageLoadStrategy(PageLoadStrategy.valueOf(pageLoadStrategyValue));
+        edgeOptions.setPageLoadTimeout(Duration.ofSeconds(Integer.parseInt(pageLoadTimeOutValue)));
+        driver = new EdgeDriver(edgeOptions);
         break;
       case "firefox":
-        driver = new FirefoxDriver((FirefoxOptions) getOptions(browser));
+        FirefoxOptions firefoxOptions = new FirefoxOptions();
+        firefoxOptions.setPageLoadStrategy(PageLoadStrategy.valueOf(pageLoadStrategyValue));
+        firefoxOptions.setPageLoadTimeout(Duration.ofSeconds(Integer.parseInt(pageLoadTimeOutValue)));
+        driver = new FirefoxDriver(firefoxOptions);
         break;
       default:
-        driver = new ChromeDriver((ChromeOptions) getOptions(browser));
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.setPageLoadStrategy(PageLoadStrategy.valueOf(pageLoadStrategyValue));
+        chromeOptions.setPageLoadTimeout(Duration.ofSeconds(Integer.parseInt(pageLoadTimeOutValue)));
+        driver = new ChromeDriver(chromeOptions);
         break;
     }
     return driver;
@@ -87,37 +101,6 @@ public class DriverConfiguration {
     }
 
     return capabilities;
-  }
-  public static MutableCapabilities getOptions(String browser) {
-    MutableCapabilities options;
-    Map<String, Map<String, String>> capabilities = loadCapabilitiesWeb();
-    Map<String, String> webCapabilities = capabilities.get("options");
-
-    String pageLoadStrategyValue = webCapabilities.get("pageLoadStrategy");
-    String pageLoadTimeOutValue = webCapabilities.get("pageLoadTimeout");
-
-    switch (browser) {
-      case "edge":
-        EdgeOptions edgeOptions = new EdgeOptions();
-        edgeOptions.setPageLoadStrategy(PageLoadStrategy.valueOf(pageLoadStrategyValue));
-        edgeOptions.setPageLoadTimeout(Duration.ofSeconds(Integer.parseInt(pageLoadTimeOutValue)));
-        options = edgeOptions;
-        break;
-      case "firefox":
-        FirefoxOptions firefoxOptions = new FirefoxOptions();
-        firefoxOptions.setPageLoadStrategy(PageLoadStrategy.valueOf(pageLoadStrategyValue));
-        firefoxOptions.setPageLoadTimeout(Duration.ofSeconds(Integer.parseInt(pageLoadTimeOutValue)));
-        options = firefoxOptions;
-        break;
-      default:
-        ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.setPageLoadStrategy(PageLoadStrategy.valueOf(pageLoadStrategyValue));
-        chromeOptions.setPageLoadTimeout(Duration.ofSeconds(Integer.parseInt(pageLoadTimeOutValue)));
-
-        options = chromeOptions;
-        break;
-    }
-    return options;
   }
 
   public static Map<String, Map<String, String>> loadCapabilitiesAndroid() {
