@@ -202,6 +202,10 @@ public class BasePage {
     }
   }
 
+  public static boolean compareTexts(WebElement element, String textCode) {
+    return element.getText().equalsIgnoreCase(textCode);
+  }
+
   public static void switchToNativeContext(AndroidDriver driver) {
     if (LocalEnviroment.isMobile()) driver.context("NATIVE_APP");
   }

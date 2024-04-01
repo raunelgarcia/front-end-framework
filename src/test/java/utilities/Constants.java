@@ -9,7 +9,11 @@ public class Constants {
     public static final long HIGH_TIMEOUT = 8;
     public static final long SUPER_HIGH_TIMEOUT = 12;
     public static final long PRO_TIMEOUT = 29;
+  }
+
+  public static class Regex {
     public static final String GMAIL_DOMAIN = "@gmail.com";
     public static final String HOTMAIL_DOMAIN = "@hotmail.com";
+    public static final String LANGUAGE_REGEX = "[a-zA-Z]{2}-[a-zA-Z]{2}";
   }
 }

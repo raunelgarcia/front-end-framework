@@ -1,5 +1,7 @@
 package utilities;
 
+import static utilities.Constants.Regex.LANGUAGE_REGEX;
+
 import java.util.Objects;
 
 public class LocalEnviroment {
@@ -53,10 +55,10 @@ public class LocalEnviroment {
 
   public static String getLanguage() {
     String language = System.getenv("Language");
-    if (Objects.isNull(language)) {
+    if (Objects.isNull(language) || language.isEmpty()) {
       throw new IllegalArgumentException("Language environment variable not found");
     }
-    if (!language.matches("[a-zA-Z]{2}-[a-zA-Z]{2}")) {
+    if (!language.matches(LANGUAGE_REGEX)) {
       throw new IllegalArgumentException("Invalid language format. It should be xx-XX");
     }
     return language;
