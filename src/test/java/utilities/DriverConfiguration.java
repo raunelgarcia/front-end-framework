@@ -78,6 +78,7 @@ public class DriverConfiguration {
         driver = new ChromeDriver(chromeOptions);
         break;
     }
+
     return driver;
   }
 
