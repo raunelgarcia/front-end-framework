@@ -51,6 +51,29 @@ Navigate to the directory where you cloned the repository and select it.
 
 You can set environment variables in IntelliJ IDEA by going to Run > Edit Configurations > Add JUNIT Configuration > Environment.
 
+#### Environment Variables:
+- Platform:
+  - Possible values: Android, IOS, Web.
+  - Description: Specifies the platform for testing, whether it is Android, iOS or Web.
+- Accessibility:
+  - Possible values: true, false.
+  - Description: indicates whether accessibility features are enabled during testing.
+- Browser:
+  - Possible values: Chrome, Firefox, Edge.
+  - Description: Defines the browser to be used for web testing. 
+- Application:
+  - Description: Should be the name of the web or mobile app being tested.
+- Resolution: 
+  - Description: Specifies the screen resolution for web testing. If null or blank, a default resolution of 1024x768 is set.
+- AppActivity: 
+  - Description: represents the app activity of the app being tested for mobile testing.
+- AppPackage: 
+  - Description: Respresent the app package of the app being tested for mobile testing.
+- Udid: 
+  - Description: Represent the unique device identifier (UDID) of the device being tested for mobile testing.
+
+Ensure to set these variables according to your testing requirements before executing the tests.
+
 ### Android Variables
 
 AppActivity=xxxx;AppPackage=xxxx;Platform=Android;Udid=xxxx
