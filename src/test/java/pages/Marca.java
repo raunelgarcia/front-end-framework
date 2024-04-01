@@ -1,5 +1,7 @@
 package pages;
 
+import static utilities.Constants.LOW_TIMEOUT;
+
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import java.time.Duration;
@@ -7,7 +9,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import utilities.Constants.Time;
 
 public class Marca extends BasePage {
 
@@ -28,7 +29,7 @@ public class Marca extends BasePage {
   public Marca(WebDriver driver) {
     this.driver = driver;
     PageFactory.initElements(
-        new AppiumFieldDecorator(driver, Duration.ofSeconds(Time.LOW_TIMEOUT)), this);
+        new AppiumFieldDecorator(driver, Duration.ofSeconds(LOW_TIMEOUT)), this);
   }
 
   public void acceptCookies() {
