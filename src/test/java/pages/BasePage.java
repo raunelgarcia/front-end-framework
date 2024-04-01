@@ -3,6 +3,8 @@ package pages;
 import static java.lang.Math.floor;
 import static java.lang.Math.max;
 import static java.lang.System.currentTimeMillis;
+import static utilities.Constants.HIGH_TIMEOUT;
+import static utilities.Constants.LOW_TIMEOUT;
 
 import exceptions.FrameworkTimeoutException;
 import io.appium.java_client.AppiumDriver;
@@ -24,8 +26,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
-import utilities.Constants.Time;
 import utilities.LocalEnviroment;
+import utilities.Text;
 import utilities.W3cActions;
 import utilities.enums.Direction;
 
@@ -72,13 +74,13 @@ public class BasePage {
     waitFor(
         ExpectedConditions.visibilityOf(element),
         driver,
-        Time.HIGH_TIMEOUT,
+        HIGH_TIMEOUT,
         ChronoUnit.SECONDS,
         true);
   }
 
   public static void waitForAnimationToFinish() {
-    waitSeconds(Time.LOW_TIMEOUT);
+    waitSeconds(LOW_TIMEOUT);
   }
 
   public static <K> void waitFor(
@@ -200,6 +202,10 @@ public class BasePage {
         js.executeScript("window.scrollBy(0,200)");
       }
     }
+  }
+
+  public static boolean compareTexts(WebElement element, String textCode) {
+    return element.getText().equalsIgnoreCase(Text.get(textCode));
   }
 
   public static void switchToNativeContext(AndroidDriver driver) {

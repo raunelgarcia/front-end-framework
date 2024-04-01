@@ -1,5 +1,7 @@
 package utilities;
 
+import static utilities.Constants.LANGUAGE_REGEX;
+
 import java.util.Objects;
 
 public class LocalEnviroment {
@@ -49,5 +51,24 @@ public class LocalEnviroment {
     String platform = System.getenv("Platform");
     return Objects.nonNull(platform) && platform.equalsIgnoreCase("Android")
         || platform.equalsIgnoreCase("IOS");
+  }
+
+  public static String getLanguage() {
+    String language = System.getenv("Language");
+    if (Objects.isNull(language) || language.isEmpty()) {
+      throw new IllegalArgumentException("Language environment variable not found");
+    }
+    if (!language.matches(LANGUAGE_REGEX)) {
+      throw new IllegalArgumentException("Invalid language format. It should be xx-XX");
+    }
+    return language;
+  }
+
+  public static String getLanguageCode() {
+    return getLanguage().split("-")[0];
+  }
+
+  public static String getCountryCode() {
+    return getLanguage().split("-")[1];
   }
 }
