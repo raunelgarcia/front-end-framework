@@ -26,6 +26,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import utilities.Constants.Time;
 import utilities.LocalEnviroment;
+import utilities.Text;
 import utilities.W3cActions;
 import utilities.enums.Direction;
 
@@ -203,7 +204,7 @@ public class BasePage {
   }
 
   public static boolean compareTexts(WebElement element, String textCode) {
-    return element.getText().equalsIgnoreCase(textCode);
+    return element.getText().equalsIgnoreCase(Text.get(textCode));
   }
 
   public static void switchToNativeContext(AndroidDriver driver) {
