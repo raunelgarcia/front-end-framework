@@ -1,6 +1,6 @@
 package utilities;
 
-import static utilities.Constants.Regex.GMAIL_DOMAIN;
+import static utilities.Constants.GMAIL_DOMAIN;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

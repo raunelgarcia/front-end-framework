@@ -1,6 +1,6 @@
 package utilities;
 
-import static utilities.Constants.Regex.LANGUAGE_REGEX;
+import static utilities.Constants.LANGUAGE_REGEX;
 
 import java.util.Objects;
 
