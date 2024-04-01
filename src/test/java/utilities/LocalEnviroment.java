@@ -1,5 +1,6 @@
 package utilities;
 
+import java.util.Map;
 import java.util.Objects;
 
 public class LocalEnviroment {
@@ -9,7 +10,7 @@ public class LocalEnviroment {
   }
 
   public static String getApplication() {
-    return System.getenv("Application");
+    return Objects.nonNull(System.getenv("Application")) ? System.getenv("Application").toLowerCase() : "";
   }
 
   public static String getBrowser() {
@@ -51,7 +52,24 @@ public class LocalEnviroment {
         || platform.equalsIgnoreCase("IOS");
   }
 
-  public static String getApplicationUrl() {
+  public static String getApplicationUrl() throws IllegalArgumentException {
+    Map<String, Map<String, String>> environment = DriverConfiguration.loadCapabilitiesWeb();
+    Map<String, String> urls = environment.get("url");
+    String url = null;
 
+    if (!urls.containsKey(getApplication()) || getApplication().isBlank()) {
+      throw new IllegalArgumentException("Application not found");
+    }
+
+    for (Map.Entry<String, String> entry : urls.entrySet()) {
+      String application = entry.getKey().toLowerCase();
+      String applicationUrl = entry.getValue();
+      if (Objects.equals(application, getApplication())) {
+        url = applicationUrl;
+        break;
+      }
+    }
+    return url;
   }
 }
+
