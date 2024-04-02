@@ -1,6 +1,7 @@
 package utilities;
 
-import java.util.Map;
+import static utilities.Constants.LANGUAGE_REGEX;
+
 import java.util.Objects;
 
 public class LocalEnviroment {
@@ -9,8 +10,8 @@ public class LocalEnviroment {
     return System.getenv("Platform");
   }
 
-  public static String getApplication() {
-    return Objects.nonNull(System.getenv("Application")) ? System.getenv("Application").toLowerCase() : "";
+  public static String getUrl() {
+    return System.getenv("Url");
   }
 
   public static String getBrowser() {
@@ -52,24 +53,22 @@ public class LocalEnviroment {
         || platform.equalsIgnoreCase("IOS");
   }
 
-  public static String getApplicationUrl() throws IllegalArgumentException {
-    Map<String, Map<String, String>> environment = DriverConfiguration.loadCapabilitiesWeb();
-    Map<String, String> urls = environment.get("url");
-    String url = null;
-
-    if (!urls.containsKey(getApplication()) || getApplication().isBlank()) {
-      throw new IllegalArgumentException("Application not found");
+  public static String getLanguage() {
+    String language = System.getenv("Language");
+    if (Objects.isNull(language) || language.isEmpty()) {
+      throw new IllegalArgumentException("Language environment variable not found");
     }
-
-    for (Map.Entry<String, String> entry : urls.entrySet()) {
-      String application = entry.getKey().toLowerCase();
-      String applicationUrl = entry.getValue();
-      if (Objects.equals(application, getApplication())) {
-        url = applicationUrl;
-        break;
-      }
+    if (!language.matches(LANGUAGE_REGEX)) {
+      throw new IllegalArgumentException("Invalid language format. It should be xx-XX");
     }
-    return url;
+    return language;
+  }
+
+  public static String getLanguageCode() {
+    return getLanguage().split("-")[0];
+  }
+
+  public static String getCountryCode() {
+    return getLanguage().split("-")[1];
   }
 }
-
