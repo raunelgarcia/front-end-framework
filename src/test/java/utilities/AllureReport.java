@@ -7,9 +7,17 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
 public class AllureReport {
+  private static final String BASE_DESC = "<h4>Entorno: " + LocalEnviroment.getBrowser() + "</h4>";
+  private static String descriptionHtml = BASE_DESC;
 
   public static void fillReportInfo() {
-    Allure.addDescription("Browser: " + LocalEnviroment.getBrowser());
+    Allure.descriptionHtml(descriptionHtml);
+    descriptionHtml = BASE_DESC;
+  }
+
+  public static void addComparation(String comparationMessage) {
+    descriptionHtml =
+        descriptionHtml.concat("<h4>Titulo: " + Generator.generateRandomString(5) + "</h4>");
   }
 
   public static void attachScreenshot(WebDriver driver) {

@@ -36,6 +36,7 @@ public class Marca extends BasePage {
     if (isVisible(acceptCookies)) {
       acceptCookies.click();
     }
+    compareTexts(randomNotice,"greeting");
   }
 
   public void goToNotice() {
