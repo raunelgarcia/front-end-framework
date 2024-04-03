@@ -59,14 +59,14 @@ public class DriverConfiguration {
   }
 
   private static MutableCapabilities fillCapabilitiesiOS() throws IllegalArgumentException {
-    Map<String, Map<String, String>> environment = loadCapabilitiesMobile("yaml/iOSConfiguration.yaml");
+    Map<String, Map<String, String>> environment = loadCapabilitiesMobile(Constants.IOS_CONFIG);
     Map<String, String> capabilities = environment.get("capabilitiesiOS");
 
       return fillCapabilities(capabilities);
   }
 
   private static MutableCapabilities fillCapabilitiesAndroid() throws IllegalArgumentException {
-    Map<String, Map<String, String>> environment = loadCapabilitiesMobile("yaml/androidConfiguration.yaml");
+    Map<String, Map<String, String>> environment = loadCapabilitiesMobile(Constants.ANDROID_CONFIG);
     Map<String, String> capabilities = environment.get("capabilitiesAndroid");
 
     if (Objects.isNull(capabilities)) {
