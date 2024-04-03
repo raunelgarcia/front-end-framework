@@ -2,7 +2,9 @@ package utilities;
 
 import static utilities.Constants.LANGUAGE_REGEX;
 
+import java.util.Map;
 import java.util.Objects;
+
 
 public class LocalEnviroment {
 
@@ -10,8 +12,8 @@ public class LocalEnviroment {
     return System.getenv("Platform");
   }
 
-  public static String getUrl() {
-    return System.getenv("Url");
+  public static String getApplication() {
+    return Objects.nonNull(System.getenv("Application")) ? System.getenv("Application").toLowerCase() : "";
   }
 
   public static String getBrowser() {
@@ -51,6 +53,26 @@ public class LocalEnviroment {
     String platform = System.getenv("Platform");
     return Objects.nonNull(platform) && platform.equalsIgnoreCase("Android")
         || platform.equalsIgnoreCase("IOS");
+  }
+
+  public static String getApplicationUrl() throws IllegalArgumentException {
+    Map<String, Map<String, String>> environment = DriverConfiguration.loadCapabilitiesWeb();
+    Map<String, String> urls = environment.get("url");
+    String url = null;
+
+    if (!urls.containsKey(getApplication()) || getApplication().isBlank()) {
+      throw new IllegalArgumentException("Application not found");
+    }
+
+    for (Map.Entry<String, String> entry : urls.entrySet()) {
+      String application = entry.getKey().toLowerCase();
+      String applicationUrl = entry.getValue();
+      if (Objects.equals(application, getApplication())) {
+        url = applicationUrl;
+        break;
+      }
+    }
+    return url;
   }
 
   public static String getLanguage() {
