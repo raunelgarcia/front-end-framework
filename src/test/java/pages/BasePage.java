@@ -208,13 +208,16 @@ public class BasePage {
   }
 
   public static <T> void checkThat(String validation, T actual, Matcher<T> expected) {
-    StringBuilder message = new StringBuilder("Verifying that ").append(validation.toLowerCase());
-    message.append(" (expectation: ").append(expected.toString()).append(")");
+    StringBuilder message = new StringBuilder();
+    message.append("Verifying that ").append(validation.toLowerCase()).append("<br>");
+    message.append("(expectation: ").append(expected.toString()).append(")<br>");
+    message.append("(actual: ").append(actual.toString()).append(")<br>");
+
     try {
       MatcherAssert.assertThat(message.toString(), actual, expected);
-      AllureReport.addComparation("Check correcto", message.toString());
+      AllureReport.addComparation(message.toString(), true);
     } catch (AssertionError error) {
-      AllureReport.addComparation("Check incorrecto: ", message.toString());
+      AllureReport.addComparation(message.toString(), false);
       throw error;
     }
   }

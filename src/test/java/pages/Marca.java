@@ -1,6 +1,5 @@
 package pages;
 
-import static org.hamcrest.Matchers.containsString;
 import static utilities.Constants.LOW_TIMEOUT;
 
 import io.appium.java_client.pagefactory.AndroidFindBy;
@@ -40,9 +39,7 @@ public class Marca extends BasePage {
   }
 
   public void goToNotice() {
-    String str = "Hello, world!";
-    checkThat("the string", str, containsString("fail"));
-    // randomNotice.click();
+    randomNotice.click();
   }
 
   public void acceptAge() {

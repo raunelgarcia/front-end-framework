@@ -15,9 +15,19 @@ public class AllureReport {
     descriptionHtml = BASE_DESC;
   }
 
-  public static void addComparation(String success, String comparationMessage) {
-    descriptionHtml =
-        descriptionHtml.concat("<h4>" + success + ": " + comparationMessage + "</h4>");
+  public static void addComparation(String comparationMessage, boolean success) {
+    if (success)
+      descriptionHtml =
+          descriptionHtml.concat(
+              "<h4 style=\"background-color: #97cc64; padding: 8px; color: #fff;\">"
+                  + comparationMessage
+                  + "</h4>");
+    else
+      descriptionHtml =
+          descriptionHtml.concat(
+              "<h4 style=\"background-color: #fd5a3e; padding: 8px; color: #fff;\">"
+                  + comparationMessage
+                  + "</h4>");
   }
 
   public static void attachScreenshot(WebDriver driver) {
