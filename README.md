@@ -68,7 +68,7 @@ You can set environment variables in IntelliJ IDEA by going to Run > Edit Config
 - AppActivity: 
   - Description: represents the app activity of the app being tested for mobile testing.
 - AppPackage: 
-  - Description: Respresent the app package of the app being tested for mobile testing.
+  - Description: Represents the app package of the app being tested for mobile testing.
 - Udid: 
   - Description: Represent the unique device identifier (UDID) of the device being tested for mobile testing.
 
@@ -76,18 +76,20 @@ Ensure to set these variables according to your testing requirements before exec
 
 ### Android Variables
 
-AppActivity=xxxx;AppPackage=xxxx;Platform=Android;Udid=xxxx
+AppActivity=xxxx;AppPackage=xxxx;Apk=xxxx;Platform=Android;Udid=xxxx
 
-| Campo          | Valor   |
-|----------------|---------|
-| AppActivity    | xxxx    |
-| AppPackage     | xxxx    |
-| Platform       | Android |
-| Udid           | xxxx    |
+| Campo       | Valor   |
+|-------------|---------|
+| AppActivity | xxxx    |
+| AppPackage  | xxxx    |
+| Apk         | xxxx    | 
+| Platform    | Android |
+| Udid        | xxxx    |
 
 #### Notes 
 
-- The variables cannot be null and must be provided with valid values for the tests to function correctly.
+- The tests work if either the Apk field is set, or both AppPackage and AppActivity fields are provided.
+- The rest of the variables cannot be null (Udid and Platform) and must be provided with valid values for the tests to function correctly.
 
 
 ### Web Variables
@@ -145,6 +147,8 @@ Tests that encountered errors will have an error message displayed in the descri
 Raunel Garcia Quintana
 
 Raul Galera Sancho
+
+Alejandra Alvarado Tirado
 
 ### Acknowledgments
 
