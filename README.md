@@ -135,7 +135,7 @@ Tests that encountered errors will have an error message displayed in the descri
 
 ### Accessibility Reports
 
-When the "Accessibility" variable is set to "true", accessibility reports will be generated and saved in a folder named "java-a11y".These reports provide insights into the accessibility status of your application, helping to ensure compliance with accessibility standards.
+When the "Accessibility" variable is set to "true", accessibility reports will be generated and saved in a folder named "target/java-a11y".These reports provide insights into the accessibility status of your application, helping to ensure compliance with accessibility standards.
 
 #### Report Formats:
 
@@ -144,7 +144,7 @@ The accessibility reports are available in two formats:
 1. HTML Reports: These reports are human-readable and can ve opened in any browser. They provide detailed information about accessibility issues found during testing.
 2. JSON Reports: These reports contain machine-readable data about accessibility issues detected in the application.
 
-To access these report navigate to the "java-a11y" folder. You can open the HTML reports in your preferred web browser to review the findings.
+To access these report navigate to the "target/java-a11y" folder. You can open the HTML reports in your preferred web browser to review the findings.
 ### Contributors
 
 Raunel Garcia Quintana
