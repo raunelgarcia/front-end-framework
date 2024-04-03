@@ -3,9 +3,12 @@ package utilities;
 import static org.openqa.selenium.remote.CapabilityType.PLATFORM_NAME;
 
 import io.appium.java_client.android.AndroidDriver;
+
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Paths;
+import java.util.Map;
 import java.util.Objects;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.MutableCapabilities;
@@ -14,15 +17,17 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.yaml.snakeyaml.Yaml;
 
 public class DriverConfiguration {
 
   public WebDriver getDriver() {
     if (LocalEnviroment.getPlatform().equalsIgnoreCase("Web")) {
       Dimension windowResolution = ScreenResolution.getResolutionFromEnv();
+      String url = LocalEnviroment.getApplicationUrl();
       WebDriver driver = configureWebDriver();
       driver.manage().window().setSize(windowResolution);
-      driver.get(LocalEnviroment.getUrl());
+      driver.get(url);
       return driver;
     } else if (LocalEnviroment.getPlatform().equalsIgnoreCase("Android")) {
       try {
@@ -71,5 +76,16 @@ public class DriverConfiguration {
     }
 
     return capabilities;
+  }
+  public static Map<String, Map<String, String>> loadCapabilitiesWeb() {
+    Yaml yaml = new Yaml();
+    try (InputStream inputStream =
+                 DriverConfiguration.class
+                         .getClassLoader()
+                         .getResourceAsStream("yaml/webConfiguration.yaml")) {
+      return yaml.load(inputStream);
+    } catch (Exception e) {
+      throw new IllegalStateException("Failed to load or parse the YAML file", e);
+    }
   }
 }
