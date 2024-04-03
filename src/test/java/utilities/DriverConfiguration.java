@@ -6,6 +6,7 @@ import io.appium.java_client.android.AndroidDriver;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Objects;
 import org.openqa.selenium.Dimension;
@@ -30,7 +31,7 @@ public class DriverConfiguration {
     } else if (LocalEnviroment.getPlatform().equalsIgnoreCase("Android")) {
       try {
         URL url = new URL("http://127.0.0.1:4723");
-        return new AndroidDriver(url, fillCapabilitiesAndroid());
+        return new AndroidDriver(url, fillCapabilitiesMobile());
 
       } catch (MalformedURLException e) {
         throw new RuntimeException(e);
@@ -58,28 +59,46 @@ public class DriverConfiguration {
     return driver;
   }
 
-  private static MutableCapabilities fillCapabilitiesAndroid() {
-    Map<String, Map<String, String>> environment = loadCapabilitiesAndroid();
-    Map<String, String> androidCapabilitiesYaml = environment.get("capabilities");
+  private static MutableCapabilities fillCapabilitiesMobile() throws IllegalArgumentException {
+    String platform = LocalEnviroment.getPlatform();
+    Map<String, Map<String, Map<String, String>>> environment = loadCapabilitiesMobile();
+    Map<String, Map<String, String>> mobileCapabilities = environment.get("capabilities");
+    Map<String, String> capabilities = null;
 
-    MutableCapabilities capabilities = new DesiredCapabilities();
-    for (Map.Entry<String, String> entry : androidCapabilitiesYaml.entrySet()) {
+    if (Objects.equals(platform, "Android")) {
+      capabilities = mobileCapabilities.get("android");
+    } else if (Objects.equals(platform, "iOS")) {
+      capabilities = mobileCapabilities.get("iOS");
+    }
+
+    if (Objects.isNull(capabilities)) {
+      throw new IllegalArgumentException("Capabilities are not set");
+    }
+
+    MutableCapabilities filledCapabilities = new DesiredCapabilities();
+    for (Map.Entry<String, String> entry : capabilities.entrySet()) {
       String capabilityName = entry.getKey();
       String capabilityValue = entry.getValue();
       if (Objects.nonNull(capabilityValue) && !capabilityValue.isEmpty()) {
-        capabilities.setCapability(capabilityName, capabilityValue);
+        filledCapabilities.setCapability(capabilityName, capabilityValue);
+      } else {
+        throw new IllegalArgumentException("Capabilities cannot be blank");
       }
-      capabilities.setCapability("platformName", LocalEnviroment.getPlatform());
-      capabilities.setCapability("udid", LocalEnviroment.getUdid());
-      capabilities.setCapability("apk", LocalEnviroment.getApk());
-      capabilities.setCapability("appActivity", LocalEnviroment.getAppActivity());
-      capabilities.setCapability("appPackage", LocalEnviroment.getAppPackage());
+    }
+    filledCapabilities.setCapability("platformName", LocalEnviroment.getPlatform());
+    filledCapabilities.setCapability("udid", LocalEnviroment.getUdid());
+    String apk = LocalEnviroment.getApk();
+    if (Objects.nonNull(apk) && !apk.isEmpty()) {
+      filledCapabilities.setCapability("app", Paths.get("src/test/resources/" + apk).toAbsolutePath().toString());
+    } else {
+      filledCapabilities.setCapability("appPackage", LocalEnviroment.getAppPackage());
+      filledCapabilities.setCapability("appActivity", LocalEnviroment.getAppActivity());
     }
 
-    return capabilities;
+    return filledCapabilities;
   }
 
-  public static Map<String, Map<String, String>> loadCapabilitiesAndroid() {
+  public static Map<String, Map<String, Map<String, String>>> loadCapabilitiesMobile() {
     Yaml yaml = new Yaml();
     try (InputStream inputStream =
                  DriverConfiguration.class

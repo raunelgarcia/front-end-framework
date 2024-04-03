@@ -102,6 +102,7 @@ Accessibility=xxxx;Platform=Web;Url=xxxx;Browser=xxxx;Resolution=xxxx;
 | Resolution    | xxxx   |
 
 
+
 ### Install Dependencies:
 
 Open the pom.xml file in IntelliJ IDEA. Click on the 'Maven' tab, then click on the 'Reimport' button to install all the required dependencies.
@@ -112,9 +113,12 @@ If you're running web tests, make sure you have the appropriate WebDriver instal
 
 ### Configure Mobile Testing Environment (For Mobile Tests):
 
-If you're running mobile tests, ensure you have the necessary emulators or devices set up and configured for testing. You may need to configure the mobile platform-specific settings accordingly.
 
-Run Tests:
+Before running mobile tests, ensure that you have:
+
+- Mobile Platform Setup: Make sure you have the appropriate emulators, simulators, or physical devices configured and available for testing.
+
+- Environment Configuration: Configure the mobile platform-specific settings in the mobileConfiguration.yaml file located in the project directory (resources/yaml/mobileConfiguration.yaml). Ensure that the required capabilities are correctly specified for Android and iOS platforms.
 
 You can now run the automated tests either for web or mobile platforms based on the environment variable you've set.
 
