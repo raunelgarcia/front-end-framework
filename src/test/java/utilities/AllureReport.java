@@ -15,9 +15,9 @@ public class AllureReport {
     descriptionHtml = BASE_DESC;
   }
 
-  public static void addComparation(String comparationMessage) {
+  public static void addComparation(String success, String comparationMessage) {
     descriptionHtml =
-        descriptionHtml.concat("<h4>Titulo: " + Generator.generateRandomString(5) + "</h4>");
+        descriptionHtml.concat("<h4>" + success + ": " + comparationMessage + "</h4>");
   }
 
   public static void attachScreenshot(WebDriver driver) {

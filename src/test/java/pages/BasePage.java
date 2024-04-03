@@ -15,6 +15,8 @@ import java.time.temporal.TemporalUnit;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import javax.annotation.Nullable;
+import org.hamcrest.Matcher;
+import org.hamcrest.MatcherAssert;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
@@ -73,11 +75,7 @@ public class BasePage {
 
   public static void waitForVisibility(WebElement element, WebDriver driver) {
     waitFor(
-        ExpectedConditions.visibilityOf(element),
-        driver,
-        HIGH_TIMEOUT,
-        ChronoUnit.SECONDS,
-        true);
+        ExpectedConditions.visibilityOf(element), driver, HIGH_TIMEOUT, ChronoUnit.SECONDS, true);
   }
 
   public static void waitForAnimationToFinish() {
@@ -206,8 +204,19 @@ public class BasePage {
   }
 
   public static boolean compareTexts(WebElement element, String textCode) {
-    AllureReport.addComparation("Prueba");
     return element.getText().equalsIgnoreCase(Text.get(textCode));
+  }
+
+  public static <T> void checkThat(String validation, T actual, Matcher<T> expected) {
+    StringBuilder message = new StringBuilder("Verifying that ").append(validation.toLowerCase());
+    message.append(" (expectation: ").append(expected.toString()).append(")");
+    try {
+      MatcherAssert.assertThat(message.toString(), actual, expected);
+      AllureReport.addComparation("Check correcto", message.toString());
+    } catch (AssertionError error) {
+      AllureReport.addComparation("Check incorrecto: ", message.toString());
+      throw error;
+    }
   }
 
   public static void switchToNativeContext(AndroidDriver driver) {

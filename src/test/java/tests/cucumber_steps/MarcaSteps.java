@@ -1,5 +1,6 @@
 package tests.cucumber_steps;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertTrue;
 import static pages.BasePage.waitSeconds;
 import static utilities.Constants.LOW_TIMEOUT;
