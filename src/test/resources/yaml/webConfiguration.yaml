@@ -1,6 +1,3 @@
-options:
-  pageLoadStrategy: 'NONE'
-  pageLoadTimeout: '1'
 url:
   mrc: 'https://www.marca.com/'
   amz: 'https://www.amazon.es/'
