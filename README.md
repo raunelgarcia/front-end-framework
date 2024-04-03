@@ -54,23 +54,25 @@ You can set environment variables in IntelliJ IDEA by going to Run > Edit Config
 #### Environment Variables:
 - Platform:
   - Possible values: Android, IOS, Web.
-  - Description: Specifies the platform for testing, whether it is Android, iOS or Web.
+  - Description: Specifies the platform for testing, whether it is Android, iOS or Web. Must be provided with valid values for the tests to function correctly.
 - Accessibility:
-  - Possible values: true, false.
-  - Description: indicates whether accessibility features are enabled during testing.
+  - Possible values: true, false, 
+  - Description: indicates whether accessibility features are enabled during testing.The variable can take the value of 'null', in which case the Accessibility report will not be shown.
 - Browser:
   - Possible values: Chrome, Firefox, Edge.
-  - Description: Defines the browser to be used for web testing. 
+  - Description: Defines the browser to be used for web testing. The 'Browser' variable can take the value of 'null', in which case the default browser used for testing is 'chrome'.
 - Application:
-  - Description: Should be the name of the web or mobile app being tested.
+  - Description: Should be the name of the web or mobile app being tested. Application cannot be null and must be provided with valid values for the tests to function correctly.
 - Resolution: 
   - Description: Specifies the screen resolution for web testing. If null or blank, a default resolution of 1024x768 is set.
+- Apk:
+  - Description: Specifies the path or name of the APK file to be installed and tested on an Android device. The tests work if either the Apk field is set, or both AppPackage and AppActivity fields are provided.
 - AppActivity: 
-  - Description: represents the app activity of the app being tested for mobile testing.
+  - Description: represents the app activity of the app being tested for mobile testing. The tests work if both AppPackage and AppActivity fields are provided.
 - AppPackage: 
-  - Description: Represents the app package of the app being tested for mobile testing.
+  - Description: Represents the app package of the app being tested for mobile testing. The tests work if both AppPackage and AppActivity fields are provided.
 - Udid: 
-  - Description: Represent the unique device identifier (UDID) of the device being tested for mobile testing.
+  - Description: Represent the unique device identifier (UDID) of the device being tested for mobile testing. Must be provided with valid values for the tests to function correctly.
 
 Ensure to set these variables according to your testing requirements before executing the tests.
 
@@ -86,29 +88,19 @@ AppActivity=xxxx;AppPackage=xxxx;Apk=xxxx;Platform=Android;Udid=xxxx
 | Platform    | Android |
 | Udid        | xxxx    |
 
-#### Notes 
-
-- The tests work if either the Apk field is set, or both AppPackage and AppActivity fields are provided.
-- The rest of the variables cannot be null (Udid and Platform) and must be provided with valid values for the tests to function correctly.
-
 
 ### Web Variables
 
 Accessibility=xxxx;Platform=Web;Url=xxxx;Browser=xxxx;Resolution=xxxx;
 
-| Campo         | Valor                                |
-|---------------|--------------------------------------|
-| Accessibility | true                                 |
-| Platform      | Web                                  |
-| Application   | xxxx                                 |
-| Browser       | xxxx (default: chrome,can be null)   |
-| Resolution    | xxxx (default:1024x768, can be null) |
+| Campo         | Valor  |
+|---------------|--------|
+| Accessibility | true   |
+| Platform      | Web    |
+| Application   | xxxx   |
+| Browser       | xxxx   |
+| Resolution    | xxxx   |
 
-#### Notes
-
-- The 'Browser' variable can take the value of 'null', in which case the default browser used for testing is 'chrome'.
-- The 'Resolution' variable can also be 'null', in which case the default value screenResolution used for testing is '1024x768'.
-- The remaining variables ('Accessibility', 'Platform' and 'Application') cannot be null and must be provided with valid values for the tests to function correctly.
 
 ### Install Dependencies:
 
