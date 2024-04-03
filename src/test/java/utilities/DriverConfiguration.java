@@ -11,14 +11,10 @@ import java.util.Objects;
 
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.MutableCapabilities;
-import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.yaml.snakeyaml.Yaml;
 
@@ -52,33 +48,18 @@ public class DriverConfiguration {
   private WebDriver configureWebDriver() {
     WebDriver driver;
     String browser = LocalEnviroment.getBrowser();
-    Map<String, Map<String, String>> capabilities = loadCapabilitiesWeb();
-    Map<String, String> webCapabilities = capabilities.get("general options");
-
-    String pageLoadStrategyValue = webCapabilities.get("pageLoadStrategy");
-    String pageLoadTimeOutValue = webCapabilities.get("pageLoadTimeout");
 
     switch (browser) {
       case "edge":
-        EdgeOptions edgeOptions = new EdgeOptions();
-        edgeOptions.setPageLoadStrategy(PageLoadStrategy.valueOf(pageLoadStrategyValue));
-        edgeOptions.setPageLoadTimeout(Duration.ofSeconds(Integer.parseInt(pageLoadTimeOutValue)));
-        driver = new EdgeDriver(edgeOptions);
+        driver = new EdgeDriver();
         break;
       case "firefox":
-        FirefoxOptions firefoxOptions = new FirefoxOptions();
-        firefoxOptions.setPageLoadStrategy(PageLoadStrategy.valueOf(pageLoadStrategyValue));
-        firefoxOptions.setPageLoadTimeout(Duration.ofSeconds(Integer.parseInt(pageLoadTimeOutValue)));
-        driver = new FirefoxDriver(firefoxOptions);
+        driver = new FirefoxDriver();
         break;
       default:
-        ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.setPageLoadStrategy(PageLoadStrategy.valueOf(pageLoadStrategyValue));
-        chromeOptions.setPageLoadTimeout(Duration.ofSeconds(Integer.parseInt(pageLoadTimeOutValue)));
-        driver = new ChromeDriver(chromeOptions);
+        driver = new ChromeDriver();
         break;
     }
-
     return driver;
   }
 
@@ -94,9 +75,8 @@ public class DriverConfiguration {
         capabilities.setCapability(capabilityName, capabilityValue);
       }
       capabilities.setCapability("platformName", LocalEnviroment.getPlatform());
-      capabilities.setCapability("platformName", LocalEnviroment.getPlatform());
       capabilities.setCapability("udid", LocalEnviroment.getUdid());
-      capabilities.setCapability("app", LocalEnviroment.getApk());
+      capabilities.setCapability("apk", LocalEnviroment.getApk());
       capabilities.setCapability("appActivity", LocalEnviroment.getAppActivity());
       capabilities.setCapability("appPackage", LocalEnviroment.getAppPackage());
     }
@@ -110,18 +90,6 @@ public class DriverConfiguration {
                  DriverConfiguration.class
                          .getClassLoader()
                          .getResourceAsStream("yaml/mobileConfiguration.yaml")) {
-      return yaml.load(inputStream);
-    } catch (Exception e) {
-      throw new IllegalStateException("Failed to load or parse the YAML file", e);
-    }
-  }
-
-  public static Map<String, Map<String, String>> loadCapabilitiesWeb() {
-    Yaml yaml = new Yaml();
-    try (InputStream inputStream =
-                 DriverConfiguration.class
-                         .getClassLoader()
-                         .getResourceAsStream("yaml/webConfiguration.yaml")) {
       return yaml.load(inputStream);
     } catch (Exception e) {
       throw new IllegalStateException("Failed to load or parse the YAML file", e);

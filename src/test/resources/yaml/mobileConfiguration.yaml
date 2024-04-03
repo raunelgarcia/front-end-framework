@@ -1,4 +1,4 @@
 capabilities:
   automationName: 'UiAutomator2'
   noRest: 'true'
-  newCommandTimeout: "10"
+  newCommandTimeout: "1"

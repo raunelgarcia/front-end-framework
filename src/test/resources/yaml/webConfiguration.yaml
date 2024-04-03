@@ -1,6 +1,0 @@
-general options:
-  pageLoadStrategy: 'NONE'
-  pageLoadTimeout: '1'
-edge options:
-firefox options:
-chrome options:
