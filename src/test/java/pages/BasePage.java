@@ -15,6 +15,8 @@ import java.time.temporal.TemporalUnit;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import javax.annotation.Nullable;
+import org.hamcrest.Matcher;
+import org.hamcrest.MatcherAssert;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
@@ -26,6 +28,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
+import utilities.AllureReport;
 import utilities.LocalEnviroment;
 import utilities.Text;
 import utilities.W3cActions;
@@ -72,11 +75,7 @@ public class BasePage {
 
   public static void waitForVisibility(WebElement element, WebDriver driver) {
     waitFor(
-        ExpectedConditions.visibilityOf(element),
-        driver,
-        HIGH_TIMEOUT,
-        ChronoUnit.SECONDS,
-        true);
+        ExpectedConditions.visibilityOf(element), driver, HIGH_TIMEOUT, ChronoUnit.SECONDS, true);
   }
 
   public static void waitForAnimationToFinish() {
@@ -206,6 +205,21 @@ public class BasePage {
 
   public static boolean compareTexts(WebElement element, String textCode) {
     return element.getText().equalsIgnoreCase(Text.get(textCode));
+  }
+
+  public static <T> void checkThat(String validation, T actual, Matcher<T> expected) {
+    StringBuilder message = new StringBuilder();
+    message.append("Verifying that ").append(validation.toLowerCase()).append("<br>");
+    message.append("(expectation: ").append(expected.toString()).append(")<br>");
+    message.append("(actual: ").append(actual.toString()).append(")<br>");
+
+    try {
+      MatcherAssert.assertThat(message.toString(), actual, expected);
+      AllureReport.addComparation(message.toString(), true);
+    } catch (AssertionError error) {
+      AllureReport.addComparation(message.toString(), false);
+      throw error;
+    }
   }
 
   public static void switchToNativeContext(AndroidDriver driver) {
