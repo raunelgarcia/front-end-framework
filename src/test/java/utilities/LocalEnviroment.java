@@ -5,7 +5,6 @@ import static utilities.Constants.LANGUAGE_REGEX;
 import java.util.Map;
 import java.util.Objects;
 
-
 public class LocalEnviroment {
 
   public static String getPlatform() {
@@ -13,7 +12,9 @@ public class LocalEnviroment {
   }
 
   public static String getApplication() {
-    return Objects.nonNull(System.getenv("Application")) ? System.getenv("Application").toLowerCase() : "";
+    return Objects.nonNull(System.getenv("Application"))
+        ? System.getenv("Application").toLowerCase()
+        : "";
   }
 
   public static String getBrowser() {
