@@ -1,9 +1,6 @@
 package utilities;
 
-import static org.openqa.selenium.remote.CapabilityType.PLATFORM_NAME;
-
 import io.appium.java_client.android.AndroidDriver;
-
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -60,29 +57,63 @@ public class DriverConfiguration {
     return driver;
   }
 
-  private MutableCapabilities fillCapabilities() {
-    MutableCapabilities capabilities = new DesiredCapabilities();
-    capabilities.setCapability(PLATFORM_NAME, LocalEnviroment.getPlatform());
-    capabilities.setCapability("automationName", "UiAutomator2");
-    capabilities.setCapability("udid", LocalEnviroment.getUdid());
-    capabilities.setCapability("noReset", true);
-    String apk = LocalEnviroment.getApk();
-    if (Objects.nonNull(apk) && !apk.isEmpty()) {
-      capabilities.setCapability(
-          "app", Paths.get("src/test/resources/" + apk).toAbsolutePath().toString());
-    } else {
-      capabilities.setCapability("appPackage", LocalEnviroment.getAppPackage());
-      capabilities.setCapability("appActivity", LocalEnviroment.getAppActivity());
+  private static MutableCapabilities fillCapabilities() throws IllegalArgumentException {
+    String platform = LocalEnviroment.getPlatform();
+    Map<String, Map<String, String>> environment;
+    Map<String, String> capabilities = null;
+    MutableCapabilities filledCapabilities = new DesiredCapabilities();
+
+    if (platform.equalsIgnoreCase("Android")) {
+      environment = loadCapabilitiesMobile(Constants.ANDROID_CONFIG);
+      capabilities = environment.get("capabilitiesAndroid");
+      filledCapabilities.setCapability("platformName", LocalEnviroment.getPlatform());
+      filledCapabilities.setCapability("udid", LocalEnviroment.getUdid());
+      String apk = LocalEnviroment.getApk();
+      if (Objects.nonNull(apk) && !apk.isEmpty()) {
+        filledCapabilities.setCapability(
+            "app", Paths.get(Constants.RESOURCE_PATH + apk).toAbsolutePath().toString());
+      } else {
+        filledCapabilities.setCapability("appPackage", LocalEnviroment.getAppPackage());
+        filledCapabilities.setCapability("appActivity", LocalEnviroment.getAppActivity());
+      }
+    } else if (platform.equalsIgnoreCase("iOS")) {
+      environment = loadCapabilitiesMobile(Constants.IOS_CONFIG);
+      capabilities = environment.get("capabilitiesiOS");
     }
 
-    return capabilities;
+    if (Objects.isNull(capabilities)) {
+      throw new IllegalArgumentException("Capabilities are not set");
+    }
+
+    for (Map.Entry<String, String> entry : capabilities.entrySet()) {
+      String capabilityName = entry.getKey();
+      String capabilityValue = entry.getValue();
+      if (Objects.nonNull(capabilityValue) && !capabilityValue.isEmpty()) {
+        filledCapabilities.setCapability(capabilityName, capabilityValue);
+      } else {
+        throw new IllegalArgumentException("Capabilities cannot be blank");
+      }
+    }
+
+    return filledCapabilities;
   }
+
+  public static Map<String, Map<String, String>> loadCapabilitiesMobile(String path) {
+    Yaml yaml = new Yaml();
+    try (InputStream inputStream =
+        DriverConfiguration.class.getClassLoader().getResourceAsStream(path)) {
+      return yaml.load(inputStream);
+    } catch (Exception e) {
+      throw new IllegalStateException("Failed to load or parse the YAML file", e);
+    }
+  }
+
   public static Map<String, Map<String, String>> loadCapabilitiesWeb() {
     Yaml yaml = new Yaml();
     try (InputStream inputStream =
-                 DriverConfiguration.class
-                         .getClassLoader()
-                         .getResourceAsStream("yaml/webConfiguration.yaml")) {
+        DriverConfiguration.class
+            .getClassLoader()
+            .getResourceAsStream("yaml/webConfiguration.yaml")) {
       return yaml.load(inputStream);
     } catch (Exception e) {
       throw new IllegalStateException("Failed to load or parse the YAML file", e);
