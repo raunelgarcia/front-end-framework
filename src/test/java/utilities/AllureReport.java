@@ -16,7 +16,7 @@ public class AllureReport {
 
   private static String setTestDescription() {
     StringBuilder description = new StringBuilder();
-    description.append("<h3 style=\"text-decoretion: underline;\">Test Enviroment</h3>");
+    description.append("<h3 style=\"text-decoration: underline;\">Test Enviroment</h3>");
     if (LocalEnviroment.isMobile()) {
 
     } else {
