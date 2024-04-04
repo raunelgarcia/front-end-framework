@@ -40,6 +40,10 @@ public class AllureReport {
             .append("<p><b>App Package:</b> ")
             .append(LocalEnviroment.getAppPackage())
             .append("</p>");
+        description
+            .append("<p><b>App Activity:</b> ")
+            .append(LocalEnviroment.getAppActivity())
+            .append("</p>");
       }
     } else {
       description.append("<p><b>Browser:</b> ").append(LocalEnviroment.getBrowser()).append("</p>");
