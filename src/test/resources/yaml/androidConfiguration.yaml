@@ -1,4 +1,4 @@
 capabilitiesAndroid:
   automationName: 'UiAutomator2'
-  noReset: 'false'
+  noReset: 'true'
   newCommandTimeout: "90"

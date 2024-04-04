@@ -1,8 +1,6 @@
 package utilities;
 
-
 import io.appium.java_client.android.AndroidDriver;
-
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -31,7 +29,7 @@ public class DriverConfiguration {
     } else if (LocalEnviroment.getPlatform().equalsIgnoreCase("Android")) {
       try {
         URL url = new URL("http://127.0.0.1:4723");
-        return new AndroidDriver(url, fillCapabilitiesAndroid());
+        return new AndroidDriver(url, fillCapabilities());
 
       } catch (MalformedURLException e) {
         throw new RuntimeException(e);
@@ -59,25 +57,26 @@ public class DriverConfiguration {
     return driver;
   }
 
-  private static MutableCapabilities fillCapabilitiesAndroid() throws IllegalArgumentException{
+  private static MutableCapabilities fillCapabilities() throws IllegalArgumentException {
     String platform = LocalEnviroment.getPlatform();
     Map<String, Map<String, String>> environment;
     Map<String, String> capabilities = null;
     MutableCapabilities filledCapabilities = new DesiredCapabilities();
 
-    if (Objects.equals(platform, "Android")) {
+    if (platform.equalsIgnoreCase("Android")) {
       environment = loadCapabilitiesMobile(Constants.ANDROID_CONFIG);
       capabilities = environment.get("capabilitiesAndroid");
       filledCapabilities.setCapability("platformName", LocalEnviroment.getPlatform());
       filledCapabilities.setCapability("udid", LocalEnviroment.getUdid());
       String apk = LocalEnviroment.getApk();
       if (Objects.nonNull(apk) && !apk.isEmpty()) {
-        filledCapabilities.setCapability("app", Paths.get(Constants.RESOURCE_PATH + apk).toAbsolutePath().toString());
+        filledCapabilities.setCapability(
+            "app", Paths.get(Constants.RESOURCE_PATH + apk).toAbsolutePath().toString());
       } else {
         filledCapabilities.setCapability("appPackage", LocalEnviroment.getAppPackage());
         filledCapabilities.setCapability("appActivity", LocalEnviroment.getAppActivity());
       }
-    } else if (Objects.equals(platform, "iOS")) {
+    } else if (platform.equalsIgnoreCase("iOS")) {
       environment = loadCapabilitiesMobile(Constants.IOS_CONFIG);
       capabilities = environment.get("capabilitiesiOS");
     }
@@ -102,9 +101,7 @@ public class DriverConfiguration {
   public static Map<String, Map<String, String>> loadCapabilitiesMobile(String path) {
     Yaml yaml = new Yaml();
     try (InputStream inputStream =
-                 DriverConfiguration.class
-                         .getClassLoader()
-                         .getResourceAsStream(path)) {
+        DriverConfiguration.class.getClassLoader().getResourceAsStream(path)) {
       return yaml.load(inputStream);
     } catch (Exception e) {
       throw new IllegalStateException("Failed to load or parse the YAML file", e);
@@ -114,9 +111,9 @@ public class DriverConfiguration {
   public static Map<String, Map<String, String>> loadCapabilitiesWeb() {
     Yaml yaml = new Yaml();
     try (InputStream inputStream =
-                 DriverConfiguration.class
-                         .getClassLoader()
-                         .getResourceAsStream("yaml/webConfiguration.yaml")) {
+        DriverConfiguration.class
+            .getClassLoader()
+            .getResourceAsStream("yaml/webConfiguration.yaml")) {
       return yaml.load(inputStream);
     } catch (Exception e) {
       throw new IllegalStateException("Failed to load or parse the YAML file", e);
