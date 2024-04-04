@@ -7,12 +7,38 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
 public class AllureReport {
-  private static final String BASE_DESC = "<h4>Entorno: " + LocalEnviroment.getBrowser() + "</h4>";
-  private static String descriptionHtml = BASE_DESC;
+  private static String descriptionHtml = setTestDescription();
 
   public static void fillReportInfo() {
     Allure.descriptionHtml(descriptionHtml);
-    descriptionHtml = BASE_DESC;
+    descriptionHtml = setTestDescription();
+  }
+
+  private static String setTestDescription() {
+    StringBuilder description = new StringBuilder();
+    description.append("<h3 style=\"text-decoretion: underline;\">Test Enviroment</h3>");
+    if (LocalEnviroment.isMobile()) {
+
+    } else {
+      description
+          .append("<p><b>Platform:</b> ")
+          .append(LocalEnviroment.getPlatform())
+          .append("</p>");
+      description.append("<p><b>Browser:</b> ").append(LocalEnviroment.getBrowser()).append("</p>");
+      description
+          .append("<p><b>Url:</b> ")
+          .append(LocalEnviroment.getApplicationUrl())
+          .append("</p>");
+      description
+          .append("<p><b>Resolution:</b> ")
+          .append(ScreenResolution.getResolutionFromEnv())
+          .append("</p>");
+      description
+          .append("<p><b>Accessibility:</b> ")
+          .append(LocalEnviroment.getAccessibility())
+          .append("</p>");
+    }
+    return description.toString();
   }
 
   public static void addComparation(String comparationMessage, boolean success) {
