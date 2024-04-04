@@ -1,29 +1,51 @@
 package utilities;
 
+import io.appium.java_client.android.AndroidDriver;
 import io.qameta.allure.Allure;
 import io.qameta.allure.model.Status;
+import java.util.Objects;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
 public class AllureReport {
-  private static String descriptionHtml = setTestDescription();
+  private static String descriptionHtml;
 
-  public static void fillReportInfo() {
+  public static void fillReportInfo(WebDriver driver) {
+    descriptionHtml = setTestDescription(driver);
     Allure.descriptionHtml(descriptionHtml);
-    descriptionHtml = setTestDescription();
+    descriptionHtml = "";
   }
 
-  private static String setTestDescription() {
+  private static String setTestDescription(WebDriver driver) {
     StringBuilder description = new StringBuilder();
     description.append("<h3 style=\"text-decoration: underline;\">Test Enviroment</h3>");
+    description.append("<p><b>Platform:</b> ").append(LocalEnviroment.getPlatform()).append("</p>");
     if (LocalEnviroment.isMobile()) {
-
-    } else {
+      AndroidDriver androidDriver = (AndroidDriver) driver;
+      String deviceName = androidDriver.getCapabilities().getCapability("deviceName").toString();
+      String platformVersion =
+          androidDriver.getCapabilities().getCapability("platformVersion").toString();
+      description.append("<p><b>Device Name:</b> ").append(deviceName).append("</p>");
+      description.append("<p><b>Udid:</b> ").append(LocalEnviroment.getUdid()).append("</p>");
       description
-          .append("<p><b>Platform:</b> ")
-          .append(LocalEnviroment.getPlatform())
+          .append("<p><b>Platform Version:</b> Android ")
+          .append(platformVersion)
           .append("</p>");
+      String apk = LocalEnviroment.getApk();
+      if (Objects.nonNull(apk) && !apk.isEmpty()) {
+        description.append("<p><b>Apk:</b> ").append(apk).append("</p>");
+      } else {
+        description
+            .append("<p><b>App Package:</b> ")
+            .append(LocalEnviroment.getAppPackage())
+            .append("</p>");
+        description
+            .append("<p><b>App Activity:</b> ")
+            .append(LocalEnviroment.getAppActivity())
+            .append("</p>");
+      }
+    } else {
       description.append("<p><b>Browser:</b> ").append(LocalEnviroment.getBrowser()).append("</p>");
       description
           .append("<p><b>Url:</b> ")
