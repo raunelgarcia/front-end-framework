@@ -6,6 +6,7 @@ import io.appium.java_client.android.AndroidDriver;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Objects;
 import org.openqa.selenium.Dimension;
@@ -58,37 +59,33 @@ public class DriverConfiguration {
     return driver;
   }
 
-  private static MutableCapabilities fillCapabilitiesiOS() throws IllegalArgumentException {
-    Map<String, Map<String, String>> environment = loadCapabilitiesMobile(Constants.IOS_CONFIG);
-    Map<String, String> capabilities = environment.get("capabilitiesiOS");
+  private static MutableCapabilities fillCapabilitiesAndroid() throws IllegalArgumentException{
+    String platform = LocalEnviroment.getPlatform();
+    Map<String, Map<String, String>> environment;
+    Map<String, String> capabilities = null;
+    MutableCapabilities filledCapabilities = new DesiredCapabilities();
 
-      return fillCapabilities(capabilities);
-  }
-
-  private static MutableCapabilities fillCapabilitiesAndroid() throws IllegalArgumentException {
-    Map<String, Map<String, String>> environment = loadCapabilitiesMobile(Constants.ANDROID_CONFIG);
-    Map<String, String> capabilities = environment.get("capabilitiesAndroid");
+    if (Objects.equals(platform, "Android")) {
+      environment = loadCapabilitiesMobile(Constants.ANDROID_CONFIG);
+      capabilities = environment.get("capabilitiesAndroid");
+      filledCapabilities.setCapability("platformName", LocalEnviroment.getPlatform());
+      filledCapabilities.setCapability("udid", LocalEnviroment.getUdid());
+      String apk = LocalEnviroment.getApk();
+      if (Objects.nonNull(apk) && !apk.isEmpty()) {
+        filledCapabilities.setCapability("app", Paths.get(Constants.RESOURCE_PATH + apk).toAbsolutePath().toString());
+      } else {
+        filledCapabilities.setCapability("appPackage", LocalEnviroment.getAppPackage());
+        filledCapabilities.setCapability("appActivity", LocalEnviroment.getAppActivity());
+      }
+    } else if (Objects.equals(platform, "iOS")) {
+      environment = loadCapabilitiesMobile(Constants.IOS_CONFIG);
+      capabilities = environment.get("capabilitiesiOS");
+    }
 
     if (Objects.isNull(capabilities)) {
       throw new IllegalArgumentException("Capabilities are not set");
     }
 
-    MutableCapabilities filledCapabilities = fillCapabilities(capabilities);
-    filledCapabilities.setCapability("platformName", LocalEnviroment.getPlatform());
-    filledCapabilities.setCapability("udid", LocalEnviroment.getUdid());
-    String apk = LocalEnviroment.getApk();
-    if (Objects.nonNull(apk) && !apk.isEmpty()) {
-      filledCapabilities.setCapability("app", Constants.RESOURCE_PATH);
-    } else {
-      filledCapabilities.setCapability("appPackage", LocalEnviroment.getAppPackage());
-      filledCapabilities.setCapability("appActivity", LocalEnviroment.getAppActivity());
-    }
-
-    return filledCapabilities;
-  }
-
-  private static MutableCapabilities fillCapabilities(Map<String, String> capabilities) {
-    MutableCapabilities filledCapabilities = new DesiredCapabilities();
     for (Map.Entry<String, String> entry : capabilities.entrySet()) {
       String capabilityName = entry.getKey();
       String capabilityValue = entry.getValue();
@@ -98,6 +95,7 @@ public class DriverConfiguration {
         throw new IllegalArgumentException("Capabilities cannot be blank");
       }
     }
+
     return filledCapabilities;
   }
 
