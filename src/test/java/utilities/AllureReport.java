@@ -1,5 +1,6 @@
 package utilities;
 
+import io.appium.java_client.android.AndroidDriver;
 import io.qameta.allure.Allure;
 import io.qameta.allure.model.Status;
 import org.openqa.selenium.OutputType;
@@ -7,18 +8,24 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
 public class AllureReport {
-  private static String descriptionHtml = setTestDescription();
+  private static String descriptionHtml = "";
 
-  public static void fillReportInfo() {
+  public static void fillReportInfo(WebDriver driver) {
+    descriptionHtml = setTestDescription(driver);
     Allure.descriptionHtml(descriptionHtml);
-    descriptionHtml = setTestDescription();
+    descriptionHtml = setTestDescription(driver);
   }
 
-  private static String setTestDescription() {
+  private static String setTestDescription(WebDriver driver) {
     StringBuilder description = new StringBuilder();
     description.append("<h3 style=\"text-decoration: underline;\">Test Enviroment</h3>");
     if (LocalEnviroment.isMobile()) {
-
+      AndroidDriver androidDriver = (AndroidDriver) driver;
+      String deviceName = androidDriver.getCapabilities().getCapability("deviceName").toString();
+      String platformVersion =
+          androidDriver.getCapabilities().getCapability("platformVersion").toString();
+      description.append("<p><b>Device Name:</b> ").append(deviceName).append("</p>");
+      description.append("<p><b>Platform Version:</b> ").append(platformVersion).append("</p>");
     } else {
       description
           .append("<p><b>Platform:</b> ")
