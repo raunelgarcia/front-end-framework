@@ -12,7 +12,9 @@ public class LocalEnviroment {
   }
 
   public static String getApplication() {
-    return Objects.nonNull(System.getenv("Application")) ? System.getenv("Application").toLowerCase() : "";
+    return Objects.nonNull(System.getenv("Application"))
+        ? System.getenv("Application").toLowerCase()
+        : "";
   }
 
   public static String getBrowser() {
@@ -48,7 +50,7 @@ public class LocalEnviroment {
         && System.getenv("Accessibility").equalsIgnoreCase("true");
   }
 
-  public static boolean   isMobile() {
+  public static boolean isMobile() {
     String platform = System.getenv("Platform");
     return Objects.nonNull(platform) && platform.equalsIgnoreCase("Android")
         || platform.equalsIgnoreCase("IOS");
