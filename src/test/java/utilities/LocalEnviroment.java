@@ -18,7 +18,7 @@ public class LocalEnviroment {
   }
 
   public static String getBrowser() {
-    if (Objects.nonNull(System.getenv("Browser"))) {
+    if (Objects.nonNull(System.getenv("Browser")) && !System.getenv("Browser").isEmpty()) {
       return System.getenv("Browser").toLowerCase();
     } else {
       return "chrome";
@@ -88,9 +88,6 @@ public class LocalEnviroment {
 
   public static String getLanguage() {
     String language = System.getenv("Language");
-    if (Objects.isNull(language) || language.isEmpty()) {
-      throw new IllegalArgumentException("Language environment variable not found");
-    }
     if (!language.matches(LANGUAGE_REGEX)) {
       throw new IllegalArgumentException("Invalid language format. It should be xx-XX");
     }
