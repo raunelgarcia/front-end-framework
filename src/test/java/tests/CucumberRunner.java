@@ -1,6 +1,7 @@
 package tests;
 
 import static utilities.Accessibility.moveHtmlReportToAccessibilityDirectory;
+import static utilities.LocalEnviroment.isWeb;
 
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
@@ -49,8 +50,7 @@ public class CucumberRunner {
   }
 
   private static void runAccesibilityCopy() {
-    if (LocalEnviroment.getAccessibility()
-        && LocalEnviroment.getPlatform().equalsIgnoreCase("Web")) {
+    if (LocalEnviroment.getAccessibility() && isWeb()) {
       moveHtmlReportToAccessibilityDirectory("target/java-a11y/");
     }
   }
