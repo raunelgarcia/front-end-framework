@@ -28,8 +28,10 @@ public class DriverConfiguration {
       Dimension windowResolution = ScreenResolution.getResolutionFromEnv();
       String url = LocalEnviroment.getApplicationUrl();
       WebDriver driver = configureWebDriver();
+      JSExecutor jsExecutor = new JSExecutor(driver);
       driver.manage().window().setSize(windowResolution);
       driver.get(url);
+      jsExecutor.executeScript("alert('Hello, world!')");
       return driver;
     } else if (isAndroid()) {
       try {
