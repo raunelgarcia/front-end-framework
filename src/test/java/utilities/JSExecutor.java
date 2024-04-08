@@ -17,12 +17,12 @@ public class JSExecutor {
       JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
       Object result = jsExecutor.executeScript(script, args);
 
-      Allure.step("Script JavaScript ejecutado correctamente", Status.PASSED);
-      System.out.println("Resultado del script JavaScript: " + result);
+      Allure.step("JavaScrip executed correctly", Status.PASSED);
+      System.out.println("JavaScrip results: " + result);
 
     } catch (Exception e) {
 
-      Allure.step("Error al ejecutar el script JavaScript: " + e.getMessage(), Status.FAILED);
+      Allure.step("JavaScript Error: " + e.getMessage(), Status.FAILED);
       e.printStackTrace();
     }
   }
