@@ -1,29 +1,67 @@
 package utilities;
 
+import static utilities.LocalEnviroment.isAndroid;
+
+import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.ios.IOSDriver;
 import io.qameta.allure.Allure;
 import io.qameta.allure.model.Status;
+import java.util.Objects;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
 public class AllureReport {
-  private static String descriptionHtml = setTestDescription();
+  private static String descriptionHtml;
 
-  public static void fillReportInfo() {
+  public static void fillReportInfo(WebDriver driver) {
+    descriptionHtml = setTestDescription(driver);
     Allure.descriptionHtml(descriptionHtml);
-    descriptionHtml = setTestDescription();
+    descriptionHtml = "";
   }
 
-  private static String setTestDescription() {
+  private static String setTestDescription(WebDriver driver) {
     StringBuilder description = new StringBuilder();
+    AppiumDriver driverMobile;
     description.append("<h3 style=\"text-decoration: underline;\">Test Enviroment</h3>");
+    description.append("<p><b>Platform:</b> ").append(LocalEnviroment.getPlatform()).append("</p>");
     if (LocalEnviroment.isMobile()) {
+      if (isAndroid()) {
+        driverMobile = (AndroidDriver) driver;
+        String appActivity = LocalEnviroment.getAppActivity();
+        String deviceName = driverMobile.getCapabilities().getCapability("deviceName").toString();
+        description.append("<p><b>Device Name:</b> ").append(deviceName).append("</p>");
+        String platformVersion =
+            driverMobile.getCapabilities().getCapability("platformVersion").toString();
 
-    } else {
+        description
+            .append("<p><b>Platform Version:</b>".concat(isAndroid() ? "Android " : "IOS"))
+            .append(platformVersion)
+            .append("</p>");
+        if (Objects.nonNull(appActivity) || !appActivity.isEmpty()) {
+          description.append("<p><b>App Activity:</b> ").append(appActivity).append("</p>");
+        }
+      } else {
+        driverMobile = (IOSDriver) driver;
+      }
       description
-          .append("<p><b>Platform:</b> ")
-          .append(LocalEnviroment.getPlatform())
+          .append("<p><b>Udid:</b> ")
+          .append(
+              driverMobile
+                  .getCapabilities()
+                  .getCapability(isAndroid() ? "deviceUDID" : "udid")
+                  .toString())
           .append("</p>");
+      description
+          .append("<p><b>App Identifier:</b> ")
+          .append(LocalEnviroment.getAppIdentifier())
+          .append("</p>");
+      String apk = LocalEnviroment.getApk();
+      if (Objects.nonNull(apk) && !apk.isEmpty()) {
+        description.append("<p><b>Apk:</b> ").append(apk).append("</p>");
+      }
+    } else {
       description.append("<p><b>Browser:</b> ").append(LocalEnviroment.getBrowser()).append("</p>");
       description
           .append("<p><b>Url:</b> ")

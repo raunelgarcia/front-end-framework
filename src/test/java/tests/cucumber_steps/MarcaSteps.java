@@ -57,7 +57,7 @@ public class MarcaSteps {
   @After
   public void closeDriver() {
     Accessibility.checkAccessibility(driver);
-    AllureReport.fillReportInfo();
+    AllureReport.fillReportInfo(driver);
     waitSeconds(LOW_TIMEOUT);
     driver.quit();
   }

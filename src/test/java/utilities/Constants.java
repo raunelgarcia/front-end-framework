@@ -12,4 +12,5 @@ public class Constants {
   public static final String RESOURCE_PATH = "src/test/resources/";
   public static final String ANDROID_CONFIG = "yaml/androidConfiguration.yaml";
   public static final String IOS_CONFIG = "yaml/iOSConfiguration.yaml";
+  public static final String DRIVER_URL = "http://127.0.0.1:4723";
 }
