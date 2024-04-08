@@ -31,7 +31,6 @@ public class DriverConfiguration {
       JSExecutor jsExecutor = new JSExecutor(driver);
       driver.manage().window().setSize(windowResolution);
       driver.get(url);
-      jsExecutor.executeScript("alert('Hello, world!')");
       return driver;
     } else if (isAndroid()) {
       try {
