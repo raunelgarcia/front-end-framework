@@ -13,7 +13,6 @@ import java.util.ArrayList;
 
 import utilities.DriverConfiguration;
 
-
 public class JSExecutor {
 
   public static void executeScript(WebDriver driver, String script, Object... args) {
@@ -22,7 +21,7 @@ public class JSExecutor {
       Object result = jsExecutor.executeScript(script, args);
 
       Allure.step("JavaScrip executed correctly", Status.PASSED);
-      System.out.println("JavaScrip results: " + result);
+      Logger.infoMessage("JavaScrip results: " + result);
 
     } catch (Exception e) {
 
@@ -36,7 +35,7 @@ public class JSExecutor {
     ArrayList<String> commandArray = new ArrayList<>();
     commandArray.add(command);
 
-    if(LocalEnviroment.isWindows()) {
+    if (LocalEnviroment.isWindows()) {
       commandArray.add(0, "cmd");
       commandArray.add(1, "/c");
     } else {

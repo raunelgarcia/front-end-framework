@@ -18,7 +18,6 @@ import javax.annotation.Nullable;
 import org.hamcrest.Matcher;
 import org.hamcrest.MatcherAssert;
 import org.openqa.selenium.Dimension;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -234,7 +233,7 @@ public class BasePage {
       if (webViewContext != null) {
         driver.context(webViewContext);
       } else {
-        System.out.println("Not WebView context found.");
+        Logger.errorMessage("Not WebView context found.");
       }
     }
   }
