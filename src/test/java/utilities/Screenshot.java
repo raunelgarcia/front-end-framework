@@ -26,10 +26,9 @@ public class Screenshot {
           screenshotFile.toPath(),
           new File(screenshotPath).toPath(),
           StandardCopyOption.REPLACE_EXISTING);
-
-      System.out.println("Screenshot stored in: " + screenshotPath);
+      Logger.infoMessage("Screenshot stored in: " + screenshotPath);
     } catch (Exception e) {
-      System.err.println("Error while taking screenshot: " + e.getMessage());
+      Logger.errorMessage("Error while taking screenshot: " + e.getMessage());
     }
   }
 }

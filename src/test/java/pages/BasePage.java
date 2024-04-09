@@ -30,6 +30,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import utilities.AllureReport;
 import utilities.LocalEnviroment;
+import utilities.Logger;
 import utilities.Text;
 import utilities.W3cActions;
 import utilities.enums.Direction;
@@ -238,7 +239,7 @@ public class BasePage {
       if (webViewContext != null) {
         driver.context(webViewContext);
       } else {
-        System.out.println("Not WebView context found.");
+        Logger.errorMessage("Not WebView context found.");
       }
     }
   }
