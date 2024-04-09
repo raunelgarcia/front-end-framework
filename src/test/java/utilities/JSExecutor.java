@@ -34,11 +34,10 @@ public class JSExecutor {
 
   public static void runCommand(String command) {
     String projectDirectory = Paths.get("").toAbsolutePath().toString();
-    String osName = System.getProperty("os.name").toLowerCase();
     ArrayList<String> commandArray = new ArrayList<>();
     commandArray.add(command);
 
-    if(osName.contains("win")) {
+    if(LocalEnviroment.isWindows()) {
       commandArray.add(0, "cmd");
       commandArray.add(1, "/c");
     } else {

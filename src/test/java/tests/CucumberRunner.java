@@ -26,14 +26,11 @@ public class CucumberRunner {
   }
 
   private static void runAllureReport() {
-    String osName = System.getProperty("os.name").toLowerCase();
-
-    if (osName.contains("win")) {
+    if (LocalEnviroment.isWindows()) {
       JSExecutor.runCommand(ALLURE_COMMAND_WIN);
     } else {
       JSExecutor.runCommand(ALLURE_COMMAND_IOS);
     }
-
   }
 
   private static void runAccesibilityCopy() {

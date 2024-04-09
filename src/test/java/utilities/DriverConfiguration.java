@@ -28,7 +28,6 @@ public class DriverConfiguration {
       Dimension windowResolution = ScreenResolution.getResolutionFromEnv();
       String url = LocalEnviroment.getApplicationUrl();
       WebDriver driver = configureWebDriver();
-      JSExecutor jsExecutor = new JSExecutor(driver);
       driver.manage().window().setSize(windowResolution);
       driver.get(url);
       return driver;
