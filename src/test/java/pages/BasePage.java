@@ -28,10 +28,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
-import utilities.AllureReport;
-import utilities.LocalEnviroment;
-import utilities.Text;
-import utilities.W3cActions;
+import utilities.*;
 import utilities.enums.Direction;
 
 public class BasePage {
@@ -197,8 +194,7 @@ public class BasePage {
       if (LocalEnviroment.isMobile()) {
         swipe(direction, 0.4, minScroll ? 0.5 : 0.6, (AppiumDriver) driver);
       } else {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("window.scrollBy(0,200)");
+        JSExecutor.executeScript(driver, "window.scrollBy(0,200)");
       }
     }
   }

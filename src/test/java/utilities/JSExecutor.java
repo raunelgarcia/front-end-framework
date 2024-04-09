@@ -8,16 +8,15 @@ import org.openqa.selenium.WebDriver;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.sql.Driver;
 import java.util.ArrayList;
 
+import utilities.DriverConfiguration;
+
+
 public class JSExecutor {
-  private final WebDriver driver;
 
-  public JSExecutor(WebDriver driver) {
-    this.driver = driver;
-  }
-
-  public void executeScript(String script, Object... args) {
+  public static void executeScript(WebDriver driver, String script, Object... args) {
     try {
       JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
       Object result = jsExecutor.executeScript(script, args);
