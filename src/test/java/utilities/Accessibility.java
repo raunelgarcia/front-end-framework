@@ -67,10 +67,10 @@ public class Accessibility {
       Path sourceDirectory = new File(sourceDirectoryPath).toPath();
       Path targetDirectory = new File(targetDirectoryPath).toPath();
       copyDirectory(sourceDirectory, targetDirectory);
-      System.out.println(
+      Logger.infoMessage(
           "Accessibility report has been successfully copied to 'accessibility-report' directory.");
     } catch (IOException e) {
-      System.err.println("Error copying the accessibility report: " + e.getMessage());
+      Logger.errorMessage("Error copying the accessibility report: " + e.getMessage());
     }
   }
 }
