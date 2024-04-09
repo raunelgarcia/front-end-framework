@@ -3,13 +3,10 @@ package tests;
 import static utilities.Accessibility.moveHtmlReportToAccessibilityDirectory;
 import static utilities.LocalEnviroment.isWeb;
 import static utilities.Constants.ALLURE_COMMAND_WIN;
-import static utilities.Constants.ALLURE_COMMAND_IOS;
+import static utilities.Constants.ALLURE_COMMAND_MAC;
 
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Paths;
 import org.junit.AfterClass;
 import org.junit.runner.RunWith;
 import utilities.JSExecutor;
@@ -29,7 +26,7 @@ public class CucumberRunner {
     if (LocalEnviroment.isWindows()) {
       JSExecutor.runCommand(ALLURE_COMMAND_WIN);
     } else {
-      JSExecutor.runCommand(ALLURE_COMMAND_IOS);
+      JSExecutor.runCommand(ALLURE_COMMAND_MAC);
     }
   }
 

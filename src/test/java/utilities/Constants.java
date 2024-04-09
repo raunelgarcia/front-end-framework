@@ -14,6 +14,6 @@ public class Constants {
   public static final String IOS_CONFIG = "yaml/iOSConfiguration.yaml";
   public static final String DRIVER_URL = "http://127.0.0.1:4723";
   public static final String ALLURE_COMMAND_WIN = "npx allure generate target/allure-results --clean && npx allure open";
-  public static final String ALLURE_COMMAND_IOS = "npx allure generate target/allure-results --clean; npx allure open";
+  public static final String ALLURE_COMMAND_MAC = "npx allure generate target/allure-results --clean; npx allure open";
 
 }
