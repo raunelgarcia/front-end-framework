@@ -26,6 +26,7 @@ public class AllureReport {
     AppiumDriver driverMobile;
     description.append("<h3 style=\"text-decoration: underline;\">Test Enviroment</h3>");
     description.append("<p><b>Platform:</b> ").append(LocalEnviroment.getPlatform()).append("</p>");
+    description.append("<p><b>Language:</b> ").append(LocalEnviroment.getLanguage()).append("</p>");
     if (LocalEnviroment.isMobile()) {
       if (isAndroid()) {
         driverMobile = (AndroidDriver) driver;
