@@ -24,12 +24,14 @@ public class AllureReport {
   private static String setTestDescription(WebDriver driver) {
     StringBuilder description = new StringBuilder();
     AppiumDriver driverMobile;
+    String os = null;
     description.append("<h3 style=\"text-decoration: underline;\">Test Enviroment</h3>");
     description.append("<p><b>Platform:</b> ").append(LocalEnviroment.getPlatform()).append("</p>");
     description.append("<p><b>Language:</b> ").append(LocalEnviroment.getLanguage()).append("</p>");
     if (LocalEnviroment.isMobile()) {
-      if (isAndroid()) {
+      if (LocalEnviroment.isAndroid()) {
         driverMobile = (AndroidDriver) driver;
+        os = "Android";
         String appActivity = LocalEnviroment.getAppActivity();
         String deviceName = driverMobile.getCapabilities().getCapability("deviceName").toString();
         description.append("<p><b>Device Name:</b> ").append(deviceName).append("</p>");
@@ -45,6 +47,7 @@ public class AllureReport {
         }
       } else {
         driverMobile = (IOSDriver) driver;
+        os = "iOS";
       }
       description
           .append("<p><b>Udid:</b> ")
@@ -58,11 +61,15 @@ public class AllureReport {
           .append("<p><b>App Identifier:</b> ")
           .append(LocalEnviroment.getAppIdentifier())
           .append("</p>");
+      description.append("<p><b>Operating System:</b> ").append(os).append("</p>");
       String apk = LocalEnviroment.getApk();
       if (Objects.nonNull(apk) && !apk.isEmpty()) {
         description.append("<p><b>Apk:</b> ").append(apk).append("</p>");
       }
     } else {
+      if (LocalEnviroment.isWindows()) { os = "Windows"; }
+      if (LocalEnviroment.isMac()) { os = "Mac"; }
+      if (LocalEnviroment.isLinux()) { os = "Linux"; }
       description.append("<p><b>Browser:</b> ").append(LocalEnviroment.getBrowser()).append("</p>");
       description
           .append("<p><b>Url:</b> ")
@@ -76,6 +83,7 @@ public class AllureReport {
           .append("<p><b>Accessibility:</b> ")
           .append(LocalEnviroment.getAccessibility())
           .append("</p>");
+      description.append("<p><b>Operating System:</b> ").append(os).append("</p>");
     }
     return description.toString();
   }
