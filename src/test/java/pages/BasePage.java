@@ -12,6 +12,8 @@ import io.appium.java_client.android.AndroidDriver;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalUnit;
+import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import javax.annotation.Nullable;
@@ -37,6 +39,19 @@ public class BasePage {
     } catch (RuntimeException var3) {
       return otherWise;
     }
+  }
+
+  public static boolean isNullOrEmpty(Object object) {
+    if (Objects.isNull(object)) {
+      return true;
+    }
+    if (object instanceof String) {
+      return ((String) object).isEmpty();
+    }
+    if (object instanceof List) {
+      return ((List<?>) object).isEmpty();
+    }
+    return false;
   }
 
   public static <T extends WebElement> boolean isVisible(final T e) {
