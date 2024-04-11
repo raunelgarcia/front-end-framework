@@ -79,6 +79,7 @@ public class DriverConfiguration {
       environment = loadCapabilitiesMobile(Constants.ANDROID_CONFIG);
       capabilities = environment.get("capabilitiesAndroid");
       filledCapabilities.setCapability("appPackage", LocalEnviroment.getAppIdentifier());
+      filledCapabilities.setCapability("locale", LocalEnviroment.getLanguage());
       String apk = LocalEnviroment.getApk();
       if (Objects.nonNull(apk) && !apk.isEmpty()) {
         filledCapabilities.setCapability(
