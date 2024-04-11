@@ -1,5 +1,7 @@
 package utilities;
 
+import pages.BasePage;
+
 import static utilities.Constants.LANGUAGE_REGEX;
 
 import java.util.Map;
@@ -18,7 +20,7 @@ public class LocalEnviroment {
   }
 
   public static String getBrowser() {
-    if (Objects.nonNull(System.getenv("Browser")) && !System.getenv("Browser").isEmpty()) {
+    if (!BasePage.isNullOrEmpty(System.getenv("Browser"))) {
       return System.getenv("Browser").toLowerCase();
     } else {
       return "chrome";
@@ -91,7 +93,7 @@ public class LocalEnviroment {
   public static String getLanguage() {
     String language = System.getenv("Language");
 
-    if (Objects.isNull(language) || language.isEmpty()) {
+    if (BasePage.isNullOrEmpty(language)) {
       language = "es-ES";
     }
 

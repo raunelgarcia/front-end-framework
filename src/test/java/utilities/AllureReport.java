@@ -7,10 +7,10 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import io.qameta.allure.Allure;
 import io.qameta.allure.model.Status;
-import java.util.Objects;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import pages.BasePage;
 
 public class AllureReport {
   private static String descriptionHtml;
@@ -40,7 +40,7 @@ public class AllureReport {
             .append("<p><b>Platform Version:</b>".concat(isAndroid() ? "Android " : "IOS"))
             .append(platformVersion)
             .append("</p>");
-        if (Objects.nonNull(appActivity) || !appActivity.isEmpty()) {
+        if (!BasePage.isNullOrEmpty(appActivity)) {
           description.append("<p><b>App Activity:</b> ").append(appActivity).append("</p>");
         }
       } else {
@@ -59,7 +59,7 @@ public class AllureReport {
           .append(LocalEnviroment.getAppIdentifier())
           .append("</p>");
       String apk = LocalEnviroment.getApk();
-      if (Objects.nonNull(apk) && !apk.isEmpty()) {
+      if (!BasePage.isNullOrEmpty(apk)) {
         description.append("<p><b>Apk:</b> ").append(apk).append("</p>");
       }
     } else {

@@ -1,5 +1,7 @@
 package utilities;
 
+import pages.BasePage;
+
 import static utilities.Constants.GMAIL_DOMAIN;
 
 import java.time.LocalDate;
@@ -62,7 +64,7 @@ public class Generator {
   }
 
   public static <T> T getRandomElement(List<T> list) {
-    if (list == null || list.isEmpty()) {
+    if (BasePage.isNullOrEmpty(list)) {
       throw new IllegalArgumentException("List cant be null or empty");
     }
     Random random = new Random();
