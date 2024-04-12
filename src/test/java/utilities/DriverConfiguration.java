@@ -124,7 +124,7 @@ public class DriverConfiguration {
     try (InputStream inputStream =
         DriverConfiguration.class
             .getClassLoader()
-            .getResourceAsStream("yaml/webConfiguration.yaml")) {
+            .getResourceAsStream(Constants.WEB_CONFIG)) {
       return yaml.load(inputStream);
     } catch (Exception e) {
       throw new IllegalStateException("Failed to load or parse the YAML file", e);

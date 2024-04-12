@@ -48,7 +48,7 @@ public class ScreenResolution {
 
     if (Objects.isNull(allowableResolutions)) {
       throw new IllegalStateException(
-          "The \"allowable-resolutions.yaml\" file could not be located or loaded");
+          "The \"allowedResolutions.yaml\" file could not be located or loaded");
     }
 
     return allowableResolutions
@@ -63,7 +63,7 @@ public class ScreenResolution {
     try (InputStream inputStream =
         ScreenResolution.class
             .getClassLoader()
-            .getResourceAsStream("yaml/allowable-resolutions.yaml")) {
+            .getResourceAsStream(Constants.ALLOWED_RESOLUTIONS_PATH)) {
       return yaml.load(inputStream);
     } catch (Exception e) {
       throw new IllegalStateException("Failed to load or parse the YAML file", e);

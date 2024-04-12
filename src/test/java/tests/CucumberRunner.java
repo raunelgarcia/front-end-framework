@@ -4,6 +4,9 @@ import static utilities.Accessibility.moveHtmlReportToAccessibilityDirectory;
 import static utilities.LocalEnviroment.isWeb;
 import static utilities.Constants.ALLURE_COMMAND_WIN;
 import static utilities.Constants.ALLURE_COMMAND_MAC;
+import static utilities.Constants.ACCESSIBILITY_REPORT_PATH;
+import static utilities.Constants.CUCUMBER_STEPS_PATH;
+import static utilities.Constants.FEATURES_PATH;
 
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
@@ -13,7 +16,7 @@ import utilities.JSExecutor;
 import utilities.LocalEnviroment;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(features = "src/test/resources/features", glue = "tests/cucumber_steps")
+@CucumberOptions(features = FEATURES_PATH, glue = CUCUMBER_STEPS_PATH)
 public class CucumberRunner {
 
   @AfterClass
@@ -32,7 +35,7 @@ public class CucumberRunner {
 
   private static void runAccesibilityCopy() {
     if (LocalEnviroment.getAccessibility() && isWeb()) {
-      moveHtmlReportToAccessibilityDirectory("target/java-a11y/");
+      moveHtmlReportToAccessibilityDirectory(ACCESSIBILITY_REPORT_PATH);
     }
   }
 }
