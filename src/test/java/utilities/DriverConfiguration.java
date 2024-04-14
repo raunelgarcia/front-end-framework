@@ -19,6 +19,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.safari.SafariDriver;
 import org.yaml.snakeyaml.Yaml;
 
 public class DriverConfiguration {
@@ -29,6 +30,7 @@ public class DriverConfiguration {
       String url = LocalEnviroment.getApplicationUrl();
       WebDriver driver = configureWebDriver();
       driver.manage().window().setSize(windowResolution);
+      driver.manage().window().maximize();
       driver.get(url);
       return driver;
     } else if (isAndroid()) {
@@ -60,6 +62,9 @@ public class DriverConfiguration {
         break;
       case "firefox":
         driver = new FirefoxDriver();
+        break;
+      case "safari":
+        driver = new SafariDriver();
         break;
       default:
         driver = new ChromeDriver();
@@ -124,9 +129,7 @@ public class DriverConfiguration {
   public static Map<String, Map<String, String>> loadCapabilitiesWeb() {
     Yaml yaml = new Yaml();
     try (InputStream inputStream =
-        DriverConfiguration.class
-            .getClassLoader()
-            .getResourceAsStream(Constants.WEB_CONFIG)) {
+        DriverConfiguration.class.getClassLoader().getResourceAsStream(Constants.WEB_CONFIG)) {
       return yaml.load(inputStream);
     } catch (Exception e) {
       throw new IllegalStateException("Failed to load or parse the YAML file", e);
