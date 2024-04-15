@@ -68,8 +68,6 @@ public class LocalEnviroment {
 
   public static boolean isWindows() { return System.getProperty("os.name").toLowerCase().contains("win"); }
 
-  public static boolean isLinux() { return System.getProperty("os.name").toLowerCase().contains("linux"); }
-
   public static boolean isMac() { return System.getProperty("os.name").toLowerCase().contains("mac"); }
 
   public static String getApplicationUrl() throws IllegalArgumentException {

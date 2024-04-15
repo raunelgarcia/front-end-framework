@@ -31,7 +31,6 @@ public class AllureReport {
     if (LocalEnviroment.isMobile()) {
       if (LocalEnviroment.isAndroid()) {
         driverMobile = (AndroidDriver) driver;
-        os = "Android";
         String appActivity = LocalEnviroment.getAppActivity();
         String deviceName = driverMobile.getCapabilities().getCapability("deviceName").toString();
         description.append("<p><b>Device Name:</b> ").append(deviceName).append("</p>");
@@ -47,7 +46,6 @@ public class AllureReport {
         }
       } else {
         driverMobile = (IOSDriver) driver;
-        os = "iOS";
       }
       description
           .append("<p><b>Udid:</b> ")
@@ -61,15 +59,14 @@ public class AllureReport {
           .append("<p><b>App Identifier:</b> ")
           .append(LocalEnviroment.getAppIdentifier())
           .append("</p>");
-      description.append("<p><b>Operating System:</b> ").append(os).append("</p>");
       String apk = LocalEnviroment.getApk();
       if (Objects.nonNull(apk) && !apk.isEmpty()) {
         description.append("<p><b>Apk:</b> ").append(apk).append("</p>");
       }
     } else {
       if (LocalEnviroment.isWindows()) { os = "Windows"; }
-      if (LocalEnviroment.isMac()) { os = "Mac"; }
-      if (LocalEnviroment.isLinux()) { os = "Linux"; }
+      else if (LocalEnviroment.isMac()) { os = "Mac"; }
+      else { os = "linux"; }
       description.append("<p><b>Browser:</b> ").append(LocalEnviroment.getBrowser()).append("</p>");
       description
           .append("<p><b>Url:</b> ")
