@@ -70,6 +70,8 @@ public class LocalEnviroment {
 
   public static boolean isWindows() { return System.getProperty("os.name").toLowerCase().contains("win"); }
 
+  public static boolean isMac() { return System.getProperty("os.name").toLowerCase().contains("mac"); }
+
   public static String getApplicationUrl() throws IllegalArgumentException {
     Map<String, Map<String, String>> environment = DriverConfiguration.loadCapabilitiesWeb();
     Map<String, String> urls = environment.get("url");

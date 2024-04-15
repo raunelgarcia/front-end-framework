@@ -24,11 +24,12 @@ public class AllureReport {
   private static String setTestDescription(WebDriver driver) {
     StringBuilder description = new StringBuilder();
     AppiumDriver driverMobile;
+    String os = null;
     description.append("<h3 style=\"text-decoration: underline;\">Test Enviroment</h3>");
     description.append("<p><b>Platform:</b> ").append(LocalEnviroment.getPlatform()).append("</p>");
     description.append("<p><b>Language:</b> ").append(LocalEnviroment.getLanguage()).append("</p>");
     if (LocalEnviroment.isMobile()) {
-      if (isAndroid()) {
+      if (LocalEnviroment.isAndroid()) {
         driverMobile = (AndroidDriver) driver;
         String appActivity = LocalEnviroment.getAppActivity();
         String deviceName = driverMobile.getCapabilities().getCapability("deviceName").toString();
@@ -63,6 +64,9 @@ public class AllureReport {
         description.append("<p><b>Apk:</b> ").append(apk).append("</p>");
       }
     } else {
+      if (LocalEnviroment.isWindows()) { os = "Windows"; }
+      else if (LocalEnviroment.isMac()) { os = "Mac"; }
+      else { os = "linux"; }
       description.append("<p><b>Browser:</b> ").append(LocalEnviroment.getBrowser()).append("</p>");
       description
           .append("<p><b>Url:</b> ")
@@ -76,6 +80,7 @@ public class AllureReport {
           .append("<p><b>Accessibility:</b> ")
           .append(LocalEnviroment.getAccessibility())
           .append("</p>");
+      description.append("<p><b>Operating System:</b> ").append(os).append("</p>");
     }
     return description.toString();
   }
