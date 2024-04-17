@@ -64,7 +64,7 @@ You can set environment variables in IntelliJ IDEA by going to Run > Edit Config
   - Browser:
     - Possible values: Chrome, Firefox, Edge, Safari.
     - Description: Defines the browser to be used for web testing. The 'Browser' variable can take the value of 'null', in which case the default browser used for testing is 'chrome'.  
-    If you are using Safari for IOS, write this command for enable the automatization: `safaridriver --enable`
+    If you are using Safari for MacOS, write this command for enable the automatization: `safaridriver --enable`
 - Application:
   - Description: Should be the name of the web or mobile app being tested. Application cannot be null and must be provided with valid values for the tests to function correctly.
 - Resolution:
@@ -87,23 +87,23 @@ Ensure to set these variables according to your testing requirements before exec
 ### Android Variables
 
 Case 1: With AppActivity and AppPackage.  
-AppActivity=.activities.MainContainerActivity;AppPackage=com.iphonedroid.marca;Platform=Android;Udid=emulator-5554
+AppActivity=.activities.MainContainerActivity;AppPackage=com.iphonedroid.marca;Platform=Android;Udid=;
 
-| Campo         | Valor   |
-|---------------|---------|
-| AppActivity   | .activities.MainContainerActivity    |
-| AppIdentifier | com.iphonedroid.marca    |
+| Campo         | Valor |
+|---------------|-----|
+| AppActivity   | .activities.MainContainerActivity |
+| AppIdentifier | com.iphonedroid.marca |
 | Platform      | Android |
-| Udid          | emulator-5554    |
+| Udid          |     |
 
 Case 2: With App.  
-App=com.iphonedroid.marca.apk;Platform=Android;Udid=emulator-5554
+App=com.iphonedroid.marca.apk;Platform=Android;Udid=;
 
-| Campo    | Valor   |
-|----------|---------| 
-| App      | com.iphonedroid.marca.apk    | 
+| Campo    | Valor |
+|----------|-----| 
+| App      | com.iphonedroid.marca.apk | 
 | Platform | Android |
-| Udid     | emulator-5554    |
+| Udid     |     |
 
 
 ### IOS Variables
