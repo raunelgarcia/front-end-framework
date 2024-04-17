@@ -16,28 +16,31 @@ Appium runs on Node.js. If you don't already have Node.js installed, download an
 
 Step 2: Install Appium
 
-Install Appium globally using npm (Node Package Manager). Open your terminal or command prompt and run the following command: 
+Install Appium globally using npm (Node Package Manager). Open your terminal or command prompt and run the following command:
 
 `npm install -g appium`
 
 Step 3: Install Appium Dependencies
 
 Appium has specific dependencies for different mobile development platforms. Install the necessary dependencies based on the platform you want to automate tests for.
+In the next lines you will install this different dependencies.
 
 ### Android
 Install Android Studio following the instructions on https://developer.android.com/studio/install.
-Set up `ANDROID_HOME` and `JAVA_HOME` environment variables correctly.
+Set up `ANDROID_HOME` and `JAVA_HOME` environment variables correctly in user variables.
 
 Step 4: Set Up Emulators or Physical Devices
 
-Use Virtual Device Manager tool from Android Studio to start a customized Android emulator
+Create a new project, select "No activity" option and follow the default configuration.  
+Once you have Android Studio configured, go to *Languages & Frameworks* > *Android SDK*, select *Android SDK Command-line Tools* and apply changes.  
+Use Virtual Device Manager tool from Android Studio to start a customized Android emulator.
 
 Step 5: Start Appium Server
 
 Run on terminal the command: `appium` to start appium server
 
 ### IDE Configuration Steps
-Clone the Repository:
+Create a new folder and clone the Repository:
 
 `git clone https://github.com/raunelgarcia/mobile-framework.git`
 
@@ -56,69 +59,91 @@ You can set environment variables in IntelliJ IDEA by going to Run > Edit Config
   - Possible values: Android, IOS, Web.
   - Description: Specifies the platform for testing, whether it is Android, iOS or Web. Must be provided with valid values for the tests to function correctly.
 - Accessibility:
-  - Possible values: true, false, 
-  - Description: indicates whether accessibility features are enabled during testing.The variable can take the value of 'null', in which case the Accessibility report will not be shown.
+  - Possible values: true, false.
+  - Description: indicates whether accessibility features are enabled during testing.The variable can take the value of null or blank, in which case the Accessibility report will not be shown.
 - Browser:
   - Possible values: Chrome, Firefox, Edge.
   - Description: Defines the browser to be used for web testing. The 'Browser' variable can take the value of 'null', in which case the default browser used for testing is 'chrome'.
 - Application:
   - Description: Should be the name of the web or mobile app being tested. Application cannot be null and must be provided with valid values for the tests to function correctly.
-- Resolution: 
+- Resolution:
+  - Possibles values: the possibles values of the environment variable resolution are established in the 'allowedResolution.yaml'.
   - Description: Specifies the screen resolution for web testing. If null or blank, a default resolution of 1024x768 is set.
+- Language:
+  - Possibles values: en-GB, en-US, es-ES, fr-FR.
+  - Description: Specifies the language of the system. If null or blank, the default language is es-ES.
 - Apk:
   - Description: Specifies the path or name of the APK file to be installed and tested on an Android device. The tests work if either the Apk field is set, or both AppPackage and AppActivity fields are provided.
-- AppActivity: 
+- AppActivity:
   - Description: represents the app activity of the app being tested for mobile testing. The tests work if both AppPackage and AppActivity fields are provided.
-- AppPackage: 
+- AppIdentifier:
   - Description: Represents the app package of the app being tested for mobile testing. The tests work if both AppPackage and AppActivity fields are provided.
-- Udid: 
+- Udid:
   - Description: Represent the unique device identifier (UDID) of the device being tested for mobile testing. Must be provided with valid values for the tests to function correctly.
 
 Ensure to set these variables according to your testing requirements before executing the tests.
 
 ### Android Variables
 
-AppActivity=xxxx;AppPackage=xxxx;Apk=xxxx;Platform=Android;Udid=xxxx
+Case 1: With AppActivity and AppPackage.  
+AppActivity=.activities.MainContainerActivity;AppPackage=com.iphonedroid.marca;Platform=Android;Udid=emulator-5554
+
+| Campo         | Valor   |
+|---------------|---------|
+| AppActivity   | .activities.MainContainerActivity    |
+| AppIdentifier | com.iphonedroid.marca    |
+| Platform      | Android |
+| Udid          | emulator-5554    |
+
+Case 2: With App.  
+App=com.iphonedroid.marca.apk;Platform=Android;Udid=emulator-5554
+
+| Campo    | Valor   |
+|----------|---------| 
+| App      | com.iphonedroid.marca.apk    | 
+| Platform | Android |
+| Udid     | emulator-5554    |
+
+
+### IOS Variables
+AppIdentifier=com.marca.marcador;Platform=IOS;Udid=3r3d3c3v3333f
 
 | Campo       | Valor   |
 |-------------|---------|
-| AppActivity | xxxx    |
-| AppPackage  | xxxx    |
-| Apk         | xxxx    | 
-| Platform    | Android |
-| Udid        | xxxx    |
+| AppIdentifier         | com.marca.marcador    |
+| Platform    | IOS |
+| Udid        | 3r3d3c3v3333f    |
 
 
 ### Web Variables
 
-Accessibility=xxxx;Platform=Web;Url=xxxx;Browser=xxxx;Resolution=xxxx;
+Accessibility=true;Platform=Web;Application=mrc;Browser=Chrome;Resolution=1920x1200;
 
-| Campo         | Valor  |
-|---------------|--------|
-| Accessibility | true   |
-| Platform      | Web    |
-| Application   | xxxx   |
-| Browser       | xxxx   |
-| Resolution    | xxxx   |
-
+| Campo         | Valor |
+|---------------|-------|
+| Accessibility | true  |
+| Platform      | Web   |
+| Application   | mrc   |
+| Browser       | Chrome  |
+| Resolution    | 1920x1200  |
 
 
 ### Install Dependencies:
 
 Open the pom.xml file in IntelliJ IDEA. Click on the 'Maven' tab, then click on the 'Reimport' button to install all the required dependencies.
 
-### Configure WebDriver (For Web Tests):
-
-If you're running web tests, make sure you have the appropriate WebDriver installed and configured. You may need to download the WebDriver for your preferred browser and set the path accordingly.
 
 ### Configure Mobile Testing Environment (For Mobile Tests):
-
 
 Before running mobile tests, ensure that you have:
 
 - Mobile Platform Setup: Make sure you have the appropriate emulators, simulators, or physical devices configured and available for testing.
 
 - Environment Configuration: Configure the mobile platform-specific settings in the mobileConfiguration.yaml file located in the project directory (resources/yaml/mobileConfiguration.yaml). Ensure that the required capabilities are correctly specified for Android and iOS platforms.
+
+If you are using Safari for IOS, write this command for enable the automatization:
+
+`safaridriver --enable`
 
 You can now run the automated tests either for web or mobile platforms based on the environment variable you've set.
 
@@ -143,7 +168,7 @@ When the "Accessibility" variable is set to "true", accessibility reports will b
 
 #### Report Formats:
 
-The accessibility reports are available in two formats: 
+The accessibility reports are available in two formats:
 
 1. HTML Reports: These reports are human-readable and can ve opened in any browser. They provide detailed information about accessibility issues found during testing.
 2. JSON Reports: These reports contain machine-readable data about accessibility issues detected in the application.
@@ -160,3 +185,4 @@ Alejandra Alvarado Tirado
 ### Acknowledgments
 
 Special thanks to our contributors and the open-source community for their valuable contributions and support.
+
