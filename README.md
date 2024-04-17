@@ -32,7 +32,7 @@ Set up `ANDROID_HOME` and `JAVA_HOME` environment variables correctly in user va
 Step 4: Set Up Emulators or Physical Devices
 
 Create a new project, select "No activity" option and follow the default configuration.  
-Once you have Android Studio configured, go to *Languages & Frameworks* > *Android SDK*, select *Android SDK Command-line Tools* and apply changes.  
+Once you have Android Studio configured, go to *Settings*, search for *Android SDK Command-line Tools* and apply changes.  
 Use Virtual Device Manager tool from Android Studio to start a customized Android emulator.
 
 Step 5: Start Appium Server
@@ -61,25 +61,26 @@ You can set environment variables in IntelliJ IDEA by going to Run > Edit Config
 - Accessibility:
   - Possible values: true, false.
   - Description: indicates whether accessibility features are enabled during testing.The variable can take the value of null or blank, in which case the Accessibility report will not be shown.
-- Browser:
-  - Possible values: Chrome, Firefox, Edge.
-  - Description: Defines the browser to be used for web testing. The 'Browser' variable can take the value of 'null', in which case the default browser used for testing is 'chrome'.
+  - Browser:
+    - Possible values: Chrome, Firefox, Edge, Safari.
+    - Description: Defines the browser to be used for web testing. The 'Browser' variable can take the value of 'null', in which case the default browser used for testing is 'chrome'.  
+    If you are using Safari for IOS, write this command for enable the automatization: `safaridriver --enable`
 - Application:
   - Description: Should be the name of the web or mobile app being tested. Application cannot be null and must be provided with valid values for the tests to function correctly.
 - Resolution:
   - Possibles values: the possibles values of the environment variable resolution are established in the 'allowedResolution.yaml'.
   - Description: Specifies the screen resolution for web testing. If null or blank, a default resolution of 1024x768 is set.
 - Language:
-  - Possibles values: en-GB, en-US, es-ES, fr-FR.
-  - Description: Specifies the language of the system. If null or blank, the default language is es-ES.
+  - Possibles values: en-GB, en-US, es-ES, fr-FR and others.
+  - Description: Specifies the language of the test execution. If null or blank, the default language is es-ES.
 - Apk:
   - Description: Specifies the path or name of the APK file to be installed and tested on an Android device. The tests work if either the Apk field is set, or both AppPackage and AppActivity fields are provided.
 - AppActivity:
-  - Description: represents the app activity of the app being tested for mobile testing. The tests work if both AppPackage and AppActivity fields are provided.
+  - Description: represents the app activity for Android of the app being tested for mobile testing. The tests work if both AppPackage and AppActivity fields are provided.
 - AppIdentifier:
-  - Description: Represents the app package of the app being tested for mobile testing. The tests work if both AppPackage and AppActivity fields are provided.
+  - Description: For Android it represents the app package and for IOS it represents the bundleId of the app being tested for mobile testing. The Android tests work if both AppPackage and AppActivity fields are provided.
 - Udid:
-  - Description: Represent the unique device identifier (UDID) of the device being tested for mobile testing. Must be provided with valid values for the tests to function correctly.
+  - Description: Represent the unique device identifier (UDID) of the device being tested for mobile testing. Must be provided with valid values for the tests to function correctly. For Android, if the variable takes the value of 'null', the default value is the current emulator Udid.  For IOS, the Udid cannot be 'null'.
 
 Ensure to set these variables according to your testing requirements before executing the tests.
 
@@ -106,13 +107,13 @@ App=com.iphonedroid.marca.apk;Platform=Android;Udid=emulator-5554
 
 
 ### IOS Variables
-AppIdentifier=com.marca.marcador;Platform=IOS;Udid=3r3d3c3v3333f
+AppIdentifier=com.marca.marcador;Platform=IOS;Udid=A308507F-99BB-47A2-9A2D-06005CAAD428
 
 | Campo       | Valor   |
 |-------------|---------|
 | AppIdentifier         | com.marca.marcador    |
 | Platform    | IOS |
-| Udid        | 3r3d3c3v3333f    |
+| Udid        | A308507F-99BB-47A2-9A2D-06005CAAD428    |
 
 
 ### Web Variables
@@ -140,10 +141,6 @@ Before running mobile tests, ensure that you have:
 - Mobile Platform Setup: Make sure you have the appropriate emulators, simulators, or physical devices configured and available for testing.
 
 - Environment Configuration: Configure the mobile platform-specific settings in the mobileConfiguration.yaml file located in the project directory (resources/yaml/mobileConfiguration.yaml). Ensure that the required capabilities are correctly specified for Android and iOS platforms.
-
-If you are using Safari for IOS, write this command for enable the automatization:
-
-`safaridriver --enable`
 
 You can now run the automated tests either for web or mobile platforms based on the environment variable you've set.
 
