@@ -64,9 +64,13 @@ public class AllureReport {
         description.append("<p><b>Apk:</b> ").append(apk).append("</p>");
       }
     } else {
-      if (LocalEnviroment.isWindows()) { os = "Windows"; }
-      else if (LocalEnviroment.isMac()) { os = "Mac"; }
-      else { os = "linux"; }
+      if (LocalEnviroment.isWindows()) {
+        os = "Windows";
+      } else if (LocalEnviroment.isMac()) {
+        os = "Mac";
+      } else {
+        os = "linux";
+      }
       description.append("<p><b>Browser:</b> ").append(LocalEnviroment.getBrowser()).append("</p>");
       description
           .append("<p><b>Url:</b> ")
