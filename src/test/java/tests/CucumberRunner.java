@@ -1,12 +1,12 @@
 package tests;
 
 import static utilities.Accessibility.moveHtmlReportToAccessibilityDirectory;
-import static utilities.LocalEnviroment.isWeb;
-import static utilities.Constants.ALLURE_COMMAND_WIN;
-import static utilities.Constants.ALLURE_COMMAND_MAC;
 import static utilities.Constants.ACCESSIBILITY_REPORT_PATH;
+import static utilities.Constants.ALLURE_COMMAND_MAC;
+import static utilities.Constants.ALLURE_COMMAND_WIN;
 import static utilities.Constants.CUCUMBER_STEPS_PATH;
 import static utilities.Constants.FEATURES_PATH;
+import static utilities.LocalEnviroment.isWeb;
 
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
@@ -23,6 +23,7 @@ public class CucumberRunner {
   public static void runReports() {
     runAllureReport();
     runAccesibilityCopy();
+    JSExecutor.runCommand("adb logcat -c");
   }
 
   private static void runAllureReport() {

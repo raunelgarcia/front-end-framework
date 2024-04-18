@@ -2,16 +2,12 @@ package utilities;
 
 import io.qameta.allure.Allure;
 import io.qameta.allure.model.Status;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.sql.Driver;
 import java.util.ArrayList;
-
-import utilities.DriverConfiguration;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
 
 public class JSExecutor {
 

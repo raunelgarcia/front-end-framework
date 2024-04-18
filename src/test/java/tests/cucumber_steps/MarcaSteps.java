@@ -15,6 +15,7 @@ import pages.Marca;
 import utilities.Accessibility;
 import utilities.AllureReport;
 import utilities.DriverConfiguration;
+import utilities.NetworkLogs;
 
 public class MarcaSteps {
 
@@ -58,6 +59,7 @@ public class MarcaSteps {
   public void closeDriver() {
     Accessibility.checkAccessibility(driver);
     AllureReport.fillReportInfo(driver);
+    NetworkLogs.getAndroidLogs();
     waitSeconds(LOW_TIMEOUT);
     driver.quit();
   }

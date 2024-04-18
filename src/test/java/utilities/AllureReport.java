@@ -7,6 +7,10 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import io.qameta.allure.Allure;
 import io.qameta.allure.model.Status;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -102,6 +106,15 @@ public class AllureReport {
               "<h4 style=\"background-color: #fd5a3e; padding: 8px; color: #fff;\">"
                   + comparationMessage
                   + "</h4>");
+  }
+
+  public static void attachTextFileToAllureReport(File file) {
+    try {
+      byte[] content = Files.readAllBytes(Paths.get(file.toURI()));
+      Allure.addAttachment("NetworkLogs", "text/plain", new String(content));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   public static void attachScreenshot(WebDriver driver) {
