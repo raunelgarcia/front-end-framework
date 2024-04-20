@@ -30,8 +30,8 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v2
       with:
-        name: FrontEnd-framework
-        path: target/FrontEnd-framework.jar
+        name: front-end-framework
+        path: target/front-end-framework.jar
 
     - name: Generate and apply version tag
       id: version_tag
