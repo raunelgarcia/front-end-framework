@@ -1,5 +1,0 @@
-- name: upload-artifact
-  uses: actions/upload-artifact@v2
-  with:
-    name: FrontEnd-framework
-    path: target/FrontEnd-framework.jar
