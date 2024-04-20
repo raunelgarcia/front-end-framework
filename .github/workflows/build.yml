@@ -32,3 +32,21 @@ jobs:
       with:
         name: FrontEnd-framework
         path: target/FrontEnd-framework.jar
+
+    - name: Generate and apply version tag
+      id: version_tag
+      run: |
+        VERSION=$(git tag --sort=-version:refname | head -n 1)
+        IFS='.' read -ra VER <<< "$VERSION"
+        MAJOR="${VER[0]}"
+        MINOR="${VER[1]}"
+        PATCH="${VER[2]}"
+        PATCH=$((PATCH + 1))
+        NEW_VERSION="$MAJOR.$MINOR.$PATCH"
+        git tag "$NEW_VERSION"
+        echo "::set-output name=new_tag::$NEW_VERSION"
+
+    - name: Push new tag
+      if: steps.version_tag.outputs.new_tag != ''
+      run: |
+        git push origin ${{ steps.version_tag.outputs.new_tag }}
