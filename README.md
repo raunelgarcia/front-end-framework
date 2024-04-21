@@ -73,8 +73,8 @@ You can set environment variables in IntelliJ IDEA by going to Run > Edit Config
 - Language:
   - Possibles values: en-GB, en-US, es-ES, fr-FR and others.
   - Description: Specifies the language of the test execution. If null or blank, the default language is es-ES.
-- Apk:
-  - Description: Specifies the path or name of the APK file to be installed and tested on an Android device. The tests work if either the Apk field is set, or both AppPackage and AppActivity fields are provided.
+- App:
+  - Description: Specifies the path or name of the APK or .IPA file to be installed and tested on an Mobile device. The tests work if either the App field is set, or both AppPackage and AppActivity fields are provided (only Android).
 - AppActivity:
   - Description: represents the app activity for Android of the app being tested for mobile testing. The tests work if both AppPackage and AppActivity fields are provided.
 - AppIdentifier:
