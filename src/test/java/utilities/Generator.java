@@ -1,13 +1,12 @@
 package utilities;
 
-import pages.BasePage;
-
 import static utilities.Constants.GMAIL_DOMAIN;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Random;
+import pages.BasePage;
 
 public class Generator {
   private static final String CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
