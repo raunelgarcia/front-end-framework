@@ -7,6 +7,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class NetworkLogs {
+  public static void getNetworkLogs() {
+    if (LocalEnviroment.isAndroid()) getAndroidLogs();
+    // TODO create logs from other platforms
+  }
+
   public static void getAndroidLogs() {
     try {
       ProcessBuilder processBuilder =
@@ -40,5 +45,10 @@ public class NetworkLogs {
     } catch (IOException | InterruptedException e) {
       e.printStackTrace();
     }
+  }
+
+  public static void clearLogs() {
+    if (LocalEnviroment.isAndroid()) JSExecutor.runCommand("adb logcat -c");
+    // TODO clear logs from other platforms
   }
 }

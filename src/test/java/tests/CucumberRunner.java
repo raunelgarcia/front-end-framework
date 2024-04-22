@@ -14,6 +14,7 @@ import org.junit.AfterClass;
 import org.junit.runner.RunWith;
 import utilities.JSExecutor;
 import utilities.LocalEnviroment;
+import utilities.NetworkLogs;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(features = FEATURES_PATH, glue = CUCUMBER_STEPS_PATH)
@@ -23,7 +24,7 @@ public class CucumberRunner {
   public static void runReports() {
     runAllureReport();
     runAccesibilityCopy();
-    JSExecutor.runCommand("adb logcat -c");
+    NetworkLogs.clearLogs();
   }
 
   private static void runAllureReport() {

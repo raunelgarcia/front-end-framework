@@ -59,7 +59,7 @@ public class MarcaSteps {
   public void closeDriver() {
     Accessibility.checkAccessibility(driver);
     AllureReport.fillReportInfo(driver);
-    NetworkLogs.getAndroidLogs();
+    NetworkLogs.getNetworkLogs();
     waitSeconds(LOW_TIMEOUT);
     driver.quit();
   }
