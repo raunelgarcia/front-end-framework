@@ -29,14 +29,11 @@ import utilities.*;
 @ExtendWith(TestErrorHandler.class)
 public class MarcaTest {
 
-  static WebDriver driver;
   private static Marca controller;
 
   @BeforeEach
   public void iAmOnTheMarcaWebsite() {
-    DriverConfiguration configuration = new DriverConfiguration();
-    driver = configuration.getDriver();
-    controller = new Marca(driver);
+    controller = new Marca();
   }
 
   @Test
@@ -53,11 +50,12 @@ public class MarcaTest {
 
   @AfterEach
   public void closeDriver() {
+    WebDriver driver = DriverConfiguration.getDriver();
     Accessibility.checkAccessibility(driver);
     AllureReport.fillReportInfo(driver);
     NetworkLogs.getNetworkLogs();
     waitSeconds(LOW_TIMEOUT);
-    driver.quit();
+    DriverConfiguration.quitDriver();
   }
 
   @AfterAll
