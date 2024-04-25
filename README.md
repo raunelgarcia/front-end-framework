@@ -179,7 +179,7 @@ Raul Galera Sancho
 
 Alejandra Alvarado Tirado
 
-### Acknowledgments
+### Acknowledgments, in which case the default value
 
 Special thanks to our contributors and the open-source community for their valuable contributions and support.
 
