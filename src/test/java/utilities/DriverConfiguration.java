@@ -23,8 +23,12 @@ import org.openqa.selenium.safari.SafariDriver;
 import org.yaml.snakeyaml.Yaml;
 
 public class DriverConfiguration {
+  private static WebDriver currentDriver;
 
-  public WebDriver getDriver() {
+  public static WebDriver getDriver() {
+    if (currentDriver != null) {
+      return currentDriver;
+    }
     if (isWeb()) {
       Dimension windowResolution = ScreenResolution.getResolutionFromEnv();
       String url = LocalEnviroment.getApplicationUrl();
@@ -32,27 +36,32 @@ public class DriverConfiguration {
       driver.manage().window().setSize(windowResolution);
       driver.manage().window().maximize();
       driver.get(url);
-      return driver;
+      currentDriver = driver;
     } else if (isAndroid()) {
       try {
         URL url = new URL(DRIVER_URL);
-        return new AndroidDriver(url, fillCapabilities());
-
+        currentDriver = new AndroidDriver(url, fillCapabilities());
       } catch (MalformedURLException e) {
         throw new RuntimeException(e);
       }
     } else {
       try {
         URL url = new URL(DRIVER_URL);
-        return new IOSDriver(url, fillCapabilities());
+        currentDriver = new IOSDriver(url, fillCapabilities());
 
       } catch (MalformedURLException e) {
         throw new RuntimeException(e);
       }
     }
+    return currentDriver;
   }
 
-  private WebDriver configureWebDriver() {
+  public static void quitDriver() {
+    currentDriver.quit();
+    currentDriver = null;
+  }
+
+  private static WebDriver configureWebDriver() {
     WebDriver driver;
     String browser = LocalEnviroment.getBrowser();
 

@@ -71,8 +71,8 @@ public class BasePage {
     return false;
   }
 
-  public static void clickWhenVisible(WebElement element, WebDriver driver) {
-    waitForVisibility(element, driver);
+  public static void clickWhenVisible(WebElement element) {
+    waitForVisibility(element);
     element.click();
   }
 
@@ -84,9 +84,8 @@ public class BasePage {
     }
   }
 
-  public static void waitForVisibility(WebElement element, WebDriver driver) {
-    waitFor(
-        ExpectedConditions.visibilityOf(element), driver, HIGH_TIMEOUT, ChronoUnit.SECONDS, true);
+  public static void waitForVisibility(WebElement element) {
+    waitFor(ExpectedConditions.visibilityOf(element), HIGH_TIMEOUT, ChronoUnit.SECONDS, true);
   }
 
   public static void waitForAnimationToFinish() {
@@ -94,12 +93,9 @@ public class BasePage {
   }
 
   public static <K> void waitFor(
-      ExpectedCondition<K> condition,
-      WebDriver driver,
-      long time,
-      TemporalUnit unit,
-      boolean shouldFail) {
+      ExpectedCondition<K> condition, long time, TemporalUnit unit, boolean shouldFail) {
     try {
+      WebDriver driver = DriverConfiguration.getDriver();
       K result =
           new FluentWait<>(driver)
               .pollingEvery(Duration.ofMillis(1000))
@@ -202,13 +198,14 @@ public class BasePage {
     waitForAnimationToFinish();
   }
 
-  public static void scrollToElement(
-      WebElement element, Direction direction, boolean minScroll, WebDriver driver) {
+  public static void scrollToElement(WebElement element, Direction direction, boolean minScroll) {
+
     while (!isVisible(element)) {
       if (LocalEnviroment.isMobile()) {
-        swipe(direction, 0.4, minScroll ? 0.5 : 0.6, (AppiumDriver) driver);
+        swipe(
+            direction, 0.4, minScroll ? 0.5 : 0.6, (AppiumDriver) DriverConfiguration.getDriver());
       } else {
-        JSExecutor.executeScript(driver, "window.scrollBy(0,200)");
+        JSExecutor.executeScript(DriverConfiguration.getDriver(), "window.scrollBy(0,200)");
       }
     }
   }
