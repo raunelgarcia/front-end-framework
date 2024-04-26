@@ -19,7 +19,7 @@ import utilities.*;
 import utilities.JSExecutor;
 import utilities.LocalEnviroment;
 
-// @ExtendWith(TestErrorHandler.class)
+@ExtendWith(TestErrorHandler.class)
 public class MarcaTest {
 
   private static Marca controller;
@@ -47,7 +47,6 @@ public class MarcaTest {
     AllureReport.fillReportInfo();
     NetworkLogs.getNetworkLogs();
     waitSeconds(LOW_TIMEOUT);
-    DriverConfiguration.quitDriver();
   }
 
   @AfterAll
