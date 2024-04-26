@@ -8,10 +8,10 @@ import utilities.DriverConfiguration;
 
 public class TestErrorHandler implements TestWatcher, AfterAllCallback {
 
-  @Override
-  public void testFailed(ExtensionContext context, Throwable cause) {
-    AllureReport.attachScreenshot(DriverConfiguration.getDriver());
-  }
+    @Override
+    public void testFailed(ExtensionContext context, Throwable cause) {
+        AllureReport.attachScreenshot(DriverConfiguration.getDriver());
+    }
 
   @Override
   public void afterAll(ExtensionContext extensionContext) throws Exception {}
