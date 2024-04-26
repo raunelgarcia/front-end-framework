@@ -117,7 +117,6 @@ AppIdentifier=com.marca.marcador;Platform=IOS;Udid=A308507F-99BB-47A2-9A2D-06005
 
 
 ### Web Variables
-
 Accessibility=true;Platform=Web;Application=mrc;Browser=Chrome;Resolution=1920x1200;
 
 | Campo         | Valor |
