@@ -86,8 +86,8 @@ Ensure to set these variables according to your testing requirements before exec
 
 ### Android Variables
 
-Case 1: With AppActivity and AppPackage.  
-AppActivity=.activities.MainContainerActivity;AppPackage=com.iphonedroid.marca;Platform=Android;Udid=;
+Case 1: With AppActivity and AppPackage.
+AppActivity=.activities.MainContainerActivity;AppIdentifier=com.iphonedroid.marca;Platform=Android;Udid=;
 
 | Campo         | Valor |
 |---------------|-----|
@@ -97,7 +97,7 @@ AppActivity=.activities.MainContainerActivity;AppPackage=com.iphonedroid.marca;P
 | Udid          |     |
 
 Case 2: With App.  
-App=com.iphonedroid.marca.apk;Platform=Android;Udid=;
+App=marca-com-7-0-20.apk;Platform=Android;Udid=;
 
 | Campo    | Valor |
 |----------|-----| 
