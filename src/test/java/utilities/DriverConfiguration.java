@@ -6,7 +6,10 @@ import static utilities.LocalEnviroment.isWeb;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Paths;
@@ -16,10 +19,15 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.safari.SafariDriver;
+import org.openqa.selenium.safari.SafariOptions;
 import org.yaml.snakeyaml.Yaml;
 
 public class DriverConfiguration {
@@ -31,7 +39,8 @@ public class DriverConfiguration {
     }
     if (isWeb()) {
       Dimension windowResolution = ScreenResolution.getResolutionFromEnv();
-      String url = LocalEnviroment.getApplicationUrl();
+      String url = setURL();
+
       WebDriver driver = configureWebDriver();
       driver.manage().window().setSize(windowResolution);
       driver.manage().window().maximize();
@@ -67,18 +76,27 @@ public class DriverConfiguration {
 
     switch (browser) {
       case "edge":
-        driver = new EdgeDriver();
+        EdgeOptions edgeOptions = new EdgeOptions();
+        edgeOptions.addArguments("--lang=" + LocalEnviroment.getLanguage());
+        driver = new EdgeDriver(edgeOptions);
         break;
       case "firefox":
-        driver = new FirefoxDriver();
+        FirefoxProfile profile = new FirefoxProfile();
+        profile.setPreference("intl.accept_languages", LocalEnviroment.getLanguage());
+        FirefoxOptions firefoxOptions = new FirefoxOptions();
+        firefoxOptions.setProfile(profile);
+        driver = new FirefoxDriver(firefoxOptions);
         break;
       case "safari":
         driver = new SafariDriver();
         break;
       default:
-        driver = new ChromeDriver();
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments("--lang=" + LocalEnviroment.getLanguage());
+        driver = new ChromeDriver(chromeOptions);
         break;
     }
+
     return driver;
   }
 
@@ -143,5 +161,17 @@ public class DriverConfiguration {
     } catch (Exception e) {
       throw new IllegalStateException("Failed to load or parse the YAML file", e);
     }
+  }
+
+  public static String setURL() {
+    String base = LocalEnviroment.getApplicationUrl();
+
+    if (base.contains("{country}")) {
+      String newUrl = base.replace("{country}", LocalEnviroment.getLanguageCode());
+
+      return newUrl;
+    }
+
+    return base;
   }
 }
