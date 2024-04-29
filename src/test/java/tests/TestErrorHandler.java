@@ -15,7 +15,7 @@ public class TestErrorHandler implements TestWatcher, AfterAllCallback {
   }
 
   @Override
-  public void testSuccessful(ExtensionContext context){
+  public void testSuccessful(ExtensionContext context) {
     cleanUp();
   }
 
