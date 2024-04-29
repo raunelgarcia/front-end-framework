@@ -12,7 +12,7 @@ public class NetworkLogs {
     // TODO create logs from other platforms
   }
 
-  public static void getAndroidLogs() {
+  private static void getAndroidLogs() {
     try {
       ProcessBuilder processBuilder =
           new ProcessBuilder("cmd.exe", "/c", "adb logcat -d | findstr okhttp.OkHttpClient");

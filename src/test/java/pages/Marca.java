@@ -9,8 +9,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import utilities.DriverConfiguration;
 
 public class Marca extends BasePage {
+  private WebDriver driver;
 
   @FindBy(id = "ue-accept-notice-button")
   WebElement acceptCookies;
@@ -24,10 +26,8 @@ public class Marca extends BasePage {
   @FindBy(id = "buttonYes")
   WebElement ageButton;
 
-  private final WebDriver driver;
-
-  public Marca(WebDriver driver) {
-    this.driver = driver;
+  public Marca() {
+    this.driver = DriverConfiguration.getDriver();
     PageFactory.initElements(
         new AppiumFieldDecorator(driver, Duration.ofSeconds(LOW_TIMEOUT)), this);
   }
@@ -43,7 +43,7 @@ public class Marca extends BasePage {
   }
 
   public void acceptAge() {
-    clickWhenVisible(ageButton, driver);
+    clickWhenVisible(ageButton);
   }
 
   public boolean isNoticeShow() {

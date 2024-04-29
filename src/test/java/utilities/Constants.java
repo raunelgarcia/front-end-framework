@@ -19,7 +19,5 @@ public class Constants {
   public static final String ALLURE_COMMAND_MAC =
       "npx allure generate target/allure-results --clean; npx allure open";
   public static final String ACCESSIBILITY_REPORT_PATH = "target/java-a11y/";
-  public static final String CUCUMBER_STEPS_PATH = "tests/cucumber_steps";
-  public static final String FEATURES_PATH = "src/test/resources/features";
   public static final String ALLOWED_RESOLUTIONS_PATH = "yaml/allowedResolutions.yaml";
 }

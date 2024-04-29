@@ -19,13 +19,14 @@ import pages.BasePage;
 public class AllureReport {
   private static String descriptionHtml;
 
-  public static void fillReportInfo(WebDriver driver) {
-    descriptionHtml = setTestDescription(driver);
+  public static void fillReportInfo() {
+    descriptionHtml = setTestDescription();
     Allure.descriptionHtml(descriptionHtml);
     descriptionHtml = "";
   }
 
-  private static String setTestDescription(WebDriver driver) {
+  private static String setTestDescription() {
+    WebDriver driver = DriverConfiguration.getDriver();
     StringBuilder description = new StringBuilder();
     AppiumDriver driverMobile;
     String os = null;

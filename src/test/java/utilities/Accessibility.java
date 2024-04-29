@@ -10,13 +10,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.Comparator;
-import org.openqa.selenium.WebDriver;
 
 public class Accessibility {
 
-  public static void checkAccessibility(WebDriver driver) {
+  public static void checkAccessibility() {
     if (LocalEnviroment.getAccessibility() && isWeb()) {
-      HtmlCsRunner htmlCsRunner = new HtmlCsRunner(driver);
+      HtmlCsRunner htmlCsRunner = new HtmlCsRunner(DriverConfiguration.getDriver());
       try {
         htmlCsRunner.execute();
         htmlCsRunner.generateHtmlReport();
@@ -26,9 +25,9 @@ public class Accessibility {
     }
   }
 
-  public static void checkAccessibilityAxe(WebDriver driver) {
+  public static void checkAccessibilityAxe() {
     if (LocalEnviroment.getAccessibility() && isWeb()) {
-      AxeRunner axeRunner = new AxeRunner(driver);
+      AxeRunner axeRunner = new AxeRunner(DriverConfiguration.getDriver());
       try {
         axeRunner.execute();
         axeRunner.generateHtmlReport();
