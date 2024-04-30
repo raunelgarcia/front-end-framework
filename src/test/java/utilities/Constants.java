@@ -20,4 +20,7 @@ public class Constants {
       "npx allure generate target/allure-results --clean; npx allure open";
   public static final String ACCESSIBILITY_REPORT_PATH = "target/java-a11y/";
   public static final String ALLOWED_RESOLUTIONS_PATH = "yaml/allowedResolutions.yaml";
+  public static final String ALLURE_CLEAN_COMMAND =
+      "rd /s /q .\\target\\allure-results\\ && rd /s /q .\\allure-report\\";
+  public static final String NETWORK_LOG_CLEAN_COMMAND = "rd /s /q .\\network-logs\\";
 }
