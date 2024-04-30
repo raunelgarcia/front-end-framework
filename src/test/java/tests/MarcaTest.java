@@ -9,10 +9,7 @@ import static utilities.Constants.ALLURE_COMMAND_MAC;
 import static utilities.Constants.ALLURE_COMMAND_WIN;
 import static utilities.LocalEnviroment.isWeb;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import pages.Marca;
 import utilities.*;
@@ -23,6 +20,13 @@ import utilities.LocalEnviroment;
 public class MarcaTest {
 
   private static Marca controller;
+
+  @BeforeAll
+  public static void clean_allure_report() {
+    JSExecutor.runCommand(ALLURE_CLEAN_COMMAND);
+    JSExecutor.runCommand(NETWORK_LOG_CLEAN_COMMAND);
+  }
+
 
   @BeforeEach
   public void iAmOnTheMarcaWebsite() {
