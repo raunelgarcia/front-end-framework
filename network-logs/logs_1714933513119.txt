@@ -1,0 +1,207 @@
+05-05 20:23:29.204 21410 21447 I okhttp.OkHttpClient: --> POST https://events.newsroom.bi/ingest.php
+05-05 20:23:29.205 21410 21447 I okhttp.OkHttpClient: Content-Type: application/x-www-form-urlencoded
+05-05 20:23:29.205 21410 21447 I okhttp.OkHttpClient: Content-Length: 527
+05-05 20:23:29.205 21410 21447 I okhttp.OkHttpClient: ps=1714933399&sc=0&l=0&ac=2165&c=https%3A%2F%2Fwww.marca.com%2Ffutbol%2Fprimera-division%2F2024%2F05%2F05%2F6637707be2704eb9918b45a0.html&n=1714933409&fv=1714254610&u=b8c0726b-58e4-4ba7-9b46-3fad6d4b8cc9&p=88988fc4-248e-4603-a9be-987de4a6e80b&pageType=4&pvar=%5B%5D&a=1&lv=1714933162&pp=https%3A%2F%2Fwww.marca.com&sui=&s=57704baf-3d2a-4902-87a3-bebe1cb617ad&t=1714933389&svar=%5B%5D&url=https%3A%2F%2Fwww.marca.com%2Ffutbol%2Fprimera-division%2F2024%2F05%2F05%2F6637707be2704eb9918b45a0.html&useg=%5B%5D&ut=1&uvar=%5B%5D&v=0.1
+05-05 20:23:29.205 21410 21447 I okhttp.OkHttpClient: --> END POST (527-byte body)
+05-05 20:23:29.250 21410 21447 I okhttp.OkHttpClient: <-- 200 https://events.newsroom.bi/ingest.php (45ms)
+05-05 20:23:29.250 21410 21447 I okhttp.OkHttpClient: access-control-allow-origin: *
+05-05 20:23:29.250 21410 21447 I okhttp.OkHttpClient: access-control-allow-methods: GET, POST, OPTIONS
+05-05 20:23:29.250 21410 21447 I okhttp.OkHttpClient: access-control-allow-headers: DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range
+05-05 20:23:29.250 21410 21447 I okhttp.OkHttpClient: access-control-expose-headers: Content-Length,Content-Range
+05-05 20:23:29.250 21410 21447 I okhttp.OkHttpClient: access-control-allow-credentials: true
+05-05 20:23:29.250 21410 21447 I okhttp.OkHttpClient: cache-control: private,no-store
+05-05 20:23:29.250 21410 21447 I okhttp.OkHttpClient: content-type: application/json
+05-05 20:23:29.250 21410 21447 I okhttp.OkHttpClient: date: Sun, 05 May 2024 18:23:30 GMT
+05-05 20:23:29.250 21410 21447 I okhttp.OkHttpClient: content-length: 2
+05-05 20:23:29.250 21410 21447 I okhttp.OkHttpClient: x-envoy-upstream-service-time: 0
+05-05 20:23:29.250 21410 21447 I okhttp.OkHttpClient: server: istio-envoy
+05-05 20:23:29.251 21410 21447 I okhttp.OkHttpClient: {}
+05-05 20:23:29.251 21410 21447 I okhttp.OkHttpClient: <-- END HTTP (2-byte body)
+05-05 20:23:39.208 21410 21447 I okhttp.OkHttpClient: --> POST https://events.newsroom.bi/ingest.php
+05-05 20:23:39.209 21410 21447 I okhttp.OkHttpClient: Content-Type: application/x-www-form-urlencoded
+05-05 20:23:39.209 21410 21447 I okhttp.OkHttpClient: Content-Length: 528
+05-05 20:23:39.209 21410 21447 I okhttp.OkHttpClient: ps=1714933399&sc=0&l=10&ac=2165&c=https%3A%2F%2Fwww.marca.com%2Ffutbol%2Fprimera-division%2F2024%2F05%2F05%2F6637707be2704eb9918b45a0.html&n=1714933419&fv=1714254610&u=b8c0726b-58e4-4ba7-9b46-3fad6d4b8cc9&p=88988fc4-248e-4603-a9be-987de4a6e80b&pageType=4&pvar=%5B%5D&a=2&lv=1714933162&pp=https%3A%2F%2Fwww.marca.com&sui=&s=57704baf-3d2a-4902-87a3-bebe1cb617ad&t=1714933389&svar=%5B%5D&url=https%3A%2F%2Fwww.marca.com%2Ffutbol%2Fprimera-division%2F2024%2F05%2F05%2F6637707be2704eb9918b45a0.html&useg=%5B%5D&ut=1&uvar=%5B%5D&v=0.1
+05-05 20:23:39.209 21410 21447 I okhttp.OkHttpClient: --> END POST (528-byte body)
+05-05 20:23:39.252 21410 21447 I okhttp.OkHttpClient: <-- 200 https://events.newsroom.bi/ingest.php (43ms)
+05-05 20:23:39.252 21410 21447 I okhttp.OkHttpClient: access-control-allow-origin: *
+05-05 20:23:39.252 21410 21447 I okhttp.OkHttpClient: access-control-allow-methods: GET, POST, OPTIONS
+05-05 20:23:39.252 21410 21447 I okhttp.OkHttpClient: access-control-allow-headers: DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range
+05-05 20:23:39.252 21410 21447 I okhttp.OkHttpClient: access-control-expose-headers: Content-Length,Content-Range
+05-05 20:23:39.252 21410 21447 I okhttp.OkHttpClient: access-control-allow-credentials: true
+05-05 20:23:39.252 21410 21447 I okhttp.OkHttpClient: cache-control: private,no-store
+05-05 20:23:39.253 21410 21447 I okhttp.OkHttpClient: content-type: application/json
+05-05 20:23:39.253 21410 21447 I okhttp.OkHttpClient: date: Sun, 05 May 2024 18:23:40 GMT
+05-05 20:23:39.253 21410 21447 I okhttp.OkHttpClient: content-length: 2
+05-05 20:23:39.253 21410 21447 I okhttp.OkHttpClient: x-envoy-upstream-service-time: 0
+05-05 20:23:39.253 21410 21447 I okhttp.OkHttpClient: server: istio-envoy
+05-05 20:23:39.253 21410 21447 I okhttp.OkHttpClient: {}
+05-05 20:23:39.253 21410 21447 I okhttp.OkHttpClient: <-- END HTTP (2-byte body)
+05-05 20:23:49.214 21410 21447 I okhttp.OkHttpClient: --> POST https://events.newsroom.bi/ingest.php
+05-05 20:23:49.214 21410 21447 I okhttp.OkHttpClient: Content-Type: application/x-www-form-urlencoded
+05-05 20:23:49.215 21410 21447 I okhttp.OkHttpClient: Content-Length: 528
+05-05 20:23:49.215 21410 21447 I okhttp.OkHttpClient: ps=1714933399&sc=0&l=20&ac=2165&c=https%3A%2F%2Fwww.marca.com%2Ffutbol%2Fprimera-division%2F2024%2F05%2F05%2F6637707be2704eb9918b45a0.html&n=1714933429&fv=1714254610&u=b8c0726b-58e4-4ba7-9b46-3fad6d4b8cc9&p=88988fc4-248e-4603-a9be-987de4a6e80b&pageType=4&pvar=%5B%5D&a=3&lv=1714933162&pp=https%3A%2F%2Fwww.marca.com&sui=&s=57704baf-3d2a-4902-87a3-bebe1cb617ad&t=1714933389&svar=%5B%5D&url=https%3A%2F%2Fwww.marca.com%2Ffutbol%2Fprimera-division%2F2024%2F05%2F05%2F6637707be2704eb9918b45a0.html&useg=%5B%5D&ut=1&uvar=%5B%5D&v=0.1
+05-05 20:23:49.215 21410 21447 I okhttp.OkHttpClient: --> END POST (528-byte body)
+05-05 20:23:49.280 21410 21447 I okhttp.OkHttpClient: <-- 200 https://events.newsroom.bi/ingest.php (65ms)
+05-05 20:23:49.281 21410 21447 I okhttp.OkHttpClient: access-control-allow-origin: *
+05-05 20:23:49.281 21410 21447 I okhttp.OkHttpClient: access-control-allow-methods: GET, POST, OPTIONS
+05-05 20:23:49.281 21410 21447 I okhttp.OkHttpClient: access-control-allow-headers: DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range
+05-05 20:23:49.281 21410 21447 I okhttp.OkHttpClient: access-control-expose-headers: Content-Length,Content-Range
+05-05 20:23:49.281 21410 21447 I okhttp.OkHttpClient: access-control-allow-credentials: true
+05-05 20:23:49.281 21410 21447 I okhttp.OkHttpClient: cache-control: private,no-store
+05-05 20:23:49.281 21410 21447 I okhttp.OkHttpClient: content-type: application/json
+05-05 20:23:49.281 21410 21447 I okhttp.OkHttpClient: date: Sun, 05 May 2024 18:23:50 GMT
+05-05 20:23:49.281 21410 21447 I okhttp.OkHttpClient: content-length: 2
+05-05 20:23:49.281 21410 21447 I okhttp.OkHttpClient: x-envoy-upstream-service-time: 0
+05-05 20:23:49.281 21410 21447 I okhttp.OkHttpClient: server: istio-envoy
+05-05 20:23:49.282 21410 21447 I okhttp.OkHttpClient: {}
+05-05 20:23:49.282 21410 21447 I okhttp.OkHttpClient: <-- END HTTP (2-byte body)
+05-05 20:23:59.210 21410 21963 I okhttp.OkHttpClient: --> POST https://events.newsroom.bi/ingest.php
+05-05 20:23:59.210 21410 21963 I okhttp.OkHttpClient: Content-Type: application/x-www-form-urlencoded
+05-05 20:23:59.210 21410 21963 I okhttp.OkHttpClient: Content-Length: 528
+05-05 20:23:59.210 21410 21963 I okhttp.OkHttpClient: ps=1714933399&sc=0&l=30&ac=2165&c=https%3A%2F%2Fwww.marca.com%2Ffutbol%2Fprimera-division%2F2024%2F05%2F05%2F6637707be2704eb9918b45a0.html&n=1714933439&fv=1714254610&u=b8c0726b-58e4-4ba7-9b46-3fad6d4b8cc9&p=88988fc4-248e-4603-a9be-987de4a6e80b&pageType=4&pvar=%5B%5D&a=4&lv=1714933162&pp=https%3A%2F%2Fwww.marca.com&sui=&s=57704baf-3d2a-4902-87a3-bebe1cb617ad&t=1714933389&svar=%5B%5D&url=https%3A%2F%2Fwww.marca.com%2Ffutbol%2Fprimera-division%2F2024%2F05%2F05%2F6637707be2704eb9918b45a0.html&useg=%5B%5D&ut=1&uvar=%5B%5D&v=0.1
+05-05 20:23:59.210 21410 21963 I okhttp.OkHttpClient: --> END POST (528-byte body)
+05-05 20:23:59.285 21410 21963 I okhttp.OkHttpClient: <-- 200 https://events.newsroom.bi/ingest.php (74ms)
+05-05 20:23:59.285 21410 21963 I okhttp.OkHttpClient: access-control-allow-origin: *
+05-05 20:23:59.285 21410 21963 I okhttp.OkHttpClient: access-control-allow-methods: GET, POST, OPTIONS
+05-05 20:23:59.285 21410 21963 I okhttp.OkHttpClient: access-control-allow-headers: DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range
+05-05 20:23:59.285 21410 21963 I okhttp.OkHttpClient: access-control-expose-headers: Content-Length,Content-Range
+05-05 20:23:59.285 21410 21963 I okhttp.OkHttpClient: access-control-allow-credentials: true
+05-05 20:23:59.285 21410 21963 I okhttp.OkHttpClient: cache-control: private,no-store
+05-05 20:23:59.286 21410 21963 I okhttp.OkHttpClient: content-type: application/json
+05-05 20:23:59.286 21410 21963 I okhttp.OkHttpClient: date: Sun, 05 May 2024 18:24:00 GMT
+05-05 20:23:59.286 21410 21963 I okhttp.OkHttpClient: content-length: 2
+05-05 20:23:59.286 21410 21963 I okhttp.OkHttpClient: x-envoy-upstream-service-time: 0
+05-05 20:23:59.286 21410 21963 I okhttp.OkHttpClient: server: istio-envoy
+05-05 20:23:59.286 21410 21963 I okhttp.OkHttpClient: {}
+05-05 20:23:59.286 21410 21963 I okhttp.OkHttpClient: <-- END HTTP (2-byte body)
+05-05 20:24:09.216 21410 21963 I okhttp.OkHttpClient: --> POST https://events.newsroom.bi/ingest.php
+05-05 20:24:09.216 21410 21963 I okhttp.OkHttpClient: Content-Type: application/x-www-form-urlencoded
+05-05 20:24:09.216 21410 21963 I okhttp.OkHttpClient: Content-Length: 528
+05-05 20:24:09.216 21410 21963 I okhttp.OkHttpClient: ps=1714933399&sc=0&l=40&ac=2165&c=https%3A%2F%2Fwww.marca.com%2Ffutbol%2Fprimera-division%2F2024%2F05%2F05%2F6637707be2704eb9918b45a0.html&n=1714933449&fv=1714254610&u=b8c0726b-58e4-4ba7-9b46-3fad6d4b8cc9&p=88988fc4-248e-4603-a9be-987de4a6e80b&pageType=4&pvar=%5B%5D&a=5&lv=1714933162&pp=https%3A%2F%2Fwww.marca.com&sui=&s=57704baf-3d2a-4902-87a3-bebe1cb617ad&t=1714933389&svar=%5B%5D&url=https%3A%2F%2Fwww.marca.com%2Ffutbol%2Fprimera-division%2F2024%2F05%2F05%2F6637707be2704eb9918b45a0.html&useg=%5B%5D&ut=1&uvar=%5B%5D&v=0.1
+05-05 20:24:09.216 21410 21963 I okhttp.OkHttpClient: --> END POST (528-byte body)
+05-05 20:24:09.260 21410 21963 I okhttp.OkHttpClient: <-- 200 https://events.newsroom.bi/ingest.php (43ms)
+05-05 20:24:09.260 21410 21963 I okhttp.OkHttpClient: access-control-allow-origin: *
+05-05 20:24:09.260 21410 21963 I okhttp.OkHttpClient: access-control-allow-methods: GET, POST, OPTIONS
+05-05 20:24:09.260 21410 21963 I okhttp.OkHttpClient: access-control-allow-headers: DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range
+05-05 20:24:09.260 21410 21963 I okhttp.OkHttpClient: access-control-expose-headers: Content-Length,Content-Range
+05-05 20:24:09.260 21410 21963 I okhttp.OkHttpClient: access-control-allow-credentials: true
+05-05 20:24:09.260 21410 21963 I okhttp.OkHttpClient: cache-control: private,no-store
+05-05 20:24:09.260 21410 21963 I okhttp.OkHttpClient: content-type: application/json
+05-05 20:24:09.260 21410 21963 I okhttp.OkHttpClient: date: Sun, 05 May 2024 18:24:10 GMT
+05-05 20:24:09.260 21410 21963 I okhttp.OkHttpClient: content-length: 2
+05-05 20:24:09.261 21410 21963 I okhttp.OkHttpClient: x-envoy-upstream-service-time: 0
+05-05 20:24:09.261 21410 21963 I okhttp.OkHttpClient: server: istio-envoy
+05-05 20:24:09.261 21410 21963 I okhttp.OkHttpClient: {}
+05-05 20:24:09.261 21410 21963 I okhttp.OkHttpClient: <-- END HTTP (2-byte body)
+05-05 20:24:19.225 21410 21963 I okhttp.OkHttpClient: --> POST https://events.newsroom.bi/ingest.php
+05-05 20:24:19.225 21410 21963 I okhttp.OkHttpClient: Content-Type: application/x-www-form-urlencoded
+05-05 20:24:19.225 21410 21963 I okhttp.OkHttpClient: Content-Length: 528
+05-05 20:24:19.225 21410 21963 I okhttp.OkHttpClient: ps=1714933399&sc=0&l=50&ac=2165&c=https%3A%2F%2Fwww.marca.com%2Ffutbol%2Fprimera-division%2F2024%2F05%2F05%2F6637707be2704eb9918b45a0.html&n=1714933459&fv=1714254610&u=b8c0726b-58e4-4ba7-9b46-3fad6d4b8cc9&p=88988fc4-248e-4603-a9be-987de4a6e80b&pageType=4&pvar=%5B%5D&a=6&lv=1714933162&pp=https%3A%2F%2Fwww.marca.com&sui=&s=57704baf-3d2a-4902-87a3-bebe1cb617ad&t=1714933389&svar=%5B%5D&url=https%3A%2F%2Fwww.marca.com%2Ffutbol%2Fprimera-division%2F2024%2F05%2F05%2F6637707be2704eb9918b45a0.html&useg=%5B%5D&ut=1&uvar=%5B%5D&v=0.1
+05-05 20:24:19.225 21410 21963 I okhttp.OkHttpClient: --> END POST (528-byte body)
+05-05 20:24:19.270 21410 21963 I okhttp.OkHttpClient: <-- 200 https://events.newsroom.bi/ingest.php (45ms)
+05-05 20:24:19.270 21410 21963 I okhttp.OkHttpClient: access-control-allow-origin: *
+05-05 20:24:19.270 21410 21963 I okhttp.OkHttpClient: access-control-allow-methods: GET, POST, OPTIONS
+05-05 20:24:19.270 21410 21963 I okhttp.OkHttpClient: access-control-allow-headers: DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range
+05-05 20:24:19.270 21410 21963 I okhttp.OkHttpClient: access-control-expose-headers: Content-Length,Content-Range
+05-05 20:24:19.270 21410 21963 I okhttp.OkHttpClient: access-control-allow-credentials: true
+05-05 20:24:19.270 21410 21963 I okhttp.OkHttpClient: cache-control: private,no-store
+05-05 20:24:19.270 21410 21963 I okhttp.OkHttpClient: content-type: application/json
+05-05 20:24:19.270 21410 21963 I okhttp.OkHttpClient: date: Sun, 05 May 2024 18:24:20 GMT
+05-05 20:24:19.270 21410 21963 I okhttp.OkHttpClient: content-length: 2
+05-05 20:24:19.270 21410 21963 I okhttp.OkHttpClient: x-envoy-upstream-service-time: 0
+05-05 20:24:19.270 21410 21963 I okhttp.OkHttpClient: server: istio-envoy
+05-05 20:24:19.271 21410 21963 I okhttp.OkHttpClient: {}
+05-05 20:24:19.271 21410 21963 I okhttp.OkHttpClient: <-- END HTTP (2-byte body)
+05-05 20:24:29.223 21410 21963 I okhttp.OkHttpClient: --> POST https://events.newsroom.bi/ingest.php
+05-05 20:24:29.223 21410 21963 I okhttp.OkHttpClient: Content-Type: application/x-www-form-urlencoded
+05-05 20:24:29.223 21410 21963 I okhttp.OkHttpClient: Content-Length: 528
+05-05 20:24:29.224 21410 21963 I okhttp.OkHttpClient: ps=1714933399&sc=0&l=60&ac=2165&c=https%3A%2F%2Fwww.marca.com%2Ffutbol%2Fprimera-division%2F2024%2F05%2F05%2F6637707be2704eb9918b45a0.html&n=1714933469&fv=1714254610&u=b8c0726b-58e4-4ba7-9b46-3fad6d4b8cc9&p=88988fc4-248e-4603-a9be-987de4a6e80b&pageType=4&pvar=%5B%5D&a=7&lv=1714933162&pp=https%3A%2F%2Fwww.marca.com&sui=&s=57704baf-3d2a-4902-87a3-bebe1cb617ad&t=1714933389&svar=%5B%5D&url=https%3A%2F%2Fwww.marca.com%2Ffutbol%2Fprimera-division%2F2024%2F05%2F05%2F6637707be2704eb9918b45a0.html&useg=%5B%5D&ut=1&uvar=%5B%5D&v=0.1
+05-05 20:24:29.224 21410 21963 I okhttp.OkHttpClient: --> END POST (528-byte body)
+05-05 20:24:29.269 21410 21963 I okhttp.OkHttpClient: <-- 200 https://events.newsroom.bi/ingest.php (45ms)
+05-05 20:24:29.269 21410 21963 I okhttp.OkHttpClient: access-control-allow-origin: *
+05-05 20:24:29.269 21410 21963 I okhttp.OkHttpClient: access-control-allow-methods: GET, POST, OPTIONS
+05-05 20:24:29.270 21410 21963 I okhttp.OkHttpClient: access-control-allow-headers: DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range
+05-05 20:24:29.270 21410 21963 I okhttp.OkHttpClient: access-control-expose-headers: Content-Length,Content-Range
+05-05 20:24:29.270 21410 21963 I okhttp.OkHttpClient: access-control-allow-credentials: true
+05-05 20:24:29.270 21410 21963 I okhttp.OkHttpClient: cache-control: private,no-store
+05-05 20:24:29.270 21410 21963 I okhttp.OkHttpClient: content-type: application/json
+05-05 20:24:29.270 21410 21963 I okhttp.OkHttpClient: date: Sun, 05 May 2024 18:24:30 GMT
+05-05 20:24:29.270 21410 21963 I okhttp.OkHttpClient: content-length: 2
+05-05 20:24:29.270 21410 21963 I okhttp.OkHttpClient: x-envoy-upstream-service-time: 0
+05-05 20:24:29.270 21410 21963 I okhttp.OkHttpClient: server: istio-envoy
+05-05 20:24:29.270 21410 21963 I okhttp.OkHttpClient: {}
+05-05 20:24:29.270 21410 21963 I okhttp.OkHttpClient: <-- END HTTP (2-byte body)
+05-05 20:24:39.216 21410 21448 I okhttp.OkHttpClient: --> POST https://events.newsroom.bi/ingest.php
+05-05 20:24:39.216 21410 21448 I okhttp.OkHttpClient: Content-Type: application/x-www-form-urlencoded
+05-05 20:24:39.216 21410 21448 I okhttp.OkHttpClient: Content-Length: 528
+05-05 20:24:39.216 21410 21448 I okhttp.OkHttpClient: ps=1714933399&sc=0&l=70&ac=2165&c=https%3A%2F%2Fwww.marca.com%2Ffutbol%2Fprimera-division%2F2024%2F05%2F05%2F6637707be2704eb9918b45a0.html&n=1714933479&fv=1714254610&u=b8c0726b-58e4-4ba7-9b46-3fad6d4b8cc9&p=88988fc4-248e-4603-a9be-987de4a6e80b&pageType=4&pvar=%5B%5D&a=8&lv=1714933162&pp=https%3A%2F%2Fwww.marca.com&sui=&s=57704baf-3d2a-4902-87a3-bebe1cb617ad&t=1714933389&svar=%5B%5D&url=https%3A%2F%2Fwww.marca.com%2Ffutbol%2Fprimera-division%2F2024%2F05%2F05%2F6637707be2704eb9918b45a0.html&useg=%5B%5D&ut=1&uvar=%5B%5D&v=0.1
+05-05 20:24:39.216 21410 21448 I okhttp.OkHttpClient: --> END POST (528-byte body)
+05-05 20:24:39.272 21410 21448 I okhttp.OkHttpClient: <-- 200 https://events.newsroom.bi/ingest.php (55ms)
+05-05 20:24:39.272 21410 21448 I okhttp.OkHttpClient: access-control-allow-origin: *
+05-05 20:24:39.272 21410 21448 I okhttp.OkHttpClient: access-control-allow-methods: GET, POST, OPTIONS
+05-05 20:24:39.272 21410 21448 I okhttp.OkHttpClient: access-control-allow-headers: DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range
+05-05 20:24:39.272 21410 21448 I okhttp.OkHttpClient: access-control-expose-headers: Content-Length,Content-Range
+05-05 20:24:39.272 21410 21448 I okhttp.OkHttpClient: access-control-allow-credentials: true
+05-05 20:24:39.272 21410 21448 I okhttp.OkHttpClient: cache-control: private,no-store
+05-05 20:24:39.272 21410 21448 I okhttp.OkHttpClient: content-type: application/json
+05-05 20:24:39.272 21410 21448 I okhttp.OkHttpClient: date: Sun, 05 May 2024 18:24:40 GMT
+05-05 20:24:39.272 21410 21448 I okhttp.OkHttpClient: content-length: 2
+05-05 20:24:39.273 21410 21448 I okhttp.OkHttpClient: x-envoy-upstream-service-time: 1
+05-05 20:24:39.273 21410 21448 I okhttp.OkHttpClient: server: istio-envoy
+05-05 20:24:39.273 21410 21448 I okhttp.OkHttpClient: {}
+05-05 20:24:39.273 21410 21448 I okhttp.OkHttpClient: <-- END HTTP (2-byte body)
+05-05 20:24:49.224 21410 21448 I okhttp.OkHttpClient: --> POST https://events.newsroom.bi/ingest.php
+05-05 20:24:49.225 21410 21448 I okhttp.OkHttpClient: Content-Type: application/x-www-form-urlencoded
+05-05 20:24:49.225 21410 21448 I okhttp.OkHttpClient: Content-Length: 528
+05-05 20:24:49.225 21410 21448 I okhttp.OkHttpClient: ps=1714933399&sc=0&l=80&ac=2165&c=https%3A%2F%2Fwww.marca.com%2Ffutbol%2Fprimera-division%2F2024%2F05%2F05%2F6637707be2704eb9918b45a0.html&n=1714933489&fv=1714254610&u=b8c0726b-58e4-4ba7-9b46-3fad6d4b8cc9&p=88988fc4-248e-4603-a9be-987de4a6e80b&pageType=4&pvar=%5B%5D&a=9&lv=1714933162&pp=https%3A%2F%2Fwww.marca.com&sui=&s=57704baf-3d2a-4902-87a3-bebe1cb617ad&t=1714933389&svar=%5B%5D&url=https%3A%2F%2Fwww.marca.com%2Ffutbol%2Fprimera-division%2F2024%2F05%2F05%2F6637707be2704eb9918b45a0.html&useg=%5B%5D&ut=1&uvar=%5B%5D&v=0.1
+05-05 20:24:49.225 21410 21448 I okhttp.OkHttpClient: --> END POST (528-byte body)
+05-05 20:24:49.269 21410 21448 I okhttp.OkHttpClient: <-- 200 https://events.newsroom.bi/ingest.php (43ms)
+05-05 20:24:49.269 21410 21448 I okhttp.OkHttpClient: access-control-allow-origin: *
+05-05 20:24:49.269 21410 21448 I okhttp.OkHttpClient: access-control-allow-methods: GET, POST, OPTIONS
+05-05 20:24:49.269 21410 21448 I okhttp.OkHttpClient: access-control-allow-headers: DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range
+05-05 20:24:49.269 21410 21448 I okhttp.OkHttpClient: access-control-expose-headers: Content-Length,Content-Range
+05-05 20:24:49.269 21410 21448 I okhttp.OkHttpClient: access-control-allow-credentials: true
+05-05 20:24:49.269 21410 21448 I okhttp.OkHttpClient: cache-control: private,no-store
+05-05 20:24:49.269 21410 21448 I okhttp.OkHttpClient: content-type: application/json
+05-05 20:24:49.269 21410 21448 I okhttp.OkHttpClient: date: Sun, 05 May 2024 18:24:50 GMT
+05-05 20:24:49.269 21410 21448 I okhttp.OkHttpClient: content-length: 2
+05-05 20:24:49.269 21410 21448 I okhttp.OkHttpClient: x-envoy-upstream-service-time: 0
+05-05 20:24:49.269 21410 21448 I okhttp.OkHttpClient: server: istio-envoy
+05-05 20:24:49.270 21410 21448 I okhttp.OkHttpClient: {}
+05-05 20:24:49.270 21410 21448 I okhttp.OkHttpClient: <-- END HTTP (2-byte body)
+05-05 20:25:01.682 22189 22228 I okhttp.OkHttpClient: --> POST https://events.newsroom.bi/ingest.php
+05-05 20:25:01.682 22189 22228 I okhttp.OkHttpClient: Content-Type: application/x-www-form-urlencoded
+05-05 20:25:01.683 22189 22228 I okhttp.OkHttpClient: Content-Length: 346
+05-05 20:25:01.683 22189 22228 I okhttp.OkHttpClient: ps=1714933501&sc=0&l=0&ac=2165&c=https%3A%2F%2Fwww.marca.com&n=1714933501&fv=1714254610&u=b8c0726b-58e4-4ba7-9b46-3fad6d4b8cc9&p=35310f9f-a210-4c2b-bfb7-fead1eef289d&pageType=4&pvar=%5B%5D&a=0&lv=1714933489&pp=&sui=&s=ba3096e7-3cb6-48eb-b9fd-f5383645dc01&t=1714933501&svar=%5B%5D&url=https%3A%2F%2Fwww.marca.com&useg=%5B%5D&ut=1&uvar=%5B%5D&v=0.1
+05-05 20:25:01.683 22189 22228 I okhttp.OkHttpClient: --> END POST (346-byte body)
+05-05 20:25:01.872 22189 22228 I okhttp.OkHttpClient: <-- 200 https://events.newsroom.bi/ingest.php (189ms)
+05-05 20:25:01.872 22189 22228 I okhttp.OkHttpClient: access-control-allow-origin: *
+05-05 20:25:01.872 22189 22228 I okhttp.OkHttpClient: access-control-allow-methods: GET, POST, OPTIONS
+05-05 20:25:01.872 22189 22228 I okhttp.OkHttpClient: access-control-allow-headers: DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range
+05-05 20:25:01.872 22189 22228 I okhttp.OkHttpClient: access-control-expose-headers: Content-Length,Content-Range
+05-05 20:25:01.872 22189 22228 I okhttp.OkHttpClient: access-control-allow-credentials: true
+05-05 20:25:01.872 22189 22228 I okhttp.OkHttpClient: cache-control: private,no-store
+05-05 20:25:01.872 22189 22228 I okhttp.OkHttpClient: content-type: application/json
+05-05 20:25:01.872 22189 22228 I okhttp.OkHttpClient: date: Sun, 05 May 2024 18:25:02 GMT
+05-05 20:25:01.872 22189 22228 I okhttp.OkHttpClient: x-envoy-upstream-service-time: 1
+05-05 20:25:01.872 22189 22228 I okhttp.OkHttpClient: server: istio-envoy
+05-05 20:25:01.872 22189 22228 I okhttp.OkHttpClient: {"strategy":[{"tick":2,"delay":5000},{"tick":3,"delay":10000},{"tick":20,"delay":15000},{"tick":150,"delay":20000}],"ads":200}
+05-05 20:25:01.872 22189 22228 I okhttp.OkHttpClient: <-- END HTTP (126-byte body)
+05-05 20:25:03.692 22189 22229 I okhttp.OkHttpClient: --> POST https://events.newsroom.bi/ingest.php
+05-05 20:25:03.693 22189 22229 I okhttp.OkHttpClient: Content-Type: application/x-www-form-urlencoded
+05-05 20:25:03.693 22189 22229 I okhttp.OkHttpClient: Content-Length: 517
+05-05 20:25:03.693 22189 22229 I okhttp.OkHttpClient: ps=1714933503&sc=0&l=0&ac=2165&c=https%3A%2F%2Fwww.marca.com%2Ffutbol%2Ffutbol-sala%2F2024%2F05%2F05%2F6637c9f922601df0538b4588.html&n=1714933503&fv=1714254610&u=b8c0726b-58e4-4ba7-9b46-3fad6d4b8cc9&p=f9e484ee-d961-4eb7-8dc2-d1cac8d9b3d3&pageType=4&pvar=%5B%5D&a=0&lv=1714933489&pp=https%3A%2F%2Fwww.marca.com&sui=&s=ba3096e7-3cb6-48eb-b9fd-f5383645dc01&t=1714933501&svar=%5B%5D&url=https%3A%2F%2Fwww.marca.com%2Ffutbol%2Ffutbol-sala%2F2024%2F05%2F05%2F6637c9f922601df0538b4588.html&useg=%5B%5D&ut=1&uvar=%5B%5D&v=0.1
+05-05 20:25:03.693 22189 22229 I okhttp.OkHttpClient: --> END POST (517-byte body)
+05-05 20:25:03.732 22189 22229 I okhttp.OkHttpClient: <-- 200 https://events.newsroom.bi/ingest.php (39ms)
+05-05 20:25:03.733 22189 22229 I okhttp.OkHttpClient: access-control-allow-origin: *
+05-05 20:25:03.733 22189 22229 I okhttp.OkHttpClient: access-control-allow-methods: GET, POST, OPTIONS
+05-05 20:25:03.733 22189 22229 I okhttp.OkHttpClient: access-control-allow-headers: DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range
+05-05 20:25:03.733 22189 22229 I okhttp.OkHttpClient: access-control-expose-headers: Content-Length,Content-Range
+05-05 20:25:03.733 22189 22229 I okhttp.OkHttpClient: access-control-allow-credentials: true
+05-05 20:25:03.733 22189 22229 I okhttp.OkHttpClient: cache-control: private,no-store
+05-05 20:25:03.733 22189 22229 I okhttp.OkHttpClient: content-type: application/json
+05-05 20:25:03.733 22189 22229 I okhttp.OkHttpClient: date: Sun, 05 May 2024 18:25:04 GMT
+05-05 20:25:03.733 22189 22229 I okhttp.OkHttpClient: x-envoy-upstream-service-time: 0
+05-05 20:25:03.733 22189 22229 I okhttp.OkHttpClient: server: istio-envoy
+05-05 20:25:03.733 22189 22229 I okhttp.OkHttpClient: {"strategy":[{"tick":2,"delay":5000},{"tick":3,"delay":10000},{"tick":20,"delay":15000},{"tick":150,"delay":20000}],"ads":200}
+05-05 20:25:03.733 22189 22229 I okhttp.OkHttpClient: <-- END HTTP (126-byte body)
