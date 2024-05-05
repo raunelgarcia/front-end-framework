@@ -8,6 +8,7 @@ import static utilities.Constants.ACCESSIBILITY_REPORT_PATH;
 import static utilities.Constants.ALLURE_COMMAND_MAC;
 import static utilities.Constants.ALLURE_COMMAND_WIN;
 import static utilities.LocalEnviroment.isWeb;
+import static utilities.LocalEnviroment.isWindows;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,10 +24,10 @@ public class MarcaTest {
 
   @BeforeAll
   public static void clean_allure_report() {
-    JSExecutor.runCommand(ALLURE_CLEAN_COMMAND);
-    JSExecutor.runCommand(NETWORK_LOG_CLEAN_COMMAND);
+    JSExecutor.runCommand(isWindows() ? ALLURE_CLEAN_COMMAND_WIN : ALLURE_CLEAN_COMMAND_MAC);
+    JSExecutor.runCommand(
+        isWindows() ? NETWORK_LOG_CLEAN_COMMAND_WIN : NETWORK_LOG_CLEAN_COMMAND_MAC);
   }
-
 
   @BeforeEach
   public void iAmOnTheMarcaWebsite() {
