@@ -2,19 +2,23 @@ package tests;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static pages.BasePage.waitSeconds;
+import static utilities.Accessibility.checkAccessibility;
 import static utilities.Accessibility.moveHtmlReportToAccessibilityDirectory;
+import static utilities.AllureReport.fillReportInfo;
 import static utilities.Constants.*;
 import static utilities.Constants.ACCESSIBILITY_REPORT_PATH;
 import static utilities.Constants.ALLURE_COMMAND_MAC;
 import static utilities.Constants.ALLURE_COMMAND_WIN;
+import static utilities.JSExecutor.runCommand;
+import static utilities.LocalEnviroment.getAccessibility;
 import static utilities.LocalEnviroment.isWeb;
 import static utilities.LocalEnviroment.isWindows;
+import static utilities.NetworkLogs.clearLogs;
+import static utilities.NetworkLogs.getNetworkLogs;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import pages.Marca;
-import utilities.*;
-import utilities.JSExecutor;
 import utilities.LocalEnviroment;
 
 @ExtendWith(TestErrorHandler.class)
@@ -23,10 +27,10 @@ public class MarcaTest {
   private static Marca controller;
 
   @BeforeAll
-  public static void clean_allure_report() {
-    JSExecutor.runCommand(isWindows() ? ALLURE_CLEAN_COMMAND_WIN : ALLURE_CLEAN_COMMAND_MAC);
-    JSExecutor.runCommand(
-        isWindows() ? NETWORK_LOG_CLEAN_COMMAND_WIN : NETWORK_LOG_CLEAN_COMMAND_MAC);
+  public static void clean_reports_logs() {
+    runCommand(isWindows() ? ALLURE_CLEAN_COMMAND_WIN : ALLURE_CLEAN_COMMAND_MAC);
+    runCommand(isWindows() ? NETWORK_LOG_CLEAN_COMMAND_WIN : NETWORK_LOG_CLEAN_COMMAND_MAC);
+    clearLogs();
   }
 
   @BeforeEach
@@ -48,9 +52,9 @@ public class MarcaTest {
 
   @AfterEach
   public void closeDriver() {
-    Accessibility.checkAccessibility();
-    AllureReport.fillReportInfo();
-    NetworkLogs.getNetworkLogs();
+    checkAccessibility();
+    fillReportInfo();
+    getNetworkLogs();
     waitSeconds(LOW_TIMEOUT);
   }
 
@@ -58,19 +62,18 @@ public class MarcaTest {
   public static void runReports() {
     runAllureReport();
     runAccessibilityCopy();
-    NetworkLogs.clearLogs();
   }
 
   public static void runAllureReport() {
     if (LocalEnviroment.isWindows()) {
-      JSExecutor.runCommand(ALLURE_COMMAND_WIN);
+      runCommand(ALLURE_COMMAND_WIN);
     } else {
-      JSExecutor.runCommand(ALLURE_COMMAND_MAC);
+      runCommand(ALLURE_COMMAND_MAC);
     }
   }
 
   public static void runAccessibilityCopy() {
-    if (LocalEnviroment.getAccessibility() && isWeb()) {
+    if (getAccessibility() && isWeb()) {
       moveHtmlReportToAccessibilityDirectory(ACCESSIBILITY_REPORT_PATH);
     }
   }
