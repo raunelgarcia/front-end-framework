@@ -125,19 +125,21 @@ public class BasePage {
     }
   }
 
-  public static void swipe(Direction direction, AppiumDriver driver) {
-    swipe(direction, 0.3, 0.7, driver);
+  public static void swipe(Direction direction) {
+    swipe(direction, 0.3, 0.7);
   }
 
   public static void swipe(
-      Direction direction, double minYRatio, double maxYRatio, AppiumDriver driver) {
+      Direction direction, double minYRatio, double maxYRatio) {
+    AppiumDriver driver = (AppiumDriver) DriverConfiguration.getDriver();
     Dimension window = driver.manage().window().getSize();
     int width = window.getWidth();
     int height = window.getHeight();
     swipe(direction, width, height, minYRatio, maxYRatio, false, driver);
   }
 
-  public static void swipeElement(WebElement me, Direction direction, AppiumDriver driver) {
+  public static void swipeElement(WebElement me, Direction direction) {
+    AppiumDriver driver = (AppiumDriver) DriverConfiguration.getDriver();
     Dimension window = driver.manage().window().getSize();
     int width = window.getWidth();
     int height = window.getHeight();
@@ -203,7 +205,7 @@ public class BasePage {
     while (!isVisible(element)) {
       if (LocalEnviroment.isMobile()) {
         swipe(
-            direction, 0.4, minScroll ? 0.5 : 0.6, (AppiumDriver) DriverConfiguration.getDriver());
+            direction, 0.4, minScroll ? 0.5 : 0.6);
       } else {
         JSExecutor.executeScript(DriverConfiguration.getDriver(), "window.scrollBy(0,200)");
       }
@@ -229,11 +231,13 @@ public class BasePage {
     }
   }
 
-  public static void switchToNativeContext(AndroidDriver driver) {
+  public static void switchToNativeContext() {
+    AndroidDriver driver = (AndroidDriver) DriverConfiguration.getDriver();
     if (LocalEnviroment.isMobile()) driver.context("NATIVE_APP");
   }
 
-  public static void switchToWebViewContext(AndroidDriver driver) {
+  public static void switchToWebViewContext() {
+    AndroidDriver driver = (AndroidDriver) DriverConfiguration.getDriver();
     if (LocalEnviroment.isMobile()) {
       String webViewContext = null;
       for (String context : driver.getContextHandles()) {
