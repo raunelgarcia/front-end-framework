@@ -1,4 +1,4 @@
-## Web and Mobile Automated Testing Repository
+## Web and Mobile Automation Framework Repository
 
 This repository contains automated tests for both web and mobile applications. With the use of environment variables in
 IntelliJ IDEA, you can easily switch between running tests for web or mobile platforms. Also is integrated with axe-core

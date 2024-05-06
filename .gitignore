@@ -11,6 +11,7 @@ target/
 .idea/libraries/
 allure-report/
 accessibility-report/
+network-logs/
 *.iws
 *.iml
 *.ipr
