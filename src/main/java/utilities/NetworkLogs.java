@@ -55,7 +55,7 @@ public class NetworkLogs {
   }
 
   public static void clearLogs() {
-    if (LocalEnviroment.isAndroid()) JSExecutor.runCommand("adb logcat -c");
+    if (LocalEnviroment.isAndroid()) JSExecutor.runCommand(Constants.NETWORK_LOG_CLEAN_COMMAND_ANDROID);
     // TODO clear logs from other platforms
   }
 }

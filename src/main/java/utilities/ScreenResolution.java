@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Objects;
 import org.openqa.selenium.Dimension;
 import org.yaml.snakeyaml.Yaml;
-import pages.BasePage;
 
 public class ScreenResolution {
 

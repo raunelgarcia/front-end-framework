@@ -1,10 +1,11 @@
-package pages;
+package utilities;
 
 import static java.lang.Math.floor;
 import static java.lang.Math.max;
 import static java.lang.System.currentTimeMillis;
 import static utilities.Constants.HIGH_TIMEOUT;
 import static utilities.Constants.LOW_TIMEOUT;
+import static utilities.enums.Direction.*;
 
 import exceptions.FrameworkTimeoutException;
 import io.appium.java_client.AppiumDriver;
@@ -85,11 +86,11 @@ public class BasePage {
   }
 
   public static void waitForVisibility(WebElement element) {
-    waitFor(ExpectedConditions.visibilityOf(element), HIGH_TIMEOUT, ChronoUnit.SECONDS, true);
+    waitFor(ExpectedConditions.visibilityOf(element), Constants.HIGH_TIMEOUT, ChronoUnit.SECONDS, true);
   }
 
   public static void waitForAnimationToFinish() {
-    waitSeconds(LOW_TIMEOUT);
+    waitSeconds(Constants.LOW_TIMEOUT);
   }
 
   public static <K> void waitFor(
@@ -105,12 +106,12 @@ public class BasePage {
               .ignoring(StaleElementReferenceException.class)
               .until(
                   new ExpectedCondition<K>() {
-                    final long start = currentTimeMillis();
+                    final long start = System.currentTimeMillis();
 
                     @Override
                     public K apply(@Nullable WebDriver driver) {
                       long remainingTimeMs =
-                          Duration.of(time, unit).toMillis() - (currentTimeMillis() - start);
+                          Duration.of(time, unit).toMillis() - (System.currentTimeMillis() - start);
 
                       System.out.printf(
                           "Remaining time for condition: %d ms. Condition is: %s%n",
@@ -173,10 +174,10 @@ public class BasePage {
       double maxYRatio,
       boolean isByMobileElement,
       AppiumDriver driver) {
-    int halfX = isByMobileElement ? width : (int) floor(width / 2.0);
-    int halfY = isByMobileElement ? height : (int) floor(height / 2.0);
-    int y = (int) floor(height * minYRatio);
-    int y2 = (int) floor(height * maxYRatio);
+    int halfX = isByMobileElement ? width : (int) Math.floor(width / 2.0);
+    int halfY = isByMobileElement ? height : (int) Math.floor(height / 2.0);
+    int y = (int) Math.floor(height * minYRatio);
+    int y2 = (int) Math.floor(height * maxYRatio);
 
     switch (direction) {
       case UP:
@@ -186,10 +187,10 @@ public class BasePage {
         W3cActions.swipe(driver, new Point(halfX, y), new Point(halfX, y2), 500);
         break;
       case LEFT:
-        W3cActions.swipe(driver, new Point(max(0, width - 10), halfY), new Point(10, halfY), 500);
+        W3cActions.swipe(driver, new Point(Math.max(0, width - 10), halfY), new Point(10, halfY), 500);
         break;
       case RIGHT:
-        W3cActions.swipe(driver, new Point(10, halfY), new Point(max(0, width - 10), halfY), 500);
+        W3cActions.swipe(driver, new Point(10, halfY), new Point(Math.max(0, width - 10), halfY), 500);
         break;
       default:
         break;

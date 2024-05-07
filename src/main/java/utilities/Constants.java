@@ -26,4 +26,5 @@ public class Constants {
       "rm -rf ./target/allure-results/ && rm -rf ./allure-report/";
   public static final String NETWORK_LOG_CLEAN_COMMAND_MAC = "rm -rf ./network-logs/";
   public static final String NETWORK_LOG_CLEAN_COMMAND_WIN = "rd /s /q .\\network-logs\\";
+  public static final String NETWORK_LOG_CLEAN_COMMAND_ANDROID = "adb logcat -c";
 }
