@@ -1,12 +1,5 @@
 package utilities;
 
-import static java.lang.Math.floor;
-import static java.lang.Math.max;
-import static java.lang.System.currentTimeMillis;
-import static utilities.Constants.HIGH_TIMEOUT;
-import static utilities.Constants.LOW_TIMEOUT;
-import static utilities.enums.Direction.*;
-
 import exceptions.FrameworkTimeoutException;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
@@ -30,7 +23,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
-import utilities.*;
 import utilities.enums.Direction;
 
 public class BasePage {
@@ -86,7 +78,8 @@ public class BasePage {
   }
 
   public static void waitForVisibility(WebElement element) {
-    waitFor(ExpectedConditions.visibilityOf(element), Constants.HIGH_TIMEOUT, ChronoUnit.SECONDS, true);
+    waitFor(
+        ExpectedConditions.visibilityOf(element), Constants.HIGH_TIMEOUT, ChronoUnit.SECONDS, true);
   }
 
   public static void waitForAnimationToFinish() {
@@ -187,10 +180,12 @@ public class BasePage {
         W3cActions.swipe(driver, new Point(halfX, y), new Point(halfX, y2), 500);
         break;
       case LEFT:
-        W3cActions.swipe(driver, new Point(Math.max(0, width - 10), halfY), new Point(10, halfY), 500);
+        W3cActions.swipe(
+            driver, new Point(Math.max(0, width - 10), halfY), new Point(10, halfY), 500);
         break;
       case RIGHT:
-        W3cActions.swipe(driver, new Point(10, halfY), new Point(Math.max(0, width - 10), halfY), 500);
+        W3cActions.swipe(
+            driver, new Point(10, halfY), new Point(Math.max(0, width - 10), halfY), 500);
         break;
       default:
         break;
