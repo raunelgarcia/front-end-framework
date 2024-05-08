@@ -1,0 +1,4 @@
+capabilitiesiOS:
+  automationName: 'XCUITest'
+  noReset: 'true'
+  newCommandTimeout: "90"
