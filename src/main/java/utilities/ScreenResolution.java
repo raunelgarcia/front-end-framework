@@ -17,7 +17,7 @@ public class ScreenResolution {
     String browser = LocalEnviroment.getBrowser().toLowerCase();
     String envResolution = LocalEnviroment.getResolution();
 
-    if (BasePage.isNullOrEmpty(envResolution)) {
+    if (FrontEndOperation.isNullOrEmpty(envResolution)) {
       return new Dimension(1024, 768);
     }
 

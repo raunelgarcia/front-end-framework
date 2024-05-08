@@ -18,7 +18,7 @@ public class LocalEnviroment {
   }
 
   public static String getBrowser() {
-    if (!BasePage.isNullOrEmpty(System.getenv("Browser"))) {
+    if (!FrontEndOperation.isNullOrEmpty(System.getenv("Browser"))) {
       return System.getenv("Browser").toLowerCase();
     } else {
       return "chrome";
@@ -97,7 +97,7 @@ public class LocalEnviroment {
   public static String getLanguage() {
     String language = System.getenv("Language");
 
-    if (BasePage.isNullOrEmpty(language)) {
+    if (FrontEndOperation.isNullOrEmpty(language)) {
       language = "es-ES";
     }
 

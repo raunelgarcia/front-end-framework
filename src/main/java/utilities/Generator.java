@@ -62,7 +62,7 @@ public class Generator {
   }
 
   public static <T> T getRandomElement(List<T> list) {
-    if (BasePage.isNullOrEmpty(list)) {
+    if (FrontEndOperation.isNullOrEmpty(list)) {
       throw new IllegalArgumentException("List cant be null or empty");
     }
     Random random = new Random();
