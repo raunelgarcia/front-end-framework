@@ -24,6 +24,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import utilities.enums.Direction;
 
 public class FrontEndOperation {
@@ -249,14 +250,22 @@ public class FrontEndOperation {
     }
   }
 
-  public static void switchToTab (int index) {
+  public static void switchToTab (int index, boolean close) {
     WebDriver driver = DriverConfiguration.getDriver();
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+    wait.until(ExpectedConditions.numberOfWindowsToBe(index + 1));
 
     List<String> windowHandles = new ArrayList<>(driver.getWindowHandles());
     if (index < 0 || index >= windowHandles.size()) {
       throw new IllegalArgumentException("Invalid index " + index);
     }
-    driver.switchTo().window(windowHandles.get(index));
+
+    String windowToSwitch = windowHandles.get(index);
+    driver.switchTo().window(windowToSwitch);
+
+    if(close)
+      driver.close();
   }
 
 }
