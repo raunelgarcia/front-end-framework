@@ -31,18 +31,21 @@ jobs:
       - name: Generate and apply version tag
         id: version_tag
         run: |
-          LAST_TAG=$(git describe --abbrev=0 --tags)
-          IFS='.' read -ra VER <<< "$LAST_TAG"
-          MAJOR="${VER[0]}"
-          MINOR="${VER[1]}"
-          PATCH="${VER[2]}"
-          NEW_VERSION="$MAJOR.$MINOR.$((PATCH + 1))"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          NEW_VERSION=$(git rev-parse --short HEAD)
           git tag "$NEW_VERSION"
           echo "::set-output name=new_tag::$NEW_VERSION"
 
       - name: Push new tag
         if: steps.version_tag.outputs.new_tag != ''
         env:
-          GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
         run: |
           git push origin ${{ steps.version_tag.outputs.new_tag }}
+
+      - name: Publish to GitHub Packages
+        run: mvn deploy
+        env:
+          MAVEN_USERNAME: ${{ github.actor }}
+          MAVEN_PASSWORD: ${{ secrets.GIT_TOKEN }}
