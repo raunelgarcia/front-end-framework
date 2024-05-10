@@ -7,9 +7,6 @@ on:
 
 jobs:
   publish_package:
-    permissions: 
-      contents: write
-      packages: write 
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -41,7 +38,10 @@ jobs:
         if: steps.version_tag.outputs.new_tag != ''
         run: git push origin "${{ steps.version_tag.outputs.new_tag }}" || echo "Tag already exists, skipping push"
 
+      - name: Use Maven settings action
+        uses: s4u/maven-settings-action@v2.5.0
+        with:
+          servers: "[{\"id\": \"github\",\"configuration\": {\"httpHeaders\": {\"property\": {\"name\": \"Authorization\",\"value\": \"Bearer ${{ secrets.GIT_TOKEN }}\"}}}}]"
+
       - name: Publish to GitHub Packages
         run: mvn --batch-mode deploy
-        env:
-          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
