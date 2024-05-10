@@ -209,7 +209,7 @@ public class FrontEndOperation {
   }
 
   public static boolean compareTexts(WebElement element, String textCode) {
-    return element.getText().equalsIgnoreCase(Text.get(textCode));
+    return element.getText().equalsIgnoreCase(textCode);
   }
 
   public static <T> void checkThat(String validation, T actual, Matcher<T> expected) {
