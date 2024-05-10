@@ -54,4 +54,7 @@ jobs:
         env:
           GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
         run: |
+          git config --global user.email "raunel.garciaquintana@emeal.nttdata.com"
+          git config --global user.name "QA NTTDATA"
+          git config credential.helper store
           git push origin ${{ steps.version_tag.outputs.new_tag }}
