@@ -38,10 +38,8 @@ jobs:
         if: steps.version_tag.outputs.new_tag != ''
         run: git push origin "${{ steps.version_tag.outputs.new_tag }}" || echo "Tag already exists, skipping push"
 
-      - name: Use Maven settings action
-        uses: s4u/maven-settings-action@v2.5.0
-        with:
-          servers: "[{\"id\": \"github\",\"configuration\": {\"httpHeaders\": {\"property\": {\"name\": \"Authorization\",\"value\": \"Bearer ${{ secrets.GIT_TOKEN }}\"}}}}]"
-
+      - name: maven-settings-action
+        uses: s4u/maven-settings-action@v3.0.0
+            
       - name: Publish to GitHub Packages
         run: mvn --batch-mode deploy
