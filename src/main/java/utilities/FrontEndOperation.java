@@ -6,6 +6,7 @@ import io.appium.java_client.android.AndroidDriver;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalUnit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -23,6 +24,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import utilities.enums.Direction;
 
 public class FrontEndOperation {
@@ -246,5 +248,22 @@ public class FrontEndOperation {
         Logger.errorMessage("Not WebView context found.");
       }
     }
+  }
+
+  public static void switchToTab(int index, boolean close) {
+    WebDriver driver = DriverConfiguration.getDriver();
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+    wait.until(ExpectedConditions.numberOfWindowsToBe(index + 1));
+
+    List<String> windowHandles = new ArrayList<>(driver.getWindowHandles());
+    if (index < 0 || index >= windowHandles.size()) {
+      throw new IllegalArgumentException("Invalid index " + index);
+    }
+
+    String windowToSwitch = windowHandles.get(index);
+    driver.switchTo().window(windowToSwitch);
+
+    if (close) driver.close();
   }
 }
