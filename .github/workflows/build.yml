@@ -45,7 +45,7 @@ jobs:
           git push origin ${{ steps.version_tag.outputs.new_tag }}
 
       - name: Publish to GitHub Packages
-        run: mvn deploy
+        run: mvn deploy -X
         env:
           MAVEN_USERNAME: ${{ github.actor }}
           MAVEN_PASSWORD: ${{ secrets.GIT_TOKEN }}
