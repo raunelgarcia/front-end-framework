@@ -48,12 +48,18 @@ public class W3cActions {
     Logger.infoMessage("ELement position: " + location);
     Sequence tap = new Sequence(FINGER, 1);
     tap.addAction(
-            FINGER.createPointerMove(
-                    Duration.ofMillis(0), viewport(), element.getLocation().x, element.getLocation().y));
+        FINGER.createPointerMove(
+            Duration.ofMillis(0), viewport(), element.getLocation().x, element.getLocation().y));
     tap.addAction(FINGER.createPointerDown(LEFT.asArg()));
     tap.addAction(FINGER.createPointerUp(LEFT.asArg()));
 
-    AppiumDriver driver = (AppiumDriver) getDriver();
+    AppiumDriver driver;
+    if (isAndroid()) {
+      driver = (AndroidDriver) getDriver();
+    } else {
+      driver = (IOSDriver) getDriver();
+    }
+
     driver.perform(Collections.singletonList(tap));
   }
 
@@ -62,8 +68,7 @@ public class W3cActions {
     AppiumDriver driver;
     if (isAndroid()) {
       driver = (AndroidDriver) getDriver();
-    }
-    else{
+    } else {
       driver = (IOSDriver) getDriver();
     }
 

@@ -250,7 +250,7 @@ public class FrontEndOperation {
     }
   }
 
-  public static void switchToTab (int index, boolean close) {
+  public static void switchToTab(int index, boolean close) {
     WebDriver driver = DriverConfiguration.getDriver();
     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
@@ -264,8 +264,6 @@ public class FrontEndOperation {
     String windowToSwitch = windowHandles.get(index);
     driver.switchTo().window(windowToSwitch);
 
-    if(close)
-      driver.close();
+    if (close) driver.close();
   }
-
 }
