@@ -49,7 +49,7 @@ public class W3cActions {
     Sequence tap = new Sequence(FINGER, 1);
     tap.addAction(
         FINGER.createPointerMove(
-            Duration.ofMillis(0), viewport(), element.getLocation().x, element.getLocation().y));
+            Duration.ofMillis(0), viewport(), location.x, location.y));
     tap.addAction(FINGER.createPointerDown(LEFT.asArg()));
     tap.addAction(FINGER.createPointerUp(LEFT.asArg()));
 
