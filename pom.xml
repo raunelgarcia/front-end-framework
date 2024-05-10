@@ -136,6 +136,14 @@
                         </dependency>
                     </dependencies>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>3.0.0-M1</version>
+                    <configuration>
+                        <altDeploymentRepository>github::default::https://maven.pkg.github.com/raunelgarcia/front-end-framework</altDeploymentRepository>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
@@ -150,4 +158,11 @@
             </plugin>
         </plugins>
     </build>
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub raunelgarcia Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/raunelgarcia/front-end-framework</url>
+        </repository>
+    </distributionManagement>
 </project>
