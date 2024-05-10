@@ -12,6 +12,7 @@ import io.appium.java_client.android.AndroidDriver;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalUnit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -253,4 +254,15 @@ public class BasePage {
       }
     }
   }
+
+  public static void switchToTab (int index) {
+    WebDriver driver = DriverConfiguration.getDriver();
+
+    List<String> windowHandles = new ArrayList<>(driver.getWindowHandles());
+    if (index < 0 || index >= windowHandles.size()) {
+      throw new IllegalArgumentException("Invalid index " + index);
+    }
+    driver.switchTo().window(windowHandles.get(index));
+  }
+
 }

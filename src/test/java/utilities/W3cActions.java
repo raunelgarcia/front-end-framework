@@ -34,12 +34,13 @@ public class W3cActions {
     driver.perform(Collections.singletonList(swipe));
   }
 
-  public void tap(WebElement element) {
+  public static void tap(WebElement element) {
     Point location = element.getLocation();
+    Logger.infoMessage("Posicion del elemento: " + location);
     tap(location.getX(), location.getY());
   }
 
-  public void tap(int x, int y) {
+  public static void tap(int x, int y) {
     AndroidDriver driver = (AndroidDriver) DriverConfiguration.getDriver();
 
     Sequence tap = new Sequence(FINGER, 1);
