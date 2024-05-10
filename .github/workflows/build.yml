@@ -20,10 +20,7 @@ jobs:
           distribution: 'adopt'
 
       - name: Build with Maven
-        run: mvn clean source:jar deploy -DuniqueVersion=false -Dmaven.source.useDefaultManifestFile=true -DdeplyAtEnd=true -Dmaven.source.includePom=true -Dmaven.install.skip=true
-        env:
-          MAVEN_USERNAME: ${{ github.actor }}
-          MAVEN_PASSWORD: ${{ secrets.GIT_TOKEN }}
+        run: mvn clean package
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
@@ -46,3 +43,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
         run: |
           git push origin ${{ steps.version_tag.outputs.new_tag }}
+
+      - name: Publish to GitHub Packages
+        run: mvn deploy -X
+        env:
+          MAVEN_USERNAME: ${{ github.actor }}
+          MAVEN_PASSWORD: ${{ secrets.GIT_TOKEN }}
