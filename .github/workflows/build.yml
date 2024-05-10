@@ -36,7 +36,7 @@ jobs:
 
       - name: Push new tag
         if: steps.version_tag.outputs.new_tag != ''
-        run: git push origin "${{ steps.version_tag.outputs.new_tag }}"
+        run: git push origin "${{ steps.version_tag.outputs.new_tag }}" || echo "Tag already exists, skipping push"
 
       - name: Publish to GitHub Packages
         run: mvn --batch-mode deploy
