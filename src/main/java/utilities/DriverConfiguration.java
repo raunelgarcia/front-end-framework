@@ -1,6 +1,7 @@
 package utilities;
 
 import static utilities.Constants.DRIVER_URL;
+import static utilities.LocalEnviroment.getProvider;
 import static utilities.LocalEnviroment.isAndroid;
 import static utilities.LocalEnviroment.isWeb;
 
@@ -33,29 +34,33 @@ public class DriverConfiguration {
     if (currentDriver != null) {
       return currentDriver;
     }
-    if (isWeb()) {
-      Dimension windowResolution = ScreenResolution.getResolutionFromEnv();
-      String url = setURL();
-
-      WebDriver driver = configureWebDriver();
-      driver.manage().window().setSize(windowResolution);
-      driver.manage().window().maximize();
-      driver.get(url);
-      currentDriver = driver;
-    } else if (isAndroid()) {
-      try {
-        URL url = new URL(DRIVER_URL);
-        currentDriver = new AndroidDriver(url, fillCapabilities());
-      } catch (MalformedURLException e) {
-        throw new RuntimeException(e);
-      }
+    if (getProvider().equalsIgnoreCase("SauceLabs")) {
+      currentDriver = Saucelabs.getSauceDriver();
     } else {
-      try {
-        URL url = new URL(DRIVER_URL);
-        currentDriver = new IOSDriver(url, fillCapabilities());
+      if (isWeb()) {
+        Dimension windowResolution = ScreenResolution.getResolutionFromEnv();
+        String url = setURL();
 
-      } catch (MalformedURLException e) {
-        throw new RuntimeException(e);
+        WebDriver driver = configureWebDriver();
+        driver.manage().window().setSize(windowResolution);
+        driver.manage().window().maximize();
+        driver.get(url);
+        currentDriver = driver;
+      } else if (isAndroid()) {
+        try {
+          URL url = new URL(DRIVER_URL);
+          currentDriver = new AndroidDriver(url, fillCapabilities());
+        } catch (MalformedURLException e) {
+          throw new RuntimeException(e);
+        }
+      } else {
+        try {
+          URL url = new URL(DRIVER_URL);
+          currentDriver = new IOSDriver(url, fillCapabilities());
+
+        } catch (MalformedURLException e) {
+          throw new RuntimeException(e);
+        }
       }
     }
     return currentDriver;

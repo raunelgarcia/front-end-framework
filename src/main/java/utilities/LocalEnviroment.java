@@ -10,6 +10,9 @@ public class LocalEnviroment {
   public static String getPlatform() {
     return System.getenv("Platform");
   }
+  public static String getProvider() {
+    return System.getenv("Provider");
+  }
 
   public static String getApplication() {
     return Objects.nonNull(System.getenv("Application"))
