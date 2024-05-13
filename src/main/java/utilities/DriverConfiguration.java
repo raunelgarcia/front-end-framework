@@ -34,7 +34,7 @@ public class DriverConfiguration {
     if (currentDriver != null) {
       return currentDriver;
     }
-    if (getProvider().equalsIgnoreCase("SauceLabs")) {
+    if (Objects.nonNull(getProvider()) && getProvider().equalsIgnoreCase("SauceLabs")) {
       currentDriver = Saucelabs.getSauceDriver();
     } else {
       if (isWeb()) {

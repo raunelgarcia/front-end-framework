@@ -30,6 +30,7 @@ public class Saucelabs {
     sauceOptions.put("accessKey", "31551aa9-6e4e-4a62-b0b8-dcec2ddfac31");
     sauceOptions.put("build", "selenium-build-VNFHT");
     sauceOptions.put("name", "First Demo Test");
+    sauceOptions.put("extendedDebugging", true);
     URL url;
     try {
       url = new URL("https://ondemand.eu-central-1.saucelabs.com:443/wd/hub");
