@@ -1,6 +1,8 @@
 package utilities;
 
 import static utilities.DriverConfiguration.setURL;
+import static utilities.LocalEnviroment.getAccessToken;
+import static utilities.LocalEnviroment.getUser;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -26,8 +28,8 @@ public class Saucelabs {
 
   public static WebDriver configureSauceWeb() {
     Map<String, Object> sauceOptions = new HashMap<>();
-    sauceOptions.put("username", "raulgalera97");
-    sauceOptions.put("accessKey", "31551aa9-6e4e-4a62-b0b8-dcec2ddfac31");
+    sauceOptions.put("username", getUser());
+    sauceOptions.put("accessKey", getAccessToken());
     sauceOptions.put("build", "selenium-build-VNFHT");
     sauceOptions.put("name", "First Demo Test");
     sauceOptions.put("extendedDebugging", true);

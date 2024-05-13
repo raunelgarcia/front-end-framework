@@ -10,6 +10,7 @@ public class LocalEnviroment {
   public static String getPlatform() {
     return System.getenv("Platform");
   }
+
   public static String getProvider() {
     return System.getenv("Provider");
   }
@@ -34,6 +35,14 @@ public class LocalEnviroment {
 
   public static String getUdid() {
     return System.getenv("Udid");
+  }
+
+  public static String getUser() {
+    return System.getenv("User");
+  }
+
+  public static String getAccessToken() {
+    return System.getenv("AccessToken");
   }
 
   public static String getApk() {
