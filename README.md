@@ -212,6 +212,10 @@ Raul Galera Sancho
 
 Alejandra Alvarado Tirado
 
+Leire Fuchun Jimenez Gonzalez
+
+Ciro Alonso Aquino
+
 ### Acknowledgments
 
 Special thanks to our contributors and the open-source community for their valuable contributions and support.
