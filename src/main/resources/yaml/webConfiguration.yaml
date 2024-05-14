@@ -1,3 +1,4 @@
 url:
   mrc: 'https://www.marca.com/'
-  amz: 'https://www.amazon.es/'
+  amz: 'https://www.amazon.{country}/'
+  ikea: 'https://www.ikea.{country}/'
