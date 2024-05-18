@@ -16,7 +16,7 @@ jobs:
       - name: Get latest version from GitHub Packages
         id: get_version
         run: |
-          response=$(curl -s -H "Authorization: Bearer ${{ secrets.GIT_TOKEN }}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/user/packages/{package_type}/{package_name}/versions | jq '[.[] ] | .[0] .metadata .container .tags[0])
+          response=$(curl -s -H "Authorization: Bearer ${{ secrets.GIT_TOKEN }}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/user/packages/{package_type}/{package_name}/versions" | jq '[.[] ] | .[0] .metadata .container .tags[0]')
           echo "Response: $response"
           version=$(echo $response | jq -r '.version')
           echo "Latest version: $version"
