@@ -12,11 +12,30 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      # Step to update the version in the pom.xml
+      # Step to determine and update the version in the pom.xml
       - name: Update POM version
         run: |
           version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
-          new_version=$(echo $version | awk -F. '{$NF+=1; OFS="."; print $0}')
+          IFS='.' read -r -a version_parts <<< "$version"
+          major=${version_parts[0]}
+          minor=${version_parts[1]}
+          patch=${version_parts[2]}
+          
+          # Determine the type of increment based on commit messages or other criteria
+          if git log -1 --pretty=%B | grep -qE '\[major\]'; then
+            new_major=$((major + 1))
+            new_minor=0
+            new_patch=0
+            new_version="$new_major.$new_minor.$new_patch"
+          elif git log -1 --pretty=%B | grep -qE '\[minor\]'; then
+            new_minor=$((minor + 1))
+            new_patch=0
+            new_version="$major.$new_minor.$new_patch"
+          else
+            new_patch=$((patch + 1))
+            new_version="$major.$minor.$new_patch"
+          fi
+          
           echo "Current version: $version"
           echo "New version: $new_version"
           sed -i "s|<version>$version</version>|<version>$new_version</version>|g" pom.xml
