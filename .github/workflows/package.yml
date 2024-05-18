@@ -29,8 +29,21 @@ jobs:
           major=${version_parts[0]}
           minor=${version_parts[1]}
           patch=${version_parts[2]}
-          new_patch=$((patch + 1))
-          new_version="$major.$minor.$new_patch"
+          
+          # Increment logic
+          if [ $patch -eq 30 ]; then
+            patch=0
+            minor=$((minor + 1))
+          else
+            patch=$((patch + 1))
+          fi
+
+          if [ $minor -eq 30 ]; then
+            minor=0
+            major=$((major + 1))
+          fi
+          
+          new_version="$major.$minor.$patch"
           echo "NEW_VERSION=$new_version" >> $GITHUB_ENV
 
       # Step to update the version in the pom.xml
