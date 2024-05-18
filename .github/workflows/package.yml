@@ -26,7 +26,7 @@ jobs:
       - name: Generate new version
         run: |
           latest_version="${{ env.LATEST_VERSION }}"
-          IFS='.' read -r -a version_parts <<< "$latest_version"
+          IFS='.' read -r -a version_parts <<< "$LATEST_VERSION"  
           major=${version_parts[0]}
           minor=${version_parts[1]}
           patch=${version_parts[2]}
