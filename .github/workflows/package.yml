@@ -23,7 +23,7 @@ jobs:
           echo "LATEST_VERSION=$version" >> $GITHUB_ENV
         env:
           package_type: "maven" # Adjust this based on your package type (e.g., maven, npm, docker)
-          package_name: "org.nttdata:front-end-framework" # Adjust this based on your package name
+          package_name: "org.nttdata.front-end-framework" # Adjust this based on your package name
           
       # Step to generate a new version based on the latest version
       - name: Generate new version
