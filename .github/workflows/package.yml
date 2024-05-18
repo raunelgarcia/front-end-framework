@@ -12,33 +12,28 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      # Step to determine and update the version in the pom.xml
-      - name: Update POM version
+      # Step to get the latest version from GitHub Packages
+      - name: Get latest version from GitHub Packages
+        id: get_version
         run: |
-          version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
-          IFS='.' read -r -a version_parts <<< "$version"
+          response=$(curl -s -H "Authorization: Bearer ${{ secrets.GIT_TOKEN }}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/packages/{package_type}/{package_name}/versions/latest)
+          version=$(echo $response | jq -r '.version')
+          echo "::set-output name=latest_version::$version"
+        env:
+          package_type: "maven" # Adjust this based on your package type (e.g., maven, npm, docker)
+          package_name: "org.nttdata:front-end-framework" # Adjust this based on your package name
+          
+      # Step to generate a new version based on the latest version
+      - name: Generate new version
+        run: |
+          latest_version="${{ steps.get_version.outputs.latest_version }}"
+          IFS='.' read -r -a version_parts <<< "$latest_version"
           major=${version_parts[0]}
           minor=${version_parts[1]}
           patch=${version_parts[2]}
-          
-          # Determine the type of increment based on commit messages or other criteria
-          if git log -1 --pretty=%B | grep -qE '\[major\]'; then
-            new_major=$((major + 1))
-            new_minor=0
-            new_patch=0
-            new_version="$new_major.$new_minor.$new_patch"
-          elif git log -1 --pretty=%B | grep -qE '\[minor\]'; then
-            new_minor=$((minor + 1))
-            new_patch=0
-            new_version="$major.$new_minor.$new_patch"
-          else
-            new_patch=$((patch + 1))
-            new_version="$major.$minor.$new_patch"
-          fi
-          
-          echo "Current version: $version"
-          echo "New version: $new_version"
-          sed -i "s|<version>$version</version>|<version>$new_version</version>|g" pom.xml
+          new_patch=$((patch + 1))
+          new_version="$major.$minor.$new_patch"
+          echo "::set-output name=new_version::$new_version"
           
       - uses: actions/setup-java@v4
         with:
@@ -48,4 +43,4 @@ jobs:
       - name: Publish package
         run: mvn --batch-mode deploy
         env:
-          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
