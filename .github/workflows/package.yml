@@ -11,10 +11,21 @@ jobs:
       packages: write
     steps:
       - uses: actions/checkout@v4
+      
+      # Step to update the version in the pom.xml
+      - name: Update POM version
+        run: |
+          version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          new_version=$(echo $version | awk -F. '{$NF+=1; OFS="."; print $0}')
+          echo "Current version: $version"
+          echo "New version: $new_version"
+          sed -i "s|<version>$version</version>|<version>$new_version</version>|g" pom.xml
+          
       - uses: actions/setup-java@v4
         with:
           java-version: '11'
           distribution: 'temurin'
+          
       - name: Publish package
         run: mvn --batch-mode deploy
         env:
