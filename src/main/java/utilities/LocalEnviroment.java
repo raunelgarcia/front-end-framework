@@ -45,8 +45,8 @@ public class LocalEnviroment {
     return System.getenv("AccessToken");
   }
 
-  public static String getApk() {
-    return System.getenv("Apk");
+  public static String getApp() {
+    return System.getenv("App");
   }
 
   public static String getAppIdentifier() {

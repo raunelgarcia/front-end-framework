@@ -114,7 +114,7 @@ public class DriverConfiguration {
       filledCapabilities.setCapability("appPackage", LocalEnviroment.getAppIdentifier());
       filledCapabilities.setCapability("language", LocalEnviroment.getLanguageCode());
       filledCapabilities.setCapability("locale", LocalEnviroment.getCountryCode());
-      String apk = LocalEnviroment.getApk();
+      String apk = LocalEnviroment.getApp();
       if (Objects.nonNull(apk) && !apk.isEmpty()) {
         filledCapabilities.setCapability(
             "app", Paths.get(Constants.RESOURCE_PATH + apk).toAbsolutePath().toString());

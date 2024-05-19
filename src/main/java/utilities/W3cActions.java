@@ -3,23 +3,17 @@ package utilities;
 import static java.time.Duration.ofMillis;
 import static org.openqa.selenium.interactions.PointerInput.MouseButton.LEFT;
 import static org.openqa.selenium.interactions.PointerInput.Origin.viewport;
-import static utilities.FrontEndOperation.waitForVisibility;
 import static utilities.DriverConfiguration.getDriver;
+import static utilities.FrontEndOperation.waitForVisibility;
 import static utilities.LocalEnviroment.isAndroid;
 
 import io.appium.java_client.AppiumDriver;
-
-import java.time.Duration;
-import java.util.Arrays;
-import java.util.Collections;
-
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.internal.filters.AppiumUserAgentFilter;
 import io.appium.java_client.ios.IOSDriver;
+import java.time.Duration;
+import java.util.Collections;
 import org.openqa.selenium.Point;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.PointerInput;
 import org.openqa.selenium.interactions.PointerInput.Kind;
 import org.openqa.selenium.interactions.Sequence;

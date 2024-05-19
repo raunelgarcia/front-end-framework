@@ -63,9 +63,9 @@ public class AllureReport {
           .append("<p><b>App Identifier:</b> ")
           .append(LocalEnviroment.getAppIdentifier())
           .append("</p>");
-      String apk = LocalEnviroment.getApk();
+      String apk = LocalEnviroment.getApp();
       if (!FrontEndOperation.isNullOrEmpty(apk)) {
-        description.append("<p><b>Apk:</b> ").append(apk).append("</p>");
+        description.append("<p><b>App:</b> ").append(apk).append("</p>");
       }
     } else {
       if (LocalEnviroment.isWindows()) {
