@@ -43,7 +43,6 @@ public class DriverConfiguration {
 
         WebDriver driver = configureWebDriver();
         driver.manage().window().setSize(windowResolution);
-        driver.manage().window().maximize();
         driver.get(url);
         currentDriver = driver;
       } else if (isAndroid()) {
