@@ -48,7 +48,9 @@ public class Saucelabs {
     MutableCapabilities caps = new MutableCapabilities();
     caps.setCapability("platformName", platformName);
     caps.setCapability("appium:app", app);
-    caps.setCapability("appium:deviceName", deviceName);
+    if (deviceName != null) {
+      caps.setCapability("appium:deviceName", deviceName);
+    }
     if (platformVersion != null) {
       caps.setCapability("appium:platformVersion", platformVersion);
     }
@@ -71,7 +73,7 @@ public class Saucelabs {
         configureCommonCapabilities(
             "iOS",
             "storage:filename=SauceLabs-Demo-App-With-TestFairy.ipa",
-            "iPhone XR",
+            null,
             null,
             "XCUITest");
 
