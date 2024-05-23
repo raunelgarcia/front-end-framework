@@ -159,12 +159,13 @@ Environment.
       takes the value of '
       null', the default value is the current emulator Udid. For IOS, the Udid cannot be 'null'.
 - Provider:
-- Description: Specifies the provider or environment to launch any test execution. Could be made on
-  SauceLabs or Local Environment.
+    - Description: Specifies the provider or environment to launch any test execution. Could be made
+      on
+      SauceLabs or Local Environment.
 - User:
-- Description: Represents the username of your SauceLabs Account.
+    - Description: Represents the username of your SauceLabs Account.
 - AccessToken:
-- Description: Represents the API access token of your SauceLabs Account.
+    - Description: Represents the API access token of your SauceLabs Account.
 
 Ensure to set these variables according to your testing requirements before executing the tests.
 
