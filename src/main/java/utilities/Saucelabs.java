@@ -1,5 +1,6 @@
 package utilities;
 
+import static utilities.Constants.SAUCELABS_TESTS_URL;
 import static utilities.DriverConfiguration.setURL;
 import static utilities.LocalEnviroment.getAccessToken;
 import static utilities.LocalEnviroment.getUser;
@@ -28,7 +29,6 @@ public class Saucelabs {
       String url = setURL();
       WebDriver driver = configureSauceWeb();
       driver.manage().window().setSize(windowResolution);
-      driver.manage().window().maximize();
       driver.get(url);
       return driver;
     } else if (isAndroid()) {
@@ -77,7 +77,7 @@ public class Saucelabs {
 
     URL url = null;
     try {
-      url = new URL("https://ondemand.eu-central-1.saucelabs.com:443/wd/hub");
+      url = new URL(SAUCELABS_TESTS_URL);
     } catch (MalformedURLException e) {
       throw new RuntimeException(e);
     }
@@ -95,7 +95,7 @@ public class Saucelabs {
 
     URL url = null;
     try {
-      url = new URL("https://ondemand.eu-central-1.saucelabs.com:443/wd/hub");
+      url = new URL(SAUCELABS_TESTS_URL);
     } catch (MalformedURLException e) {
       throw new RuntimeException(e);
     }
@@ -111,7 +111,7 @@ public class Saucelabs {
     sauceOptions.put("extendedDebugging", true);
     URL url;
     try {
-      url = new URL("https://ondemand.eu-central-1.saucelabs.com:443/wd/hub");
+      url = new URL(SAUCELABS_TESTS_URL);
     } catch (MalformedURLException e) {
       throw new RuntimeException(e);
     }
