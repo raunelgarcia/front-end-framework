@@ -18,11 +18,21 @@ Ensure you have IntelliJ IDEA installed on your system.
 Make sure you have Maven installed, Git and Java jdk 11 or superior.
 Have a GitHub account with a Personal Access Token.
 
+IntelliJ Idea Community: https://www.jetbrains.com/idea/download/?section=windows
+Maven: https://maven.apache.org/download.cgi
+Java: https://www.java.com/es/download/ie_manual.jsp
+Git: https://www.git-scm.com/downloads
+
 ### Setting Up GitHub Packages
 
 To download the required Maven packages from GitHub Packages, follow these steps:
 
-Step 1: Configure GitHub authentication
+Step 1: Generate a new Personal Access Token 
+
+Go to your personal GitHub account and create a new token with read packages permission. 
+Copy your token for the following step.
+
+Step 2: Configure GitHub authentication
 
 Create or update your `settings.xml` file in the `.m2` directory (usually located in your home
 directory) with the following content:
@@ -46,6 +56,11 @@ directory) with the following content:
 
 Replace YOUR_GITHUB_USERNAME with your GitHub username and YOUR_GITHUB_TOKEN with a personal access
 token generated from your GitHub account with read:packages permissions.
+
+## Install User Certificate in Git
+
+Open the following link: https://everisgroup.sharepoint.com/sites/Zscaler/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FZscaler%2FShared%20Documents%2FKnown%20Issues%2FFixes%2FWindows&viewid=a2c69b76%2Dc9ca%2D4e54%2D987b%2D3c3835a729e3
+Locate the file named "Zscaler_USER_EnvironmentVariables.exe", download it to your computer and execute it.
 
 ### Setting Up Appium Environment
 
@@ -77,15 +92,28 @@ Step 4: Set Up Emulators or Physical Devices
 
 Create a new project, select "No activity" option and follow the default configuration.  
 Once you have Android Studio configured, go to *Settings*, search for *Android SDK Command-line
-Tools* and apply
-changes.  
+Tools* and apply changes.  
 Use Virtual Device Manager tool from Android Studio to start a customized Android emulator.
+
+## Install User Certificate for Android Studio 
+
+Open the following link: https://everisgroup.sharepoint.com/sites/Zscaler/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FZscaler%2FShared%20Documents%2FKnown%20Issues%2FCA%5FCertificates&viewid=a2c69b76%2Dc9ca%2D4e54%2D987b%2D3c3835a729e3
+Locate the file named "Zscaler_Root_CA.exe " and download it to your computer.
+
+Launch Android Studio in your computer and open the Device File Explorer. Navigate to the sdcard/Download Folder (Right-click in the Download folder, select Upload) and navigate to the location where you saved the Zscaler_Root_CA.cer file on your computer. Click open to upload it to the device. 
 
 Step 5: Start Appium Server
 
 Run on terminal the command: `appium` to start appium server
 
-### IDE Configuration Steps
+### IDE Configuration 
+
+## Install User Certificate for IntelliJ
+
+Open the following link: https://everisgroup.sharepoint.com/sites/Zscaler/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FZscaler%2FShared%20Documents%2FKnown%20Issues%2FFixes%2FWindows&viewid=a2c69b76%2Dc9ca%2D4e54%2D987b%2D3c3835a729e3
+Locate the file named "Zscaler_ADMIN_Update_Java_CACERTS.exe ", download it to your computer and execute it.
+
+## Configuration Steps
 
 Create a new folder and clone the Repository:
 
@@ -96,6 +124,13 @@ Open Project in IntelliJ IDEA:
 Open IntelliJ IDEA and select File > Open.
 
 Navigate to the directory where you cloned the repository and select it.
+
+## Configure SDK 
+
+Go to File > Project Structure 
+Click on the project SDK field. If the Amazon Correto SDK in not listed, select Add SDK > Download JDK. Select Amazon Corretto, version 11.
+Apply and confirm the configuration
+
 
 ### Set Environment Variables:
 
@@ -108,28 +143,21 @@ Environment.
 - Platform:
     - Possible values: Android, IOS, Web.
     - Description: Specifies the platform for testing, whether it is Android, iOS or Web. Must be
-      provided with valid
-      values for the tests to function correctly.
+      provided with valid values for the tests to function correctly.
 - Accessibility:
     - Possible values: true, false.
-    - Description: indicates whether accessibility features are enabled during testing.The variable
-      can take the value
-      of null or blank, in which case the Accessibility report will not be shown.
-    - Browser:
-        - Possible values: Chrome, Firefox, Edge, Safari.
-        - Description: Defines the browser to be used for web testing. The 'Browser' variable can
-          take the value of '
-          null', in which case the default browser used for testing is 'chrome'.  
-          If you are using Safari for MacOS, write this command for enable the
-          automatization: `safaridriver --enable`
+    - Description: indicates whether accessibility features are enabled during testing. The variable
+      can take the value of null or blank, in which case the Accessibility report will not be shown.
+- Browser:
+    - Possible values: Chrome, Firefox, Edge, Safari.
+    - Description: Defines the browser to be used for web testing. The 'Browser' variable can take the value of 'null', in which case the default browser used for testing is 'chrome'.
+      If you are using Safari for MacOS, write this command for enable the automatization: `safaridriver --enable`
 - Application:
     - Description: Should be the name of the web app being tested. Application cannot be
-      null and must be
-      provided with valid values for the tests to function correctly.
+      null and must be provided with valid values for the tests to function correctly.
 - Resolution:
     - Possibles values: the possibles values of the environment variable resolution are established
-      in the '
-      allowedResolution.yaml'.
+      in the 'allowedResolution.yaml'.
     - Description: Specifies the screen resolution for web testing. If null or blank, a default
       resolution of 1024x768
       is set.
@@ -149,19 +177,15 @@ Environment.
       both AppPackage and AppActivity fields are provided.
 - AppIdentifier:
     - Description: For Android it represents the app package and for IOS it represents the bundleId
-      of the app being
-      tested for mobile testing. The Android tests work if both AppPackage and AppActivity fields
+      of the app being tested for mobile testing. The Android tests work if both AppPackage and AppActivity fields
       are provided.
 - Udid:
     - Description: Represent the unique device identifier (UDID) of the device being tested for
-      mobile testing.It can be obtained running on terminal `adb devices`. Must be
-      provided with valid values for the tests to function correctly. For Android, if the variable
-      takes the value of '
-      null', the default value is the current emulator Udid. For IOS, the Udid cannot be 'null'.
+      mobile testing.It can be obtained running on terminal `adb devices`. Must be provided with valid values for the tests to function correctly. For Android, in the variable takes the value of 'null', the default value is the current emulator Udid. For IOS, the Udid cannot be 'null'.
 - Provider:
+    - Possible values: Local and SauceLabs  
     - Description: Specifies the provider or environment to launch any test execution. Could be made
-      on
-      SauceLabs or Local Environment.
+      on SauceLabs or Local Environment.
 - User:
     - Description: Represents the username of your SauceLabs Account.
 - AccessToken:
