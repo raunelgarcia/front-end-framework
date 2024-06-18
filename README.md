@@ -1,4 +1,4 @@
-## Web and Mobile Framework Repository for Automatic Testing
+# Web and Mobile Framework Repository for Automatic Testing
 
 This repository contains all necessary tools and features for the automation of front end
 applications. With the use of
@@ -8,11 +8,11 @@ cloud testing provider as SauceLabs or keep running in Local. Also is
 integrated with axe-core
 tools to easily check web accessibility violations while running an automated web script.
 
-### Getting Started
+## Getting Started
 
 To set up your local environment and install dependencies for running the tests, follow these steps:
 
-### Pre-requisites
+## Pre-requisites
 
 Ensure you have IntelliJ IDEA installed on your system.
 Make sure you have Maven installed, Git and Java jdk 11 or superior.
@@ -23,7 +23,7 @@ Maven: https://maven.apache.org/download.cgi
 Java: https://www.java.com/es/download/ie_manual.jsp
 Git: https://www.git-scm.com/downloads
 
-### Setting Up GitHub Packages
+## Setting Up GitHub Packages
 
 To download the required Maven packages from GitHub Packages, follow these steps:
 
@@ -57,12 +57,12 @@ directory) with the following content:
 Replace YOUR_GITHUB_USERNAME with your GitHub username and YOUR_GITHUB_TOKEN with a personal access
 token generated from your GitHub account with read:packages permissions.
 
-## Install User Certificate in Git
+### Install User Certificate in Git
 
 Open the following link: https://everisgroup.sharepoint.com/sites/Zscaler/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FZscaler%2FShared%20Documents%2FKnown%20Issues%2FFixes%2FWindows&viewid=a2c69b76%2Dc9ca%2D4e54%2D987b%2D3c3835a729e3
 Locate the file named "Zscaler_USER_EnvironmentVariables.exe", download it to your computer and execute it.
 
-### Setting Up Appium Environment
+## Setting Up Appium Environment
 
 Step 1: Install Node.js
 Appium runs on Node.js. If you don't already have Node.js installed, download and install it
@@ -95,7 +95,7 @@ Once you have Android Studio configured, go to *Settings*, search for *Android S
 Tools* and apply changes.  
 Use Virtual Device Manager tool from Android Studio to start a customized Android emulator.
 
-## Install User Certificate for Android Studio 
+### Install User Certificate for Android Studio 
 
 Open the following link: https://everisgroup.sharepoint.com/sites/Zscaler/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FZscaler%2FShared%20Documents%2FKnown%20Issues%2FCA%5FCertificates&viewid=a2c69b76%2Dc9ca%2D4e54%2D987b%2D3c3835a729e3
 Locate the file named "Zscaler_Root_CA.exe " and download it to your computer.
@@ -106,14 +106,14 @@ Step 5: Start Appium Server
 
 Run on terminal the command: `appium` to start appium server
 
-### IDE Configuration 
+## IDE Configuration 
 
-## Install User Certificate for IntelliJ
+### Install User Certificate for IntelliJ
 
 Open the following link: https://everisgroup.sharepoint.com/sites/Zscaler/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FZscaler%2FShared%20Documents%2FKnown%20Issues%2FFixes%2FWindows&viewid=a2c69b76%2Dc9ca%2D4e54%2D987b%2D3c3835a729e3
 Locate the file named "Zscaler_ADMIN_Update_Java_CACERTS.exe ", download it to your computer and execute it.
 
-## Configuration Steps
+### Configuration Steps
 
 Create a new folder and clone the Repository:
 
@@ -125,14 +125,14 @@ Open IntelliJ IDEA and select File > Open.
 
 Navigate to the directory where you cloned the repository and select it.
 
-## Configure SDK 
+### Configure SDK 
 
 Go to File > Project Structure 
 Click on the project SDK field. If the Amazon Correto SDK in not listed, select Add SDK > Download JDK. Select Amazon Corretto, version 11.
 Apply and confirm the configuration
 
 
-### Set Environment Variables:
+## Set Environment Variables:
 
 You can set environment variables in IntelliJ IDEA by going to Run > Edit Configurations > Add JUNIT
 Configuration >
