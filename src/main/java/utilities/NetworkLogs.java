@@ -39,12 +39,14 @@ public class NetworkLogs {
       }
       String fileName = "logs_" + System.currentTimeMillis() + ".txt";
       File outputFile = new File(logsFolder, fileName);
+
       try (FileWriter writer = new FileWriter(outputFile)) {
         writer.write(output.toString());
-        AllureReport.attachTextFileToAllureReport(outputFile);
       } catch (IOException e) {
         e.printStackTrace();
       }
+
+      AllureReport.attachTextFileToAllureReport(outputFile);
 
       process.waitFor();
       reader.close();

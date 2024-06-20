@@ -16,7 +16,8 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
 public class AllureReport {
-  private static String descriptionHtml;
+  private static String descriptionHtml = "";
+  private static String checksHtml = "";
 
   public static void fillReportInfo() {
     descriptionHtml = setTestDescription();
@@ -90,19 +91,21 @@ public class AllureReport {
           .append("</p>");
       description.append("<p><b>Operating System:</b> ").append(os).append("</p>");
     }
+    description.append(checksHtml);
+    checksHtml = "";
     return description.toString();
   }
 
   public static void addComparation(String comparationMessage, boolean success) {
     if (success)
-      descriptionHtml =
-          descriptionHtml.concat(
+      checksHtml =
+          checksHtml.concat(
               "<h4 style=\"background-color: #97cc64; padding: 8px; color: #fff;\">"
                   + comparationMessage
                   + "</h4>");
     else
-      descriptionHtml =
-          descriptionHtml.concat(
+      checksHtml =
+          checksHtml.concat(
               "<h4 style=\"background-color: #fd5a3e; padding: 8px; color: #fff;\">"
                   + comparationMessage
                   + "</h4>");
