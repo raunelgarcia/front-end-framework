@@ -19,8 +19,11 @@ Make sure you have Maven installed, Git and Java jdk 11 or superior.
 Have a GitHub account with a Personal Access Token.
 
 IntelliJ Idea Community: https://www.jetbrains.com/idea/download/?section=windows
+
 Maven: https://maven.apache.org/download.cgi
+
 Java: https://www.java.com/es/download/ie_manual.jsp
+
 Git: https://www.git-scm.com/downloads
 
 ## Setting Up GitHub Packages
