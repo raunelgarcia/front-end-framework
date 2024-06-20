@@ -27,9 +27,9 @@ Git: https://www.git-scm.com/downloads
 
 To download the required Maven packages from GitHub Packages, follow these steps:
 
-Step 1: Generate a new Personal Access Token 
+Step 1: Generate a new Personal Access Token
 
-Go to your personal GitHub account and create a new token with read packages permission. 
+Go to your personal GitHub account and create a new token with read packages permission.
 Copy your token for the following step.
 
 Step 2: Configure GitHub authentication
@@ -40,16 +40,16 @@ directory) with the following content:
 ```xml
 
 <settings xmlns="http://maven.apache.org/SETTINGS/1.2.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.2.0 http://maven.apache.org/xsd/settings-1.2.0.xsd">
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.2.0 http://maven.apache.org/xsd/settings-1.2.0.xsd">
 
-  <servers>
-    <server>
-      <id>github</id>
-      <username>YOUR_GITHUB_USERNAME</username>
-      <password>YOUR_GITHUB_TOKEN</password>
-    </server>
-  </servers>
+    <servers>
+        <server>
+            <id>github</id>
+            <username>YOUR_GITHUB_USERNAME</username>
+            <password>YOUR_GITHUB_TOKEN</password>
+        </server>
+    </servers>
 
 </settings>
 ```
@@ -59,7 +59,8 @@ token generated from your GitHub account with read:packages permissions.
 
 ### Install User Certificate in Git
 
-Open the following link: https://everisgroup.sharepoint.com/sites/Zscaler/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FZscaler%2FShared%20Documents%2FKnown%20Issues%2FFixes%2FWindows&viewid=a2c69b76%2Dc9ca%2D4e54%2D987b%2D3c3835a729e3
+Open the following
+link: https://everisgroup.sharepoint.com/sites/Zscaler/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FZscaler%2FShared%20Documents%2FKnown%20Issues%2FFixes%2FWindows&viewid=a2c69b76%2Dc9ca%2D4e54%2D987b%2D3c3835a729e3
 Locate the file named "Zscaler_USER_EnvironmentVariables.exe", download it to your computer and execute it.
 
 ## Setting Up Appium Environment
@@ -95,22 +96,26 @@ Once you have Android Studio configured, go to *Settings*, search for *Android S
 Tools* and apply changes.  
 Use Virtual Device Manager tool from Android Studio to start a customized Android emulator.
 
-### Install User Certificate for Android Studio 
+### Install User Certificate for Android Studio
 
-Open the following link: https://everisgroup.sharepoint.com/sites/Zscaler/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FZscaler%2FShared%20Documents%2FKnown%20Issues%2FCA%5FCertificates&viewid=a2c69b76%2Dc9ca%2D4e54%2D987b%2D3c3835a729e3
+Open the following
+link: https://everisgroup.sharepoint.com/sites/Zscaler/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FZscaler%2FShared%20Documents%2FKnown%20Issues%2FCA%5FCertificates&viewid=a2c69b76%2Dc9ca%2D4e54%2D987b%2D3c3835a729e3
 Locate the file named "Zscaler_Root_CA.exe " and download it to your computer.
 
-Launch Android Studio in your computer and open the Device File Explorer. Navigate to the sdcard/Download Folder (Right-click in the Download folder, select Upload) and navigate to the location where you saved the Zscaler_Root_CA.cer file on your computer. Click open to upload it to the device. 
+Launch Android Studio in your computer and open the Device File Explorer. Navigate to the sdcard/Download Folder (
+Right-click in the Download folder, select Upload) and navigate to the location where you saved the Zscaler_Root_CA.cer
+file on your computer. Click open to upload it to the device.
 
 Step 5: Start Appium Server
 
 Run on terminal the command: `appium` to start appium server
 
-## IDE Configuration 
+## IDE Configuration
 
 ### Install User Certificate for IntelliJ
 
-Open the following link: https://everisgroup.sharepoint.com/sites/Zscaler/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FZscaler%2FShared%20Documents%2FKnown%20Issues%2FFixes%2FWindows&viewid=a2c69b76%2Dc9ca%2D4e54%2D987b%2D3c3835a729e3
+Open the following
+link: https://everisgroup.sharepoint.com/sites/Zscaler/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FZscaler%2FShared%20Documents%2FKnown%20Issues%2FFixes%2FWindows&viewid=a2c69b76%2Dc9ca%2D4e54%2D987b%2D3c3835a729e3
 Locate the file named "Zscaler_ADMIN_Update_Java_CACERTS.exe ", download it to your computer and execute it.
 
 ### Configuration Steps
@@ -125,12 +130,12 @@ Open IntelliJ IDEA and select File > Open.
 
 Navigate to the directory where you cloned the repository and select it.
 
-### Configure SDK 
+### Configure SDK
 
-Go to File > Project Structure 
-Click on the project SDK field. If the Amazon Correto SDK in not listed, select Add SDK > Download JDK. Select Amazon Corretto, version 11.
+Go to File > Project Structure
+Click on the project SDK field. If the Amazon Correto SDK in not listed, select Add SDK > Download JDK. Select Amazon
+Corretto, version 11.
 Apply and confirm the configuration
-
 
 ## Set Environment Variables:
 
@@ -150,7 +155,8 @@ Environment.
       can take the value of null or blank, in which case the Accessibility report will not be shown.
 - Browser:
     - Possible values: Chrome, Firefox, Edge, Safari.
-    - Description: Defines the browser to be used for web testing. The 'Browser' variable can take the value of 'null', in which case the default browser used for testing is 'chrome'.
+    - Description: Defines the browser to be used for web testing. The 'Browser' variable can take the value of 'null',
+      in which case the default browser used for testing is 'chrome'.
       If you are using Safari for MacOS, write this command for enable the automatization: `safaridriver --enable`
 - Application:
     - Description: Should be the name of the web app being tested. Application cannot be
@@ -181,9 +187,11 @@ Environment.
       are provided.
 - Udid:
     - Description: Represent the unique device identifier (UDID) of the device being tested for
-      mobile testing.It can be obtained running on terminal `adb devices`. Must be provided with valid values for the tests to function correctly. For Android, in the variable takes the value of 'null', the default value is the current emulator Udid. For IOS, the Udid cannot be 'null'.
+      mobile testing.It can be obtained running on terminal `adb devices`. Must be provided with valid values for the
+      tests to function correctly. For Android, in the variable takes the value of 'null', the default value is the
+      current emulator Udid. For IOS, the Udid cannot be 'null'.
 - Provider:
-    - Possible values: Local and SauceLabs  
+    - Possible values: Local and SauceLabs
     - Description: Specifies the provider or environment to launch any test execution. Could be made
       on SauceLabs or Local Environment.
 - User:
