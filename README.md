@@ -80,6 +80,10 @@ command:
 
 `npm install -g appium`
 
+You will also need the uiautomator2 driver for Appium, run the following command just as before:
+
+`appium driver install uiautomator2`
+
 Step 3: Install Appium Dependencies
 
 Appium has specific dependencies for different mobile development platforms. Install the necessary
@@ -125,7 +129,7 @@ Locate the file named "Zscaler_ADMIN_Update_Java_CACERTS.exe ", download it to y
 
 Create a new folder and clone the Repository:
 
-`git clone https://github.com/raunelgarcia/mobile-framework.git`
+`git clone https://github.com/raunelgarcia/front-end-automation.git`
 
 Open Project in IntelliJ IDEA:
 
@@ -139,6 +143,22 @@ Go to File > Project Structure
 Click on the project SDK field. If the Amazon Correto SDK in not listed, select Add SDK > Download JDK. Select Amazon
 Corretto, version 11.
 Apply and confirm the configuration
+
+### Add plugin
+
+Go to File > Settings > Plugins > Marketplace and search the google-java-format plugin and install it, you will probably
+need
+to restart de IDE after installing it. Once it is installed you should enable the plugin in File > Settings >
+google-java-format Settings.
+In order to be able to Reformat Code with the Optimize import option on you should go to Help > Edit Custom VM Options,
+paste the following lines and restart the IDE afterward:
+
+`--add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED
+--add-exports=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED
+--add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED
+--add-exports=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED
+--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED
+--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED`
 
 ## Set Environment Variables:
 
