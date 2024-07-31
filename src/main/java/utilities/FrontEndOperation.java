@@ -21,6 +21,7 @@ import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -203,7 +204,11 @@ public class FrontEndOperation {
       if (LocalEnviroment.isMobile()) {
         swipe(direction, 0.4, minScroll ? 0.5 : 0.6);
       } else {
-        JSExecutor.executeScript(DriverConfiguration.getDriver(), "window.scrollBy(0,200)");
+        WebDriver driver = DriverConfiguration.getDriver();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        Actions actions = new Actions(driver);
+        wait.until(ExpectedConditions.visibilityOf(element));
+        actions.moveToElement(element).perform();
       }
     }
   }
