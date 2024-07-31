@@ -80,9 +80,13 @@ command:
 
 `npm install -g appium`
 
-You will also need the uiautomator2 driver for Appium, run the following command just as before:
+You will also need the uiautomator2 driver if you're using Android, run the following command just as before:
 
 `appium driver install uiautomator2`
+
+In case you are using iOS you should run the following command instead:
+
+`appium driver install xcuitest`
 
 Step 3: Install Appium Dependencies
 
@@ -144,7 +148,7 @@ Click on the project SDK field. If the Amazon Correto SDK in not listed, select 
 Corretto, version 11.
 Apply and confirm the configuration
 
-### Add plugin
+### Add google java plugin
 
 Go to File > Settings > Plugins > Marketplace and search the google-java-format plugin and install it, you will probably
 need
