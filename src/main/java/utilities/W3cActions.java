@@ -25,6 +25,7 @@ public class W3cActions {
 
   public static void swipe(AppiumDriver driver, Point start, Point end, int duration) {
 
+
     Sequence swipe =
         new Sequence(FINGER, 1)
             .addAction(
