@@ -22,6 +22,7 @@ public class W3cActions {
 
   private static final PointerInput FINGER = new PointerInput(Kind.TOUCH, "finger");
 
+
   public static void swipe(AppiumDriver driver, Point start, Point end, int duration) {
 
     Sequence swipe =
