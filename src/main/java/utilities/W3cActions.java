@@ -13,7 +13,9 @@ import io.appium.java_client.ios.IOSDriver;
 import java.time.Duration;
 import java.util.Collections;
 import org.openqa.selenium.Point;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.PointerInput;
 import org.openqa.selenium.interactions.PointerInput.Kind;
 import org.openqa.selenium.interactions.Sequence;
@@ -22,9 +24,12 @@ public class W3cActions {
 
   private static final PointerInput FINGER = new PointerInput(Kind.TOUCH, "finger");
 
+  public static Actions getActions() {
+    WebDriver driver = DriverConfiguration.getDriver();
+    return new Actions(driver);
+  }
 
   public static void swipe(AppiumDriver driver, Point start, Point end, int duration) {
-
 
     Sequence swipe =
         new Sequence(FINGER, 1)
@@ -44,8 +49,7 @@ public class W3cActions {
     Logger.infoMessage("ELement position: " + location);
     Sequence tap = new Sequence(FINGER, 1);
     tap.addAction(
-        FINGER.createPointerMove(
-            Duration.ofMillis(0), viewport(), location.x, location.y));
+        FINGER.createPointerMove(Duration.ofMillis(0), viewport(), location.x, location.y));
     tap.addAction(FINGER.createPointerDown(LEFT.asArg()));
     tap.addAction(FINGER.createPointerUp(LEFT.asArg()));
 

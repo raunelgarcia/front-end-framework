@@ -203,7 +203,8 @@ public class FrontEndOperation {
       if (LocalEnviroment.isMobile()) {
         swipe(direction, 0.4, minScroll ? 0.5 : 0.6);
       } else {
-        JSExecutor.executeScript(DriverConfiguration.getDriver(), "window.scrollBy(0,200)");
+        waitForVisibility(element);
+        W3cActions.getActions().moveToElement(element).perform();
       }
     }
   }
