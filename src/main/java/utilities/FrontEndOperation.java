@@ -203,7 +203,6 @@ public class FrontEndOperation {
         swipe(direction, 0.4, minScroll ? 0.5 : 0.6);
       }
     } else {
-      waitForVisibility(element);
       W3cActions.getActions().moveToElement(element).perform();
     }
   }
