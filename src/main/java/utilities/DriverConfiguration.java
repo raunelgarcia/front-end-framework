@@ -93,6 +93,7 @@ public class DriverConfiguration {
       default:
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--lang=" + LocalEnviroment.getLanguage());
+        chromeOptions.addArguments("--disable-search-engine-choice-screen");
         driver = new ChromeDriver(chromeOptions);
         break;
     }
