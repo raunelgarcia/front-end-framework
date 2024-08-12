@@ -100,6 +100,10 @@ In the next lines you will install this different dependencies.
 Install Android Studio following the instructions on https://developer.android.com/studio/install.
 Set up `ANDROID_HOME` and `JAVA_HOME` environment variables correctly in user variables.
 
+If you are using Windows `ANDROID_HOME` should be in the sdk folder, `JAVA_HOME` in the JDK folder version you have
+already installed
+and lastly in the variable `Path` you should also add the following route `%ANDROID_HOME%\platform-tools`
+
 Step 4: Set Up Emulators or Physical Devices
 
 Create a new project, select "No activity" option and follow the default configuration.  

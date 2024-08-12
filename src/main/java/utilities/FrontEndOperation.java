@@ -198,13 +198,13 @@ public class FrontEndOperation {
   }
 
   public static void scrollToElement(WebElement element, Direction direction, boolean minScroll) {
-
-    while (!isVisible(element)) {
-      if (LocalEnviroment.isMobile()) {
+    if (LocalEnviroment.isMobile()) {
+      while (!isVisible(element)) {
         swipe(direction, 0.4, minScroll ? 0.5 : 0.6);
-      } else {
-        JSExecutor.executeScript(DriverConfiguration.getDriver(), "window.scrollBy(0,200)");
       }
+    } else {
+      waitForVisibility(element);
+      W3cActions.getActions().moveToElement(element).perform();
     }
   }
 
