@@ -234,7 +234,7 @@ Ensure to set these variables according to your testing requirements before exec
 
 ### Android Variables Example
 
-Case 1: With AppActivity and AppPackage.
+Case 1: With AppActivity and AppPackage, when you don't have the app installed.
 AppActivity=.activities.MainContainerActivity;AppIdentifier=com.iphonedroid.marca;Platform=Android;Udid=;Provider=;
 
 | Campo         | Valor                             |
@@ -244,7 +244,7 @@ AppActivity=.activities.MainContainerActivity;AppIdentifier=com.iphonedroid.marc
 | Platform      | Android                           |
 | Udid          |                                   |
 
-Case 2: With App.  
+Case 2: With App, when you have installed the app.  
 App=marca-com-7-0-20.apk;Platform=Android;Udid=;
 
 | Campo    | Valor                     |
