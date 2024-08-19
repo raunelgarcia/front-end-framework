@@ -192,6 +192,9 @@ Environment.
 - Application:
     - Description: Should be the name of the web app being tested. Application cannot be
       null and must be provided with valid values for the tests to function correctly.
+- Url:
+    - Description: Specifies the URL of the web app being tested. By default, the URL is blank. If the URL is not provided,
+      a url will be chosen from the 'webConfiguration.yaml', where Application is the key.
 - Resolution:
     - Possibles values: the possibles values of the environment variable resolution are established
       in the 'allowedResolution.yaml'.
@@ -229,6 +232,12 @@ Environment.
     - Description: Represents the username of your SauceLabs Account.
 - AccessToken:
     - Description: Represents the API access token of your SauceLabs Account.
+- DeviceName:
+    - Description: Represents the name of the device being tested for mobile testing on SauceLabs. If left blank, the
+      default value is `Android GoogleAPI Emulator`.
+- PlatformVersion:
+    - Description: Represents the version of the platform being tested for mobile testing on SauceLabs. If left blank, the
+      default value is `15.0`.
 
 Ensure to set these variables according to your testing requirements before executing the tests.
 

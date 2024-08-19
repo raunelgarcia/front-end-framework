@@ -3,6 +3,8 @@ package utilities;
 import static utilities.Constants.SAUCELABS_TESTS_URL;
 import static utilities.DriverConfiguration.setURL;
 import static utilities.LocalEnviroment.getAccessToken;
+import static utilities.LocalEnviroment.getDeviceName;
+import static utilities.LocalEnviroment.getPlatformVersion;
 import static utilities.LocalEnviroment.getUser;
 import static utilities.LocalEnviroment.isAndroid;
 import static utilities.LocalEnviroment.isIOS;
@@ -57,7 +59,7 @@ public class Saucelabs {
     caps.setCapability("appium:automationName", automationName);
 
     MutableCapabilities sauceOptions = new MutableCapabilities();
-    sauceOptions.setCapability("appiumVersion", "latest");
+    sauceOptions.setCapability("appiumVersion", "2.11.0");
     sauceOptions.setCapability("username", getUser());
     sauceOptions.setCapability("accessKey", getAccessToken());
     sauceOptions.setCapability("build", "selenium-build-VNFHT");
@@ -72,7 +74,7 @@ public class Saucelabs {
     MutableCapabilities caps =
         configureCommonCapabilities(
             "iOS",
-            "storage:filename=SauceLabs-Demo-App-With-TestFairy.ipa",
+            "storage:filename="+System.getenv("App"),
             null,
             null,
             "XCUITest");
@@ -90,9 +92,9 @@ public class Saucelabs {
     MutableCapabilities caps =
         configureCommonCapabilities(
             "Android",
-            "storage:filename=mda-2.0.1-22.apk",
-            "Samsung Galaxy S9",
-            "10",
+            "storage:filename="+System.getenv("App"),
+            getDeviceName(),
+            getPlatformVersion(),
             "UiAutomator2");
 
     URL url = null;
