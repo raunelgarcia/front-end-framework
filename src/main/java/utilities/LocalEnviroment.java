@@ -68,7 +68,7 @@ public class LocalEnviroment {
     if (FrontEndOperation.isNullOrEmpty(deviceName)) {
       String platform = getPlatform();
       if ("Android".equals(platform)) {
-        return "Android GoogleAPI Emulator";
+        return ".*";
       } else if ("IOS".equals(platform)) {
         return null;
       }
@@ -82,7 +82,7 @@ public class LocalEnviroment {
     if (FrontEndOperation.isNullOrEmpty(platformVersion)) {
       String platform = getPlatform();
       if ("Android".equals(platform)) {
-        return "15.0";
+        return "^(8|9|1[0-5]).*";
       } else if ("IOS".equals(platform)) {
         return null;
       }

@@ -59,7 +59,7 @@ public class Saucelabs {
     caps.setCapability("appium:automationName", automationName);
 
     MutableCapabilities sauceOptions = new MutableCapabilities();
-    sauceOptions.setCapability("appiumVersion", "2.11.0");
+    sauceOptions.setCapability("appiumVersion", "latest");
     sauceOptions.setCapability("username", getUser());
     sauceOptions.setCapability("accessKey", getAccessToken());
     sauceOptions.setCapability("build", "selenium-build-VNFHT");
