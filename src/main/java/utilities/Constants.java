@@ -29,4 +29,5 @@ public class Constants {
   public static final String NETWORK_LOG_CLEAN_COMMAND_ANDROID = "adb logcat -c";
   public static final String SAUCELABS_TESTS_URL =
       "https://ondemand.eu-central-1.saucelabs.com:443/wd/hub";
+  public static final String SAUCELABS_API_URL = "https://api.eu-central-1.saucelabs.com/";
 }
