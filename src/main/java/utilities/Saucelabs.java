@@ -73,7 +73,7 @@ public class Saucelabs {
     MutableCapabilities caps =
         configureCommonCapabilities(
             "iOS",
-            "storage:filename=" + System.getenv("App"),
+            "storage:filename=".concat(System.getenv("App")),
             getDeviceName(),
             "(1[4-9]|[2-9]\\d).*",
             "XCUITest");
@@ -91,7 +91,7 @@ public class Saucelabs {
     MutableCapabilities caps =
         configureCommonCapabilities(
             "Android",
-            "storage:filename=" + System.getenv("App"),
+            "storage:filename=".concat(System.getenv("App")),
             getDeviceName(),
             "(8|9|\\d{2}).*",
             "UiAutomator2");
