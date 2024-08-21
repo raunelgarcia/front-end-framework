@@ -238,60 +238,60 @@ Ensure to set these variables according to your testing requirements before exec
 ### Android Variables Example
 
 Case 1: With AppActivity and AppPackage, when you have installed the app.
-AppActivity=.activities.MainContainerActivity;AppIdentifier=com.iphonedroid.marca;Platform=Android;Udid=;Provider=;
+AppActivity=.view.activities.SplashActivity;AppIdentifier=com.saucelabs.mydemoapp.android;Platform=Android;Udid=;Provider=;
 
 | Campo         | Valor                             |
 |---------------|-----------------------------------|
-| AppActivity   | .activities.MainContainerActivity |
-| AppIdentifier | com.iphonedroid.marca             |
+| AppActivity   | .view.activities.SplashActivity   |
+| AppIdentifier | com.saucelabs.mydemoapp.android   |
 | Platform      | Android                           |
 | Udid          |                                   |
 
 Case 2: With App, when you don't have the app installed.  
-App=marca-com-7-0-20.apk;Platform=Android;Udid=;
+App=mda-2.0.2-23.apk;Platform=Android;Udid=;
 
-| Campo    | Valor                     |
-|----------|---------------------------| 
-| App      | com.iphonedroid.marca.apk | 
-| Platform | Android                   |
-| Udid     |                           |
+| Campo    | Valor            |
+|----------|------------------| 
+| App      | mda-2.0.2-23.apk | 
+| Platform | Android          |
+| Udid     |                  |
 
 Case 3: With SauceLabs.
-Platform=Android;Provider=SauceLabs;DeviceName=Samsung Galaxy S9;AppIdentifier=com.iphonedroid.marca;User=;AccessToken=;
+Platform=Android;Provider=SauceLabs;DeviceName=Samsung Galaxy S9;AppIdentifier=com.saucelabs.mydemoapp.android;User=;AccessToken=;
 
-| Campo         | Valor                 |
-|---------------|-----------------------|
-| Platform      | Android               |
-| Provider      | SauceLabs             |
-| DeviceName    | Samsung Galaxy S9     |
-| AppIdentifier | com.iphonedroid.marca |
-| User          |                       |
-| AccessToken   |                       |
+| Campo         | Valor                           |
+|---------------|---------------------------------|
+| Platform      | Android                         |
+| Provider      | SauceLabs                       |
+| DeviceName    | Samsung Galaxy S9               |
+| AppIdentifier | com.saucelabs.mydemoapp.android |
+| User          |                                 |
+| AccessToken   |                                 |
 
 ### IOS Variables Example
 
 Case 1: With AppIdentifier.
 
-AppIdentifier=com.marca.marcador;Platform=IOS;Udid=A308507F-99BB-47A2-9A2D-06005CAAD428;Provider=;
+AppIdentifier=com.saucelabs.mydemoapp.ios;Platform=IOS;Udid=A308507F-99BB-47A2-9A2D-06005CAAD428;Provider=;
 
 | Campo         | Valor                                |
 |---------------|--------------------------------------|
-| AppIdentifier | com.marca.marcador                   |
+| AppIdentifier | com.saucelabs.mydemoapp.ios          |
 | Platform      | IOS                                  |
 | Udid          | A308507F-99BB-47A2-9A2D-06005CAAD428 |
 
 Case 2: With SauceLabs.
 
-Platform=IOS;Provider=SauceLabs;DeviceName=iPhone 12;AppIdentifier=com.marca.marcador;User=;AccessToken=;
+Platform=IOS;Provider=SauceLabs;DeviceName=iPhone 12;AppIdentifier=com.saucelabs.mydemoapp.ios;User=;AccessToken=;
 
-| Campo         | Valor                 |
-|---------------|-----------------------|
-| Platform      | IOS                   |
-| Provider      | SauceLabs             |
-| DeviceName    | iPhone 12             |
-| AppIdentifier | com.marca.marcador    |
-| User          |                       |
-| AccessToken   |                       |
+| Campo         | Valor                       |
+|---------------|-----------------------------|
+| Platform      | IOS                         |
+| Provider      | SauceLabs                   |
+| DeviceName    | iPhone 12                   |
+| AppIdentifier | com.saucelabs.mydemoapp.ios |
+| User          |                             |
+| AccessToken   |                             |
 
 ### Web Variables
 
