@@ -256,7 +256,21 @@ App=marca-com-7-0-20.apk;Platform=Android;Udid=;
 | Platform | Android                   |
 | Udid     |                           |
 
+Case 3: With SauceLabs.
+Platform=Android;Provider=SauceLabs;DeviceName=Samsung Galaxy S9;AppIdentifier=com.iphonedroid.marca;User=;AccessToken=;
+
+| Campo         | Valor                 |
+|---------------|-----------------------|
+| Platform      | Android               |
+| Provider      | SauceLabs             |
+| DeviceName    | Samsung Galaxy S9     |
+| AppIdentifier | com.iphonedroid.marca |
+| User          |                       |
+| AccessToken   |                       |
+
 ### IOS Variables Example
+
+Case 1: With AppIdentifier.
 
 AppIdentifier=com.marca.marcador;Platform=IOS;Udid=A308507F-99BB-47A2-9A2D-06005CAAD428;Provider=;
 
@@ -265,6 +279,19 @@ AppIdentifier=com.marca.marcador;Platform=IOS;Udid=A308507F-99BB-47A2-9A2D-06005
 | AppIdentifier | com.marca.marcador                   |
 | Platform      | IOS                                  |
 | Udid          | A308507F-99BB-47A2-9A2D-06005CAAD428 |
+
+Case 2: With SauceLabs.
+
+Platform=IOS;Provider=SauceLabs;DeviceName=iPhone 12;AppIdentifier=com.marca.marcador;User=;AccessToken=;
+
+| Campo         | Valor                 |
+|---------------|-----------------------|
+| Platform      | IOS                   |
+| Provider      | SauceLabs             |
+| DeviceName    | iPhone 12             |
+| AppIdentifier | com.marca.marcador    |
+| User          |                       |
+| AccessToken   |                       |
 
 ### Web Variables
 
