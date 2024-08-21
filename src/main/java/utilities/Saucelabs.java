@@ -74,7 +74,7 @@ public class Saucelabs {
         configureCommonCapabilities(
             "iOS",
             "storage:filename=" + System.getenv("App"),
-                getDeviceName(),
+            getDeviceName(),
             "(1[4-9]|[2-9]\\d).*",
             "XCUITest");
 
@@ -92,7 +92,7 @@ public class Saucelabs {
         configureCommonCapabilities(
             "Android",
             "storage:filename=" + System.getenv("App"),
-                getDeviceName(),
+            getDeviceName(),
             "(8|9|\\d{2}).*",
             "UiAutomator2");
 
