@@ -3,6 +3,7 @@ package utilities;
 import static utilities.Constants.SAUCELABS_TESTS_URL;
 import static utilities.DriverConfiguration.setURL;
 import static utilities.LocalEnviroment.getAccessToken;
+import static utilities.LocalEnviroment.getDeviceName;
 import static utilities.LocalEnviroment.getUser;
 import static utilities.LocalEnviroment.isAndroid;
 import static utilities.LocalEnviroment.isIOS;
@@ -72,9 +73,9 @@ public class Saucelabs {
     MutableCapabilities caps =
         configureCommonCapabilities(
             "iOS",
-            "storage:filename=SauceLabs-Demo-App-With-TestFairy.ipa",
-            null,
-            null,
+            "storage:filename=".concat(System.getenv("App")),
+            getDeviceName(),
+            "(1[4-9]|[2-9]\\d).*",
             "XCUITest");
 
     URL url = null;
@@ -90,9 +91,9 @@ public class Saucelabs {
     MutableCapabilities caps =
         configureCommonCapabilities(
             "Android",
-            "storage:filename=mda-2.0.1-22.apk",
-            "Samsung Galaxy S9",
-            "10",
+            "storage:filename=".concat(System.getenv("App")),
+            getDeviceName(),
+            "(8|9|\\d{2}).*",
             "UiAutomator2");
 
     URL url = null;
