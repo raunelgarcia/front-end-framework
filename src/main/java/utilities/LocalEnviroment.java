@@ -62,6 +62,22 @@ public class LocalEnviroment {
         && System.getenv("Accessibility").equalsIgnoreCase("true");
   }
 
+  public static String getDeviceName() {
+    String deviceName = System.getenv("DeviceName");
+    if (FrontEndOperation.isNullOrEmpty(deviceName)) {
+      return ".*";
+    }
+    return deviceName;
+  }
+
+  public static String getAppVersion() {
+    String appVersion = System.getenv("AppVersion");
+    if (FrontEndOperation.isNullOrEmpty(appVersion)) {
+      return "latest";
+    }
+    return appVersion;
+  }
+
   public static boolean isMobile() {
     return !isWeb();
   }
