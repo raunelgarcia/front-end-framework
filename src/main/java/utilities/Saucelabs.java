@@ -4,7 +4,6 @@ import static utilities.Constants.SAUCELABS_TESTS_URL;
 import static utilities.DriverConfiguration.setURL;
 import static utilities.LocalEnviroment.getAccessToken;
 import static utilities.LocalEnviroment.getDeviceName;
-import static utilities.LocalEnviroment.getPlatformVersion;
 import static utilities.LocalEnviroment.getUser;
 import static utilities.LocalEnviroment.isAndroid;
 import static utilities.LocalEnviroment.isIOS;
@@ -74,9 +73,9 @@ public class Saucelabs {
     MutableCapabilities caps =
         configureCommonCapabilities(
             "iOS",
-            "storage:filename="+System.getenv("App"),
-            null,
-            null,
+            "storage:filename=" + System.getenv("App"),
+                getDeviceName(),
+            "(1[4-9]|[2-9]\\d).*",
             "XCUITest");
 
     URL url = null;
@@ -92,9 +91,9 @@ public class Saucelabs {
     MutableCapabilities caps =
         configureCommonCapabilities(
             "Android",
-            "storage:filename="+System.getenv("App"),
-            getDeviceName(),
-            getPlatformVersion(),
+            "storage:filename=" + System.getenv("App"),
+                getDeviceName(),
+            "(8|9|\\d{2}).*",
             "UiAutomator2");
 
     URL url = null;

@@ -1,7 +1,6 @@
 package utilities;
 
 import static utilities.Constants.LANGUAGE_REGEX;
-import static utilities.Constants.URL_REGEX;
 
 import java.util.Map;
 import java.util.Objects;
@@ -66,30 +65,10 @@ public class LocalEnviroment {
   public static String getDeviceName() {
     String deviceName = System.getenv("DeviceName");
     if (FrontEndOperation.isNullOrEmpty(deviceName)) {
-      String platform = getPlatform();
-      if ("Android".equals(platform)) {
-        return ".*";
-      } else if ("IOS".equals(platform)) {
-        return null;
-      }
+      return ".*";
     }
     return deviceName;
   }
-
-
-  public static String getPlatformVersion() {
-    String platformVersion = System.getenv("PlatformVersion");
-    if (FrontEndOperation.isNullOrEmpty(platformVersion)) {
-      String platform = getPlatform();
-      if ("Android".equals(platform)) {
-        return "^(8|9|1[0-5]).*";
-      } else if ("IOS".equals(platform)) {
-        return null;
-      }
-    }
-    return platformVersion;
-  }
-
 
   public static boolean isMobile() {
     return !isWeb();
@@ -116,13 +95,6 @@ public class LocalEnviroment {
   }
 
   public static String getApplicationUrl() throws IllegalArgumentException {
-    String url_env = System.getenv("Url");
-    if (!FrontEndOperation.isNullOrEmpty(url_env)) {
-      if (!url_env.matches(URL_REGEX)) {
-        throw new IllegalArgumentException("Invalid URL: " + url_env);
-      }
-      return url_env;
-    }
     Map<String, Map<String, String>> environment = DriverConfiguration.loadCapabilitiesWeb();
     Map<String, String> urls = environment.get("url");
     String url = null;
