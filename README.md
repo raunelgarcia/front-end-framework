@@ -229,6 +229,9 @@ Environment.
     - Description: Represents the username of your SauceLabs Account.
 - AccessToken:
     - Description: Represents the API access token of your SauceLabs Account.
+- DeviceName:
+    - Description: Represents the name of the device being tested for mobile testing on SauceLabs. If left blank, the
+      default value is `.*`, which means any available device.
 
 Ensure to set these variables according to your testing requirements before executing the tests.
 
@@ -253,7 +256,21 @@ App=marca-com-7-0-20.apk;Platform=Android;Udid=;
 | Platform | Android                   |
 | Udid     |                           |
 
+Case 3: With SauceLabs.
+Platform=Android;Provider=SauceLabs;DeviceName=Samsung Galaxy S9;AppIdentifier=com.saucelabs.mydemoapp.android;User=;AccessToken=;
+
+| Campo         | Valor                           |
+|---------------|---------------------------------|
+| Platform      | Android                         |
+| Provider      | SauceLabs                       |
+| DeviceName    | Samsung Galaxy S9               |
+| AppIdentifier | com.saucelabs.mydemoapp.android |
+| User          |                                 |
+| AccessToken   |                                 |
+
 ### IOS Variables Example
+
+Case 1: With AppIdentifier.
 
 AppIdentifier=com.marca.marcador;Platform=IOS;Udid=A308507F-99BB-47A2-9A2D-06005CAAD428;Provider=;
 
@@ -262,6 +279,19 @@ AppIdentifier=com.marca.marcador;Platform=IOS;Udid=A308507F-99BB-47A2-9A2D-06005
 | AppIdentifier | com.marca.marcador                   |
 | Platform      | IOS                                  |
 | Udid          | A308507F-99BB-47A2-9A2D-06005CAAD428 |
+
+Case 2: With SauceLabs.
+
+Platform=IOS;Provider=SauceLabs;DeviceName=iPhone 12;AppIdentifier=com.saucelabs.mydemoapp.ios;User=;AccessToken=;
+
+| Campo         | Valor                       |
+|---------------|-----------------------------|
+| Platform      | IOS                         |
+| Provider      | SauceLabs                   |
+| DeviceName    | iPhone 12                   |
+| AppIdentifier | com.saucelabs.mydemoapp.ios |
+| User          |                             |
+| AccessToken   |                             |
 
 ### Web Variables
 
