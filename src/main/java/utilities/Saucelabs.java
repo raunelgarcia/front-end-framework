@@ -3,11 +3,14 @@ package utilities;
 import static utilities.Constants.SAUCELABS_TESTS_URL;
 import static utilities.DriverConfiguration.setURL;
 import static utilities.LocalEnviroment.getAccessToken;
+import static utilities.LocalEnviroment.getAppIdentifier;
+import static utilities.LocalEnviroment.getAppVersion;
 import static utilities.LocalEnviroment.getDeviceName;
 import static utilities.LocalEnviroment.getUser;
 import static utilities.LocalEnviroment.isAndroid;
 import static utilities.LocalEnviroment.isIOS;
 import static utilities.LocalEnviroment.isWeb;
+import static utilities.SauceLabsAPI.getAppFileId;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
@@ -70,10 +73,20 @@ public class Saucelabs {
   }
 
   public static IOSDriver configureSauceIOS() {
+    HashMap <String, String> params = new HashMap<>();
+    params.put("q", getAppIdentifier());
+    String appStorage = null;
+
+    try{
+      appStorage = getAppFileId(getAppVersion(), params);
+    } catch (Exception e){
+      e.printStackTrace();
+    }
+
     MutableCapabilities caps =
         configureCommonCapabilities(
             "iOS",
-            "storage:filename=".concat(System.getenv("App")),
+            "storage:" + appStorage,
             getDeviceName(),
             "(1[4-9]|[2-9]\\d).*",
             "XCUITest");
@@ -88,10 +101,20 @@ public class Saucelabs {
   }
 
   public static AndroidDriver configureSauceAndroid() {
+    HashMap <String, String> params = new HashMap<>();
+    params.put("q", getAppIdentifier());
+    String appStorage = null;
+
+    try{
+      appStorage = getAppFileId(getAppVersion(), params);
+    } catch (Exception e){
+      e.printStackTrace();
+    }
+
     MutableCapabilities caps =
         configureCommonCapabilities(
             "Android",
-            "storage:filename=".concat(System.getenv("App")),
+            "storage:" + appStorage,
             getDeviceName(),
             "(8|9|\\d{2}).*",
             "UiAutomator2");
