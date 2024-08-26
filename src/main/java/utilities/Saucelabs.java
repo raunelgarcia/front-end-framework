@@ -59,8 +59,8 @@ public class Saucelabs {
     if (!FrontEndOperation.isNullOrEmpty(platformVersion)) {
       caps.setCapability("appium:platformVersion", platformVersion);
     }
-
     caps.setCapability("appium:automationName", automationName);
+
     MutableCapabilities sauceOptions = new MutableCapabilities();
     if (deviceName.contains("Emulator")
         && (!platformVersion.equalsIgnoreCase("current_major")
