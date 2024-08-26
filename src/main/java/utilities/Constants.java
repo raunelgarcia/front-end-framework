@@ -30,4 +30,6 @@ public class Constants {
   public static final String SAUCELABS_TESTS_URL =
       "https://ondemand.eu-central-1.saucelabs.com:443/wd/hub";
   public static final String SAUCELABS_API_URL = "https://api.eu-central-1.saucelabs.com/";
+  public static final String ANDROID_VERSION_REGEX = "(8|9|\\d{2}).*";
+  public static final String IOS_VERSION_REGEX = "(1[4-9]|[2-9]\\d).*";
 }

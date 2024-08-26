@@ -236,14 +236,13 @@ Environment.
 - DeviceName:
     - Description: Represents the name of the device being tested for mobile testing on SauceLabs. If left blank, the
       default value is `.*`, which means any available device. If you want to use an emulator, you must
-      write `emulator`, and it will automatically use the Android Emulator or IPhone Simulator depending on the
-      capability "Platform".
+      write `emulator` for Android or `simulator` for iOS, and it will build up automatically.
 - PlatformVersion:
     - Description: Represents the version of the device being tested for mobile testing on SauceLabs. If left blank, the
       default value is `.*`, which means the latest version of any available device. If left blank while using an
       emulator, the default value is `current_major`, which means it will use the latest version. You can also specify
       the version if needed, having in mind that 14.0 is the smaller version for iOS, and 8.0 is the smaller version for
-      Android. If you want to use the previous latest version while emulating you must write `previous`.
+      Android.
 
 Ensure to set these variables according to your testing requirements before executing the tests.
 
@@ -324,13 +323,13 @@ Platform=IOS;Provider=SauceLabs;DeviceName=iPhone
 | AppVersion    |                             |
 
 Case 3: With SauceLabs, emulator.
-Platform=IOS;Provider=SauceLabs;DeviceName=emulator;AppIdentifier=com.saucelabs.mydemoapp.android;User=;AccessToken=;AppVersion=;PlatformVersion=;
+Platform=IOS;Provider=SauceLabs;DeviceName=simulator;AppIdentifier=com.saucelabs.mydemoapp.android;User=;AccessToken=;AppVersion=;PlatformVersion=;
 
 | Campo           | Valor                       |
 |-----------------|-----------------------------|
 | Platform        | IOS                         |
 | Provider        | SauceLabs                   |
-| DeviceName      | emulator                    |
+| DeviceName      | simulator                   |
 | AppIdentifier   | com.saucelabs.mydemoapp.ios |
 | User            |                             |
 | AccessToken     |                             |

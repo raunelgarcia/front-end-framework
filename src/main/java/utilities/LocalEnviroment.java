@@ -1,6 +1,6 @@
 package utilities;
 
-import static utilities.Constants.LANGUAGE_REGEX;
+import static utilities.Constants.*;
 
 import java.util.Map;
 import java.util.Objects;
@@ -45,6 +45,32 @@ public class LocalEnviroment {
     return System.getenv("AccessToken");
   }
 
+  public static String getAppiumVersion() {
+    String appiumVersion = null;
+    if (isVirtualDevice()) {
+      switch (getPlatform().toLowerCase()) {
+        case "android":
+          if (getPlatformVersion().matches(ANDROID_VERSION_REGEX)) {
+            appiumVersion = "2.11.0";
+          } else {
+            Logger.infoMessage("The version specified is not available for Android");
+          }
+          break;
+
+        case "ios":
+          if (getPlatformVersion().matches(IOS_VERSION_REGEX)) {
+            appiumVersion = "2.0.0";
+          } else {
+            Logger.infoMessage("The version specified is not available for iOS");
+          }
+          break;
+      }
+    } else {
+      appiumVersion = "latest";
+    }
+    return appiumVersion;
+  }
+
   public static String getApp() {
     return System.getenv("App");
   }
@@ -66,11 +92,27 @@ public class LocalEnviroment {
     String deviceName = System.getenv("DeviceName");
     if (FrontEndOperation.isNullOrEmpty(deviceName)) {
       return ".*";
-    } else if (deviceName.equalsIgnoreCase("emulator")) {
-      if (getPlatform().equalsIgnoreCase("iOS")) {
-        deviceName = "iPhone Simulator";
-      } else {
-        deviceName = "Android GoogleAPI Emulator";
+    } else {
+      switch (deviceName.toLowerCase()) {
+        case "emulator":
+          if (isAndroid()) {
+            deviceName = "Android GoogleAPI Emulator";
+          } else {
+            Logger.infoMessage("Check for emulator and Android");
+          }
+          break;
+
+        case "simulator":
+          if (isIOS()) {
+            deviceName = "iPhone Simulator";
+          } else {
+            Logger.infoMessage("Check for simulator and iOS");
+          }
+          break;
+
+        default:
+          Logger.infoMessage("DeviceName does not match 'emulator' or 'simulator'");
+          break;
       }
     }
     return deviceName;
@@ -79,24 +121,20 @@ public class LocalEnviroment {
   public static String getPlatformVersion() {
     String platformVersion = System.getenv("PlatformVersion");
     if (FrontEndOperation.isNullOrEmpty(platformVersion)) {
-      if (getDeviceName().contains("Emulator") || getDeviceName().contains("Simulator")) {
+      if (isVirtualDevice()) {
         platformVersion = "current_major";
       } else {
         return ".*";
       }
 
     } else {
-      if (platformVersion.equalsIgnoreCase("previous")
-          && (getDeviceName().contains("Emulator") || getDeviceName().contains("Simulator"))) {
-        platformVersion = "previous_major";
-      }
-
-      if (getPlatform().equalsIgnoreCase("Android") && !getDeviceName().contains("Emulator")) {
-        platformVersion = "(8|9|\\d{2}).*";
-      }
-
-      if (getPlatform().equalsIgnoreCase("iOS") && !getDeviceName().contains("Simulator")) {
-        platformVersion = "(1[4-9]|[2-9]\\d).*";
+      if (!isVirtualDevice()) {
+        if (isAndroid()) {
+          platformVersion = ANDROID_VERSION_REGEX;
+        }
+        if (isIOS()) {
+          platformVersion = IOS_VERSION_REGEX;
+        }
       }
     }
     return platformVersion;
@@ -132,6 +170,10 @@ public class LocalEnviroment {
 
   public static boolean isMac() {
     return System.getProperty("os.name").toLowerCase().contains("mac");
+  }
+
+  public static boolean isVirtualDevice() {
+    return (getDeviceName().contains("Emulator") || getDeviceName().contains("Simulator"));
   }
 
   public static String getApplicationUrl() throws IllegalArgumentException {

@@ -2,15 +2,7 @@ package utilities;
 
 import static utilities.Constants.SAUCELABS_TESTS_URL;
 import static utilities.DriverConfiguration.setURL;
-import static utilities.LocalEnviroment.getAccessToken;
-import static utilities.LocalEnviroment.getAppIdentifier;
-import static utilities.LocalEnviroment.getAppVersion;
-import static utilities.LocalEnviroment.getDeviceName;
-import static utilities.LocalEnviroment.getPlatformVersion;
-import static utilities.LocalEnviroment.getUser;
-import static utilities.LocalEnviroment.isAndroid;
-import static utilities.LocalEnviroment.isIOS;
-import static utilities.LocalEnviroment.isWeb;
+import static utilities.LocalEnviroment.*;
 import static utilities.SauceLabsAPI.getAppFileId;
 
 import io.appium.java_client.android.AndroidDriver;
@@ -62,21 +54,7 @@ public class Saucelabs {
     caps.setCapability("appium:automationName", automationName);
 
     MutableCapabilities sauceOptions = new MutableCapabilities();
-    if (deviceName.contains("Emulator")
-        && (!platformVersion.equalsIgnoreCase("current_major")
-            || !platformVersion.equalsIgnoreCase("previous_major"))) {
-      sauceOptions.setCapability("appiumVersion", "2.11.0");
-    } else if (deviceName.contains("Simulator")
-        && (!platformVersion.equalsIgnoreCase("current_major")
-            || !platformVersion.equalsIgnoreCase("previous_major"))) {
-      if (platformVersion.equalsIgnoreCase("17.0")) {
-        sauceOptions.setCapability("appiumVersion", "2.1.3");
-      } else {
-        sauceOptions.setCapability("appiumVersion", "2.0.0");
-      }
-    } else {
-      sauceOptions.setCapability("appiumVersion", "latest");
-    }
+    sauceOptions.setCapability("appiumVersion", getAppiumVersion());
     sauceOptions.setCapability("username", getUser());
     sauceOptions.setCapability("accessKey", getAccessToken());
     sauceOptions.setCapability("build", "selenium-build-VNFHT");
