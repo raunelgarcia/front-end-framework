@@ -217,9 +217,9 @@ Environment.
       of the app being tested for mobile testing. The Android tests work if both AppPackage and AppActivity fields
       are provided.
 - AppVersion:
-    - Description: Represent the version of the app specified in "AppIdentifier". If left blank, the
-      default value is `latest`, which means it will run the latest version of the app. You can also specify the version
-      if wanted.
+    - Description: Represent the version of the app installed in SauceLabs specified in "AppIdentifier". If left blank,
+      the default value is `latest`, which means it will run the latest version of the app. You can also specify the
+      version if wanted. It will only work while working with SauceLabs.
 - Udid:
     - Description: Represent the unique device identifier (UDID) of the device being tested for
       mobile testing.It can be obtained running on terminal `adb devices`. Must be provided with valid values for the
