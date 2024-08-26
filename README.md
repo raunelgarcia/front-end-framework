@@ -231,7 +231,16 @@ Environment.
     - Description: Represents the API access token of your SauceLabs Account.
 - DeviceName:
     - Description: Represents the name of the device being tested for mobile testing on SauceLabs. If left blank, the
-      default value is `.*`, which means any available device.
+      default value is `.*`, which means any available device. If you want to use an emulator, you must
+      write `emulator`, and it will automatically use the Android Emulator or IPhone Simulator depending on the
+      capability "Platform".
+- PlatformVersion:
+    - Description: Represents the version of the device being tested for mobile testing on SauceLabs. If left blank, the
+      default value is `.*`, which means the latest version of any available device. If left blank while using an
+      emulator, the default value
+      is `current_major`, which means it will use the latest version. You can also specify the version if needed, having
+      in mind that 14.0 is the smaller version for iOS, and 8.0 is the smaller version for Android. If you want to use
+      the previous latest version while emulating you must write `previous`.
 
 Ensure to set these variables according to your testing requirements before executing the tests.
 
@@ -256,8 +265,9 @@ App=marca-com-7-0-20.apk;Platform=Android;Udid=;
 | Platform | Android                   |
 | Udid     |                           |
 
-Case 3: With SauceLabs.
-Platform=Android;Provider=SauceLabs;DeviceName=Samsung Galaxy S9;AppIdentifier=com.saucelabs.mydemoapp.android;User=;AccessToken=;
+Case 3: With SauceLabs, physical device.
+Platform=Android;Provider=SauceLabs;DeviceName=Samsung Galaxy
+S9;AppIdentifier=com.saucelabs.mydemoapp.android;User=;AccessToken=;
 
 | Campo         | Valor                           |
 |---------------|---------------------------------|
@@ -267,6 +277,19 @@ Platform=Android;Provider=SauceLabs;DeviceName=Samsung Galaxy S9;AppIdentifier=c
 | AppIdentifier | com.saucelabs.mydemoapp.android |
 | User          |                                 |
 | AccessToken   |                                 |
+
+Case 4: With SauceLabs, emulator.
+Platform=Android;Provider=SauceLabs;DeviceName=emulator;AppIdentifier=com.saucelabs.mydemoapp.android;User=;AccessToken=;PlatformVersion=;
+
+| Campo           | Valor                           |
+|-----------------|---------------------------------|
+| Platform        | Android                         |
+| Provider        | SauceLabs                       |
+| DeviceName      | emulator                        |
+| AppIdentifier   | com.saucelabs.mydemoapp.android |
+| User            |                                 |
+| AccessToken     |                                 |
+| PlatformVersion |                                 |
 
 ### IOS Variables Example
 
@@ -280,7 +303,7 @@ AppIdentifier=com.marca.marcador;Platform=IOS;Udid=A308507F-99BB-47A2-9A2D-06005
 | Platform      | IOS                                  |
 | Udid          | A308507F-99BB-47A2-9A2D-06005CAAD428 |
 
-Case 2: With SauceLabs.
+Case 2: With SauceLabs, physical device.
 
 Platform=IOS;Provider=SauceLabs;DeviceName=iPhone 12;AppIdentifier=com.saucelabs.mydemoapp.ios;User=;AccessToken=;
 
@@ -292,6 +315,19 @@ Platform=IOS;Provider=SauceLabs;DeviceName=iPhone 12;AppIdentifier=com.saucelabs
 | AppIdentifier | com.saucelabs.mydemoapp.ios |
 | User          |                             |
 | AccessToken   |                             |
+
+Case 3: With SauceLabs, emulator.
+Platform=IOS;Provider=SauceLabs;DeviceName=emulator;AppIdentifier=com.saucelabs.mydemoapp.android;User=;AccessToken=;PlatformVersion=;
+
+| Campo           | Valor                       |
+|-----------------|-----------------------------|
+| Platform        | IOS                         |
+| Provider        | SauceLabs                   |
+| DeviceName      | emulator                    |
+| AppIdentifier   | com.saucelabs.mydemoapp.ios |
+| User            |                             |
+| AccessToken     |                             |
+| PlatformVersion |                             |
 
 ### Web Variables
 

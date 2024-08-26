@@ -66,8 +66,40 @@ public class LocalEnviroment {
     String deviceName = System.getenv("DeviceName");
     if (FrontEndOperation.isNullOrEmpty(deviceName)) {
       return ".*";
+    } else if (deviceName.equalsIgnoreCase("emulator")) {
+      if (getPlatform().equalsIgnoreCase("iOS")) {
+        deviceName = "iPhone Simulator";
+      } else {
+        deviceName = "Android GoogleAPI Emulator";
+      }
     }
     return deviceName;
+  }
+
+  public static String getPlatformVersion() {
+    String platformVersion = System.getenv("PlatformVersion");
+    if (FrontEndOperation.isNullOrEmpty(platformVersion)) {
+      if (getDeviceName().contains("Emulator") || getDeviceName().contains("Simulator")) {
+        platformVersion = "current_major";
+      } else {
+        return ".*";
+      }
+
+    } else {
+      if (platformVersion.equalsIgnoreCase("previous")
+          && (getDeviceName().contains("Emulator") || getDeviceName().contains("Simulator"))) {
+        platformVersion = "previous_major";
+      }
+
+      if (getPlatform().equalsIgnoreCase("Android") && !getDeviceName().contains("Emulator")) {
+        platformVersion = "(8|9|\\d{2}).*";
+      }
+
+      if (getPlatform().equalsIgnoreCase("iOS") && !getDeviceName().contains("Simulator")) {
+        platformVersion = "(1[4-9]|[2-9]\\d).*";
+      }
+    }
+    return platformVersion;
   }
 
   public static String getAppVersion() {
