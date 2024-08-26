@@ -216,6 +216,10 @@ Environment.
     - Description: For Android it represents the app package and for IOS it represents the bundleId
       of the app being tested for mobile testing. The Android tests work if both AppPackage and AppActivity fields
       are provided.
+- AppVersion:
+    - Description: Represent the version of the app installed in SauceLabs specified in "AppIdentifier". If left blank,
+      the default value is `latest`, which means it will run the latest version of the app. You can also specify the
+      version if wanted. It will only work while working with SauceLabs.
 - Udid:
     - Description: Represent the unique device identifier (UDID) of the device being tested for
       mobile testing.It can be obtained running on terminal `adb devices`. Must be provided with valid values for the
@@ -277,6 +281,7 @@ S9;AppIdentifier=com.saucelabs.mydemoapp.android;User=;AccessToken=;
 | AppIdentifier | com.saucelabs.mydemoapp.android |
 | User          |                                 |
 | AccessToken   |                                 |
+| AppVersion    |                                 |
 
 Case 4: With SauceLabs, emulator.
 Platform=Android;Provider=SauceLabs;DeviceName=emulator;AppIdentifier=com.saucelabs.mydemoapp.android;User=;AccessToken=;PlatformVersion=;
@@ -305,7 +310,8 @@ AppIdentifier=com.marca.marcador;Platform=IOS;Udid=A308507F-99BB-47A2-9A2D-06005
 
 Case 2: With SauceLabs, physical device.
 
-Platform=IOS;Provider=SauceLabs;DeviceName=iPhone 12;AppIdentifier=com.saucelabs.mydemoapp.ios;User=;AccessToken=;
+Platform=IOS;Provider=SauceLabs;DeviceName=iPhone
+12;AppIdentifier=com.saucelabs.mydemoapp.ios;User=;AccessToken=;AppVersion=;
 
 | Campo         | Valor                       |
 |---------------|-----------------------------|
@@ -315,6 +321,7 @@ Platform=IOS;Provider=SauceLabs;DeviceName=iPhone 12;AppIdentifier=com.saucelabs
 | AppIdentifier | com.saucelabs.mydemoapp.ios |
 | User          |                             |
 | AccessToken   |                             |
+| AppVersion    |                             |
 
 Case 3: With SauceLabs, emulator.
 Platform=IOS;Provider=SauceLabs;DeviceName=emulator;AppIdentifier=com.saucelabs.mydemoapp.android;User=;AccessToken=;PlatformVersion=;
