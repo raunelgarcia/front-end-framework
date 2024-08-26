@@ -241,10 +241,9 @@ Environment.
 - PlatformVersion:
     - Description: Represents the version of the device being tested for mobile testing on SauceLabs. If left blank, the
       default value is `.*`, which means the latest version of any available device. If left blank while using an
-      emulator, the default value
-      is `current_major`, which means it will use the latest version. You can also specify the version if needed, having
-      in mind that 14.0 is the smaller version for iOS, and 8.0 is the smaller version for Android. If you want to use
-      the previous latest version while emulating you must write `previous`.
+      emulator, the default value is `current_major`, which means it will use the latest version. You can also specify
+      the version if needed, having in mind that 14.0 is the smaller version for iOS, and 8.0 is the smaller version for
+      Android. If you want to use the previous latest version while emulating you must write `previous`.
 
 Ensure to set these variables according to your testing requirements before executing the tests.
 
@@ -271,7 +270,7 @@ App=marca-com-7-0-20.apk;Platform=Android;Udid=;
 
 Case 3: With SauceLabs, physical device.
 Platform=Android;Provider=SauceLabs;DeviceName=Samsung Galaxy
-S9;AppIdentifier=com.saucelabs.mydemoapp.android;User=;AccessToken=;
+S9;AppIdentifier=com.saucelabs.mydemoapp.android;User=;AccessToken=;AppVersion=;
 
 | Campo         | Valor                           |
 |---------------|---------------------------------|
@@ -284,7 +283,7 @@ S9;AppIdentifier=com.saucelabs.mydemoapp.android;User=;AccessToken=;
 | AppVersion    |                                 |
 
 Case 4: With SauceLabs, emulator.
-Platform=Android;Provider=SauceLabs;DeviceName=emulator;AppIdentifier=com.saucelabs.mydemoapp.android;User=;AccessToken=;PlatformVersion=;
+Platform=Android;Provider=SauceLabs;DeviceName=emulator;AppIdentifier=com.saucelabs.mydemoapp.android;User=;AccessToken=;AppVersion=;PlatformVersion=;
 
 | Campo           | Valor                           |
 |-----------------|---------------------------------|
@@ -294,6 +293,7 @@ Platform=Android;Provider=SauceLabs;DeviceName=emulator;AppIdentifier=com.saucel
 | AppIdentifier   | com.saucelabs.mydemoapp.android |
 | User            |                                 |
 | AccessToken     |                                 |
+| AppVersion      |                                 |
 | PlatformVersion |                                 |
 
 ### IOS Variables Example
@@ -324,7 +324,7 @@ Platform=IOS;Provider=SauceLabs;DeviceName=iPhone
 | AppVersion    |                             |
 
 Case 3: With SauceLabs, emulator.
-Platform=IOS;Provider=SauceLabs;DeviceName=emulator;AppIdentifier=com.saucelabs.mydemoapp.android;User=;AccessToken=;PlatformVersion=;
+Platform=IOS;Provider=SauceLabs;DeviceName=emulator;AppIdentifier=com.saucelabs.mydemoapp.android;User=;AccessToken=;AppVersion=;PlatformVersion=;
 
 | Campo           | Valor                       |
 |-----------------|-----------------------------|
@@ -334,6 +334,7 @@ Platform=IOS;Provider=SauceLabs;DeviceName=emulator;AppIdentifier=com.saucelabs.
 | AppIdentifier   | com.saucelabs.mydemoapp.ios |
 | User            |                             |
 | AccessToken     |                             |
+| AppVersion      |                             |
 | PlatformVersion |                             |
 
 ### Web Variables
