@@ -2,14 +2,7 @@ package utilities;
 
 import static utilities.Constants.SAUCELABS_TESTS_URL;
 import static utilities.DriverConfiguration.setURL;
-import static utilities.LocalEnviroment.getAccessToken;
-import static utilities.LocalEnviroment.getAppIdentifier;
-import static utilities.LocalEnviroment.getAppVersion;
-import static utilities.LocalEnviroment.getDeviceName;
-import static utilities.LocalEnviroment.getUser;
-import static utilities.LocalEnviroment.isAndroid;
-import static utilities.LocalEnviroment.isIOS;
-import static utilities.LocalEnviroment.isWeb;
+import static utilities.LocalEnviroment.*;
 import static utilities.SauceLabsAPI.getAppFileId;
 
 import io.appium.java_client.android.AndroidDriver;
@@ -52,16 +45,16 @@ public class Saucelabs {
     MutableCapabilities caps = new MutableCapabilities();
     caps.setCapability("platformName", platformName);
     caps.setCapability("appium:app", app);
-    if (deviceName != null) {
+    if (!FrontEndOperation.isNullOrEmpty(deviceName)) {
       caps.setCapability("appium:deviceName", deviceName);
     }
-    if (platformVersion != null) {
+    if (!FrontEndOperation.isNullOrEmpty(platformVersion)) {
       caps.setCapability("appium:platformVersion", platformVersion);
     }
     caps.setCapability("appium:automationName", automationName);
 
     MutableCapabilities sauceOptions = new MutableCapabilities();
-    sauceOptions.setCapability("appiumVersion", "latest");
+    sauceOptions.setCapability("appiumVersion", getAppiumVersion());
     sauceOptions.setCapability("username", getUser());
     sauceOptions.setCapability("accessKey", getAccessToken());
     sauceOptions.setCapability("build", "selenium-build-VNFHT");
@@ -73,23 +66,19 @@ public class Saucelabs {
   }
 
   public static IOSDriver configureSauceIOS() {
-    HashMap <String, String> params = new HashMap<>();
+    HashMap<String, String> params = new HashMap<>();
     params.put("q", getAppIdentifier());
     String appStorage = null;
 
-    try{
+    try {
       appStorage = getAppFileId(getAppVersion(), params);
-    } catch (Exception e){
+    } catch (Exception e) {
       e.printStackTrace();
     }
 
     MutableCapabilities caps =
         configureCommonCapabilities(
-            "iOS",
-            "storage:" + appStorage,
-            getDeviceName(),
-            "(1[4-9]|[2-9]\\d).*",
-            "XCUITest");
+            "iOS", "storage:" + appStorage, getDeviceName(), getPlatformVersion(), "XCUITest");
 
     URL url = null;
     try {
@@ -101,13 +90,13 @@ public class Saucelabs {
   }
 
   public static AndroidDriver configureSauceAndroid() {
-    HashMap <String, String> params = new HashMap<>();
+    HashMap<String, String> params = new HashMap<>();
     params.put("q", getAppIdentifier());
     String appStorage = null;
 
-    try{
+    try {
       appStorage = getAppFileId(getAppVersion(), params);
-    } catch (Exception e){
+    } catch (Exception e) {
       e.printStackTrace();
     }
 
@@ -116,7 +105,7 @@ public class Saucelabs {
             "Android",
             "storage:" + appStorage,
             getDeviceName(),
-            "(8|9|\\d{2}).*",
+            getPlatformVersion(),
             "UiAutomator2");
 
     URL url = null;
