@@ -50,18 +50,20 @@ public class LocalEnviroment {
     if (isVirtualDevice()) {
       switch (getPlatform().toLowerCase()) {
         case "android":
-          if (getPlatformVersion().matches(ANDROID_VERSION_REGEX)) {
+          if (checkPlatformVersion(ANDROID_VERSION_REGEX)) {
             appiumVersion = "2.11.0";
           } else {
-            Logger.infoMessage("The version specified is not available for Android");
+            Logger.infoMessage(
+                "The version specified is not available for Android, the smaller one is 8.0");
           }
           break;
 
         case "ios":
-          if (getPlatformVersion().matches(IOS_VERSION_REGEX)) {
+          if (checkPlatformVersion(IOS_VERSION_REGEX)) {
             appiumVersion = "2.0.0";
           } else {
-            Logger.infoMessage("The version specified is not available for iOS");
+            Logger.infoMessage(
+                "The version specified is not available for iOS, the smaller one is 14.0");
           }
           break;
       }
@@ -174,6 +176,12 @@ public class LocalEnviroment {
 
   public static boolean isVirtualDevice() {
     return (getDeviceName().contains("Emulator") || getDeviceName().contains("Simulator"));
+  }
+
+  public static boolean checkPlatformVersion(String regex) {
+    return (getPlatformVersion().matches(regex)
+        || getPlatformVersion().equalsIgnoreCase(".*")
+        || getPlatformVersion().equalsIgnoreCase("current_major"));
   }
 
   public static String getApplicationUrl() throws IllegalArgumentException {

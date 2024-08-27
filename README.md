@@ -322,7 +322,7 @@ Platform=IOS;Provider=SauceLabs;DeviceName=iPhone
 | AccessToken   |                             |
 | AppVersion    |                             |
 
-Case 3: With SauceLabs, emulator.
+Case 3: With SauceLabs, simulator.
 Platform=IOS;Provider=SauceLabs;DeviceName=simulator;AppIdentifier=com.saucelabs.mydemoapp.android;User=;AccessToken=;AppVersion=;PlatformVersion=;
 
 | Campo           | Valor                       |
