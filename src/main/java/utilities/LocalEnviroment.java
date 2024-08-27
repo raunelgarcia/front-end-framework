@@ -133,8 +133,7 @@ public class LocalEnviroment {
       if (!isVirtualDevice()) {
         if (isAndroid()) {
           platformVersion = ANDROID_VERSION_REGEX;
-        }
-        if (isIOS()) {
+        } else {
           platformVersion = IOS_VERSION_REGEX;
         }
       }
