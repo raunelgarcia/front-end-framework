@@ -10,6 +10,7 @@ import java.util.function.Supplier;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import saucelabs.api.ApiUtils;
 import saucelabs.api.Response;
 import saucelabs.api.SauceLabsAPI;
 import utilities.Constants;
@@ -43,6 +44,8 @@ public class SauceLabsClient {
       // Execute the API call
       jakarta.ws.rs.core.Response response = executeRestAPI(apiSupplier);
       status = response.getStatus();
+
+      ApiUtils.checkStatusCode(status, 200);
 
       // Check if the response is HTML (for example, an error page)
       if (MediaType.TEXT_HTML.equals(response.getMediaType().toString())) {
