@@ -7,7 +7,7 @@ public class ApStorageItemMetadataResponse {
   private String identifier;
   private String name;
   private String version;
-  private boolean isSimulator;
-  private String minOs;
-  private String targetOs;
+  private String short_version;
+  private Boolean is_simulator;
+  private String min_os;
 }
