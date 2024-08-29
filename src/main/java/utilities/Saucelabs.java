@@ -26,7 +26,7 @@ public class Saucelabs {
   private static final String USER = LocalEnviroment.getUser();
   private static final String ACCESS_TOKEN = LocalEnviroment.getAccessToken();
   private static final String AUTHORIZATION =
-          Base64.getEncoder().encodeToString((USER + ":" + ACCESS_TOKEN).getBytes());
+      Base64.getEncoder().encodeToString((USER + ":" + ACCESS_TOKEN).getBytes());
 
   public static WebDriver getSauceDriver() {
     if (isWeb()) {
@@ -76,9 +76,9 @@ public class Saucelabs {
   public static IOSDriver configureSauceIOS() {
     String appStorage = null;
 
-    try{
+    try {
       appStorage = getAppFileId(AUTHORIZATION, getAppVersion(), getAppIdentifier());
-    } catch (Exception e){
+    } catch (Exception e) {
       e.printStackTrace();
     }
 
@@ -98,9 +98,9 @@ public class Saucelabs {
   public static AndroidDriver configureSauceAndroid() {
     String appStorage = null;
 
-    try{
+    try {
       appStorage = getAppFileId(AUTHORIZATION, getAppVersion(), getAppIdentifier());
-    } catch (Exception e){
+    } catch (Exception e) {
       e.printStackTrace();
     }
 
