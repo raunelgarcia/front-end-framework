@@ -3,7 +3,7 @@ package saucelabs.dto;
 import lombok.Data;
 
 @Data
-public class ApStorageItemMetadataResponse {
+public class AppStorageItemMetadataResponse {
   private String identifier;
   private String name;
   private String version;

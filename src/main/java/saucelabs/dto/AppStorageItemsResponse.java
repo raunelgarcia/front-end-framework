@@ -7,5 +7,5 @@ public class AppStorageItemsResponse {
   private String id;
   private String name;
   private String kind;
-  private ApStorageItemMetadataResponse metadata;
+  private AppStorageItemMetadataResponse metadata;
 }

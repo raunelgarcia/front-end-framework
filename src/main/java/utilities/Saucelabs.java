@@ -1,5 +1,6 @@
 package utilities;
 
+import static saucelabs.api.ApiUtils.getAppFileId;
 import static utilities.Constants.SAUCELABS_TESTS_URL;
 import static utilities.DriverConfiguration.setURL;
 import static utilities.LocalEnviroment.*;
@@ -9,6 +10,7 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import org.openqa.selenium.Dimension;
@@ -20,6 +22,12 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class Saucelabs {
+
+  private static final String USER = LocalEnviroment.getUser();
+  private static final String ACCESS_TOKEN = LocalEnviroment.getAccessToken();
+  private static final String AUTHORIZATION =
+          Base64.getEncoder().encodeToString((USER + ":" + ACCESS_TOKEN).getBytes());
+
   public static WebDriver getSauceDriver() {
     if (isWeb()) {
       Dimension windowResolution = ScreenResolution.getResolutionFromEnv();
@@ -66,13 +74,11 @@ public class Saucelabs {
   }
 
   public static IOSDriver configureSauceIOS() {
-    HashMap<String, String> params = new HashMap<>();
-    params.put("q", getAppIdentifier());
     String appStorage = null;
 
-    try {
-      appStorage = getAppFileId(getAppVersion(), params);
-    } catch (Exception e) {
+    try{
+      appStorage = getAppFileId(AUTHORIZATION, getAppVersion(), getAppIdentifier());
+    } catch (Exception e){
       e.printStackTrace();
     }
 
@@ -90,13 +96,11 @@ public class Saucelabs {
   }
 
   public static AndroidDriver configureSauceAndroid() {
-    HashMap<String, String> params = new HashMap<>();
-    params.put("q", getAppIdentifier());
     String appStorage = null;
 
-    try {
-      appStorage = getAppFileId(getAppVersion(), params);
-    } catch (Exception e) {
+    try{
+      appStorage = getAppFileId(AUTHORIZATION, getAppVersion(), getAppIdentifier());
+    } catch (Exception e){
       e.printStackTrace();
     }
 
