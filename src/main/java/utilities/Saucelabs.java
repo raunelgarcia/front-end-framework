@@ -4,7 +4,6 @@ import static saucelabs.api.ApiUtils.getAppFileId;
 import static utilities.Constants.SAUCELABS_TESTS_URL;
 import static utilities.DriverConfiguration.setURL;
 import static utilities.LocalEnviroment.*;
-import static utilities.SauceLabsAPI.getAppFileId;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
