@@ -1,6 +1,6 @@
 package utilities;
 
-import static saucelabs.api.ApiUtils.getAppFileId;
+import static org.apache.http.HttpStatus.SC_OK;
 import static utilities.Constants.SAUCELABS_TESTS_URL;
 import static utilities.DriverConfiguration.setURL;
 import static utilities.LocalEnviroment.*;
@@ -19,13 +19,73 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import saucelabs.api.ApiUtils;
+import saucelabs.api.Response;
+import saucelabs.client.SauceLabsClient;
+import saucelabs.dto.AppStorageItemMetadataResponse;
+import saucelabs.dto.AppStorageResponse;
+import saucelabs.service.SauceLabsService;
 
-public class Saucelabs {
+public class SaucelabsDriverConfiguration {
 
   private static final String USER = LocalEnviroment.getUser();
   private static final String ACCESS_TOKEN = LocalEnviroment.getAccessToken();
   private static final String AUTHORIZATION =
       Base64.getEncoder().encodeToString((USER + ":" + ACCESS_TOKEN).getBytes());
+
+  public static String getSaucelabsAppId(
+      String authorization, String appId, String kind, String version) {
+    // Check that appId is not null
+    if (appId.isBlank()) {
+      throw new IllegalArgumentException("AppIdentifier is not set");
+    }
+
+    // Retrieve app storage response
+    SauceLabsService sauceLabsService = new SauceLabsService(new SauceLabsClient());
+    Response<AppStorageResponse> response =
+        sauceLabsService.getV1StorageFiles(authorization, appId, kind.toLowerCase(), 10);
+    ApiUtils.checkStatusCode(response.getStatus(), SC_OK);
+    AppStorageResponse appStorageResponse = response.getPayload();
+    System.out.println(appStorageResponse);
+
+    // Filter the apps
+    return appStorageResponse.getItems().stream()
+        .filter(item -> isValidApp(item.getMetadata(), version))
+        .findFirst()
+        .orElseThrow(() -> new IllegalArgumentException("Version not found: ".concat(version)))
+        .getId();
+  }
+
+  // This function abstracts the logic of getting the latest version of the app independent of the
+  // platform
+  private static String getVersion(AppStorageItemMetadataResponse metadata) {
+    String version;
+    if (LocalEnviroment.isAndroid()) {
+      version = metadata.getVersion();
+    } else {
+      version = metadata.getShort_version();
+    }
+    if (version == null) {
+      String platform = LocalEnviroment.getPlatform();
+      throw new IllegalArgumentException(
+          "The app is not compatible with the set platform: ".concat(platform));
+    }
+    return version;
+  }
+
+  private static boolean isValidApp(AppStorageItemMetadataResponse metadata, String version) {
+    // If the version is 'latest', no need to match a specific version
+    boolean versionMatches =
+        "latest".equalsIgnoreCase(version) || getVersion(metadata).equals(version);
+
+    // For iOS, check if the app matches the local environment's simulator/virtual device setup
+    boolean iosCheck =
+        LocalEnviroment.isAndroid()
+            || metadata.getIs_simulator() == LocalEnviroment.isVirtualDevice();
+
+    // Both version and iOS check need to pass
+    return versionMatches && iosCheck;
+  }
 
   public static WebDriver getSauceDriver() {
     if (isWeb()) {
@@ -76,7 +136,8 @@ public class Saucelabs {
     String appStorage = null;
 
     try {
-      appStorage = getAppFileId(AUTHORIZATION, getAppVersion(), getAppIdentifier());
+      appStorage =
+          getSaucelabsAppId(AUTHORIZATION, getAppVersion(), getPlatform(), getAppIdentifier());
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -98,7 +159,8 @@ public class Saucelabs {
     String appStorage = null;
 
     try {
-      appStorage = getAppFileId(AUTHORIZATION, getAppVersion(), getAppIdentifier());
+      appStorage =
+          getSaucelabsAppId(AUTHORIZATION, getAppVersion(), getPlatform(), getAppIdentifier());
     } catch (Exception e) {
       e.printStackTrace();
     }

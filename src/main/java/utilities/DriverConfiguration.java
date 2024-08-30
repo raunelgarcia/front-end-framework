@@ -35,7 +35,7 @@ public class DriverConfiguration {
       return currentDriver;
     }
     if (Objects.nonNull(getProvider()) && getProvider().equalsIgnoreCase("SauceLabs")) {
-      currentDriver = Saucelabs.getSauceDriver();
+      currentDriver = SaucelabsDriverConfiguration.getSauceDriver();
     } else {
       if (isWeb()) {
         Dimension windowResolution = ScreenResolution.getResolutionFromEnv();

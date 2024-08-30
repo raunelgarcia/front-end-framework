@@ -16,9 +16,9 @@ import java.util.Optional;
  */
 public class Response<K> {
 
-  private int status;
+  private final int status;
 
-  private Map<String, List<String>> header;
+  private final Map<String, List<String>> header;
 
   private K payload;
 

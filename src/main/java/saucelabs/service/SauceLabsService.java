@@ -23,12 +23,15 @@ public class SauceLabsService {
    *
    * @param authorization The authorization token
    * @param query The query string
+   * @param kind The kind of platform (android or ios)
+   * @param perPage The number of items per page
    * @return A Response object wrapping the AppStorageItemsResponse
    */
-  public Response<AppStorageResponse> getAppStorageFiles(String authorization, String query) {
+  public Response<AppStorageResponse> getV1StorageFiles(
+      String authorization, String query, String kind, Integer perPage) {
     // Perform the API call using SauceLabsClient and wrap the result in a Response object
     return sauceLabsClient.call(
-        () -> sauceLabsClient.getAPI().getAppStorageFiles(authorization, query),
+        () -> sauceLabsClient.getAPI().getV1StorageFiles(authorization, query, kind, perPage),
         Optional.empty(), // No direct class provided, we'll use GenericType
         new GenericType<AppStorageResponse>() {} // Use GenericType for complex types
         );
