@@ -46,7 +46,6 @@ public class SaucelabsDriverConfiguration {
         sauceLabsService.getV1StorageFiles(authorization, appId, kind.toLowerCase(), 10);
     ApiUtils.checkStatusCode(response.getStatus(), SC_OK);
     AppStorageResponse appStorageResponse = response.getPayload();
-    System.out.println(appStorageResponse);
 
     // Filter the apps
     return appStorageResponse.getItems().stream()
