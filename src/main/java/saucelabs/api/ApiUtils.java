@@ -1,5 +1,7 @@
 package saucelabs.api;
 
+import static org.hamcrest.Matchers.is;
+
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import utilities.FrontEndOperation;
@@ -13,8 +15,7 @@ public class ApiUtils {
    * @param expectedStatusCode The expected status code
    */
   public static void checkStatusCode(int actualStatusCode, int expectedStatusCode) {
-    Matcher<Integer> expectedStatusCodeMatcher = Matchers.equalTo(expectedStatusCode);
     FrontEndOperation.checkThat(
-        "the status code of the response is OK", actualStatusCode, expectedStatusCodeMatcher);
+        "the status code of the response is OK", actualStatusCode, is(expectedStatusCode));
   }
 }

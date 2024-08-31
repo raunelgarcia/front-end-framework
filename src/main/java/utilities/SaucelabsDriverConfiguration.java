@@ -221,24 +221,27 @@ public class SaucelabsDriverConfiguration {
     }
     String browser = getBrowser();
     switch (browser) {
-      case "edge":
+      case "edge" -> {
         EdgeOptions edgeOptions = new EdgeOptions();
         edgeOptions.setPlatformName("Windows 11");
         edgeOptions.setBrowserVersion("latest");
         edgeOptions.setCapability("sauce:options", sauceOptions);
         return new RemoteWebDriver(url, edgeOptions);
-      case "firefox":
+      }
+      case "firefox" -> {
         FirefoxOptions firefoxOptions = new FirefoxOptions();
         firefoxOptions.setPlatformName("Windows 11");
         firefoxOptions.setBrowserVersion("latest");
         firefoxOptions.setCapability("sauce:options", sauceOptions);
         return new RemoteWebDriver(url, firefoxOptions);
-      default:
+      }
+      default -> {
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.setPlatformName("Windows 11");
         chromeOptions.setBrowserVersion("latest");
         chromeOptions.setCapability("sauce:options", sauceOptions);
         return new RemoteWebDriver(url, chromeOptions);
+      }
     }
   }
 }
