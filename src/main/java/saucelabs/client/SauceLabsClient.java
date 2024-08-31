@@ -10,6 +10,7 @@ import java.util.function.Supplier;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 import saucelabs.api.Response;
 import saucelabs.api.SauceLabsAPI;
 import utilities.Constants;

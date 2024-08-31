@@ -1,6 +1,7 @@
 package utilities;
 
 import static org.apache.http.HttpStatus.SC_OK;
+import static utilities.Constants.AUTHORIZATION;
 import static utilities.Constants.SAUCELABS_TESTS_URL;
 import static utilities.DriverConfiguration.setURL;
 import static utilities.LocalEnviroment.*;
@@ -9,9 +10,10 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.WebDriver;
@@ -28,61 +30,91 @@ import saucelabs.service.SauceLabsService;
 
 public class SaucelabsDriverConfiguration {
 
-  private static final String USER = LocalEnviroment.getUser();
-  private static final String ACCESS_TOKEN = LocalEnviroment.getAccessToken();
-  private static final String AUTHORIZATION =
-      Base64.getEncoder().encodeToString((USER + ":" + ACCESS_TOKEN).getBytes());
-
+  /**
+   * Retrieves the Sauce Labs app ID for a given app based on the specified version and kind.
+   *
+   * <p>This method fetches the app's storage files from Sauce Labs, filters the results to find the
+   * correct version, and returns the corresponding app ID.
+   *
+   * <p>If the provided app ID is null or blank, or if the specified version is not found, it throws
+   * an {@link IllegalArgumentException}.
+   *
+   * @param authorization The authorization token required to access the Sauce Labs API.
+   * @param appId The identifier of the app to retrieve. Must be non-null and non-blank.
+   * @param kind The type of the app (e.g., Android, iOS). This is converted to lowercase for the
+   *     API call.
+   * @param version The version of the app to retrieve. If "latest", retrieve tha last uploaded one.
+   * @return The Sauce Labs app ID corresponding to the specified version.
+   * @throws IllegalArgumentException If the app ID is null, blank, or if the specified version is
+   *     not found.
+   */
   public static String getSaucelabsAppId(
       String authorization, String appId, String kind, String version) {
-    // Check that appId is not null
-    if (appId.isBlank()) {
-      throw new IllegalArgumentException("AppIdentifier is not set");
-    }
 
-    // Retrieve app storage response
+    Optional.ofNullable(appId)
+        .filter(id -> !id.isBlank())
+        .orElseThrow(
+            () -> new IllegalArgumentException("AppIdentifier must be not null and not empty"));
+
     SauceLabsService sauceLabsService = new SauceLabsService(new SauceLabsClient());
     Response<AppStorageResponse> response =
         sauceLabsService.getV1StorageFiles(authorization, appId, kind.toLowerCase(), 10);
     ApiUtils.checkStatusCode(response.getStatus(), SC_OK);
-    AppStorageResponse appStorageResponse = response.getPayload();
 
-    // Filter the apps
-    return appStorageResponse.getItems().stream()
+    return response.getPayload().getItems().stream()
         .filter(item -> isValidApp(item.getMetadata(), version))
         .findFirst()
         .orElseThrow(() -> new IllegalArgumentException("Version not found: ".concat(version)))
         .getId();
   }
 
-  // This function abstracts the logic of getting the latest version of the app independent of the
-  // platform
+  /**
+   * Retrieves the appropriate version of the app based on the platform.
+   *
+   * <p>This method abstracts the logic of obtaining the version of the app, making it independent
+   * of the platform (Android or iOS). It returns the full version for Android and the short version
+   * for iOS.
+   *
+   * <p>If the version is {@code null}, the method throws a {@link NullPointerException} indicating
+   * that the app is not compatible with the current platform.
+   *
+   * @param metadata The metadata of the app, containing version details specific to each platform.
+   * @return The version string corresponding to the app's platform.
+   * @throws NullPointerException if the version is {@code null}, indicating incompatibility with
+   *     the current platform.
+   */
   private static String getVersion(AppStorageItemMetadataResponse metadata) {
-    String version;
-    if (LocalEnviroment.isAndroid()) {
-      version = metadata.getVersion();
-    } else {
-      version = metadata.getShort_version();
-    }
-    if (version == null) {
-      String platform = LocalEnviroment.getPlatform();
-      throw new IllegalArgumentException(
-          "The app is not compatible with the set platform: ".concat(platform));
-    }
-    return version;
+    String version = isAndroid() ? metadata.getVersion() : metadata.getShort_version();
+    return Objects.requireNonNull(
+        version, "The app is not compatible with the set platform: ".concat(getPlatform()));
   }
 
+  /**
+   * Determines if an application is valid based on its metadata and the specified version.
+   *
+   * <p>This method checks two main conditions:
+   *
+   * <ul>
+   *   <li>If the specified version is "latest", it will always return true for the version check.
+   *       Otherwise, it verifies if the version matches the one in the metadata.
+   *   <li>For iOS applications, it checks if the app matches the local environment's simulator or
+   *       virtual device setup. This check is bypassed if the environment is Android.
+   * </ul>
+   *
+   * @param metadata The metadata of the app, containing details such as version and platform
+   *     information.
+   * @param version The version of the app to validate against. If "latest", the version check will
+   *     pass automatically.
+   * @return {@code true} if both the version matches and the iOS compatibility check passes, {@code
+   *     false} otherwise.
+   */
   private static boolean isValidApp(AppStorageItemMetadataResponse metadata, String version) {
-    // If the version is 'latest', no need to match a specific version
     boolean versionMatches =
         "latest".equalsIgnoreCase(version) || getVersion(metadata).equals(version);
 
-    // For iOS, check if the app matches the local environment's simulator/virtual device setup
     boolean iosCheck =
         LocalEnviroment.isAndroid()
             || metadata.getIs_simulator() == LocalEnviroment.isVirtualDevice();
-
-    // Both version and iOS check need to pass
     return versionMatches && iosCheck;
   }
 
@@ -136,7 +168,7 @@ public class SaucelabsDriverConfiguration {
 
     try {
       appStorage =
-          getSaucelabsAppId(AUTHORIZATION, getAppVersion(), getPlatform(), getAppIdentifier());
+          getSaucelabsAppId(AUTHORIZATION, getAppIdentifier(), getPlatform(), getAppVersion());
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -145,7 +177,7 @@ public class SaucelabsDriverConfiguration {
         configureCommonCapabilities(
             "iOS", "storage:" + appStorage, getDeviceName(), getPlatformVersion(), "XCUITest");
 
-    URL url = null;
+    URL url;
     try {
       url = new URL(SAUCELABS_TESTS_URL);
     } catch (MalformedURLException e) {
@@ -155,14 +187,8 @@ public class SaucelabsDriverConfiguration {
   }
 
   public static AndroidDriver configureSauceAndroid() {
-    String appStorage = null;
-
-    try {
-      appStorage =
-          getSaucelabsAppId(AUTHORIZATION, getAppVersion(), getPlatform(), getAppIdentifier());
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+    String appStorage =
+          getSaucelabsAppId(AUTHORIZATION, getAppIdentifier(), getPlatform(), getAppVersion());
 
     MutableCapabilities caps =
         configureCommonCapabilities(
@@ -171,8 +197,7 @@ public class SaucelabsDriverConfiguration {
             getDeviceName(),
             getPlatformVersion(),
             "UiAutomator2");
-
-    URL url = null;
+    URL url;
     try {
       url = new URL(SAUCELABS_TESTS_URL);
     } catch (MalformedURLException e) {
@@ -194,7 +219,7 @@ public class SaucelabsDriverConfiguration {
     } catch (MalformedURLException e) {
       throw new RuntimeException(e);
     }
-    String browser = LocalEnviroment.getBrowser();
+    String browser = getBrowser();
     switch (browser) {
       case "edge":
         EdgeOptions edgeOptions = new EdgeOptions();

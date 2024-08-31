@@ -49,23 +49,22 @@ public class LocalEnviroment {
     String appiumVersion = null;
     if (isVirtualDevice()) {
       switch (getPlatform().toLowerCase()) {
-        case "android":
+        case "android" -> {
           if (checkPlatformVersion(ANDROID_VERSION_REGEX)) {
             appiumVersion = "2.11.0";
           } else {
             Logger.infoMessage(
                 "The version specified is not available for Android, the smaller one is 8.0");
           }
-          break;
-
-        case "ios":
+        }
+        case "ios" -> {
           if (checkPlatformVersion(IOS_VERSION_REGEX)) {
             appiumVersion = "2.0.0";
           } else {
             Logger.infoMessage(
                 "The version specified is not available for iOS, the smaller one is 14.0");
           }
-          break;
+        }
       }
     } else {
       appiumVersion = "latest";
@@ -96,25 +95,21 @@ public class LocalEnviroment {
       return ".*";
     } else {
       switch (deviceName.toLowerCase()) {
-        case "emulator":
+        case "emulator" -> {
           if (isAndroid()) {
             deviceName = "Android GoogleAPI Emulator";
           } else {
             Logger.infoMessage("Check for emulator and Android");
           }
-          break;
-
-        case "simulator":
+        }
+        case "simulator" -> {
           if (isIOS()) {
             deviceName = "iPhone Simulator";
           } else {
             Logger.infoMessage("Check for simulator and iOS");
           }
-          break;
-
-        default:
-          Logger.infoMessage("DeviceName does not match 'emulator' or 'simulator'");
-          break;
+        }
+        default -> Logger.infoMessage("DeviceName does not match 'emulator' or 'simulator'");
       }
     }
     return deviceName;
