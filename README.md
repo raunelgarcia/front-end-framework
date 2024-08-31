@@ -219,7 +219,7 @@ Environment.
 - AppVersion:
     - Description: Represent the version of the app installed in SauceLabs specified in "AppIdentifier". If left blank,
       the default value is `latest`, which means it will run the latest version of the app. You can also specify the
-      version if wanted. It will only work while working with SauceLabs.
+      version if wanted. This variable will be validated with a test execution on SauceLabs only.
 - Udid:
     - Description: Represent the unique device identifier (UDID) of the device being tested for
       mobile testing.It can be obtained running on terminal `adb devices`. Must be provided with valid values for the
@@ -269,7 +269,7 @@ App=marca-com-7-0-20.apk;Platform=Android;Udid=;
 
 Case 3: With SauceLabs, physical device.
 Platform=Android;Provider=SauceLabs;DeviceName=Samsung Galaxy
-S9;AppIdentifier=com.saucelabs.mydemoapp.android;User=;AccessToken=;AppVersion=;
+S9;AppIdentifier=com.saucelabs.mydemoapp.android;User=;AccessToken=;AppVersion=latest;
 
 | Campo         | Valor                           |
 |---------------|---------------------------------|
@@ -279,10 +279,10 @@ S9;AppIdentifier=com.saucelabs.mydemoapp.android;User=;AccessToken=;AppVersion=;
 | AppIdentifier | com.saucelabs.mydemoapp.android |
 | User          |                                 |
 | AccessToken   |                                 |
-| AppVersion    |                                 |
+| AppVersion    | latest                          |
 
 Case 4: With SauceLabs, emulator.
-Platform=Android;Provider=SauceLabs;DeviceName=emulator;AppIdentifier=com.saucelabs.mydemoapp.android;User=;AccessToken=;AppVersion=;PlatformVersion=;
+Platform=Android;Provider=SauceLabs;DeviceName=emulator;AppIdentifier=com.saucelabs.mydemoapp.android;User=;AccessToken=;AppVersion=latest;PlatformVersion=;
 
 | Campo           | Valor                           |
 |-----------------|---------------------------------|
@@ -292,7 +292,7 @@ Platform=Android;Provider=SauceLabs;DeviceName=emulator;AppIdentifier=com.saucel
 | AppIdentifier   | com.saucelabs.mydemoapp.android |
 | User            |                                 |
 | AccessToken     |                                 |
-| AppVersion      |                                 |
+| AppVersion      | latest                          |
 | PlatformVersion |                                 |
 
 ### IOS Variables Example
@@ -310,7 +310,7 @@ AppIdentifier=com.marca.marcador;Platform=IOS;Udid=A308507F-99BB-47A2-9A2D-06005
 Case 2: With SauceLabs, physical device.
 
 Platform=IOS;Provider=SauceLabs;DeviceName=iPhone
-12;AppIdentifier=com.saucelabs.mydemoapp.ios;User=;AccessToken=;AppVersion=;
+12;AppIdentifier=com.saucelabs.mydemoapp.ios;User=;AccessToken=;AppVersion=latest;
 
 | Campo         | Valor                       |
 |---------------|-----------------------------|
@@ -320,10 +320,10 @@ Platform=IOS;Provider=SauceLabs;DeviceName=iPhone
 | AppIdentifier | com.saucelabs.mydemoapp.ios |
 | User          |                             |
 | AccessToken   |                             |
-| AppVersion    |                             |
+| AppVersion    | latest                      |
 
 Case 3: With SauceLabs, simulator.
-Platform=IOS;Provider=SauceLabs;DeviceName=simulator;AppIdentifier=com.saucelabs.mydemoapp.android;User=;AccessToken=;AppVersion=;PlatformVersion=;
+Platform=IOS;Provider=SauceLabs;DeviceName=simulator;AppIdentifier=com.saucelabs.mydemoapp.android;User=;AccessToken=;AppVersion=latest;PlatformVersion=;
 
 | Campo           | Valor                       |
 |-----------------|-----------------------------|
@@ -333,7 +333,7 @@ Platform=IOS;Provider=SauceLabs;DeviceName=simulator;AppIdentifier=com.saucelabs
 | AppIdentifier   | com.saucelabs.mydemoapp.ios |
 | User            |                             |
 | AccessToken     |                             |
-| AppVersion      |                             |
+| AppVersion      | latest                      |
 | PlatformVersion |                             |
 
 ### Web Variables
