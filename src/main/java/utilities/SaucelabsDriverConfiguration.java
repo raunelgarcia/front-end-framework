@@ -164,14 +164,8 @@ public class SaucelabsDriverConfiguration {
   }
 
   public static IOSDriver configureSauceIOS() {
-    String appStorage = null;
-
-    try {
-      appStorage =
-          getSaucelabsAppId(AUTHORIZATION, getAppIdentifier(), getPlatform(), getAppVersion());
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+    String appStorage =
+        getSaucelabsAppId(AUTHORIZATION, getAppIdentifier(), getPlatform(), getAppVersion());
 
     MutableCapabilities caps =
         configureCommonCapabilities(
@@ -188,7 +182,7 @@ public class SaucelabsDriverConfiguration {
 
   public static AndroidDriver configureSauceAndroid() {
     String appStorage =
-          getSaucelabsAppId(AUTHORIZATION, getAppIdentifier(), getPlatform(), getAppVersion());
+        getSaucelabsAppId(AUTHORIZATION, getAppIdentifier(), getPlatform(), getAppVersion());
 
     MutableCapabilities caps =
         configureCommonCapabilities(
