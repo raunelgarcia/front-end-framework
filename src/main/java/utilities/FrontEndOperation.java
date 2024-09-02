@@ -142,23 +142,19 @@ public class FrontEndOperation {
     int meHeight = me.getLocation().getY();
 
     switch (direction) {
-      case UP:
-        W3cActions.swipe(
-            driver, new Point(meWidth / 2, meHeight), new Point(width / 2, height / 2), 500);
-        break;
-      case LEFT:
-        W3cActions.swipe(
-            driver, new Point(width / 2, height / 4), new Point(meWidth, meHeight), 500);
-        break;
-      case RIGHT:
-        W3cActions.swipe(
-            driver,
-            new Point(me.getLocation().getX(), me.getLocation().getY()),
-            new Point(width, me.getLocation().getY()),
-            500);
-        break;
-      default:
-        break;
+      case UP ->
+          W3cActions.swipe(
+              driver, new Point(meWidth / 2, meHeight), new Point(width / 2, height / 2), 500);
+      case LEFT ->
+          W3cActions.swipe(
+              driver, new Point(width / 2, height / 4), new Point(meWidth, meHeight), 500);
+      case RIGHT ->
+          W3cActions.swipe(
+              driver,
+              new Point(me.getLocation().getX(), me.getLocation().getY()),
+              new Point(width, me.getLocation().getY()),
+              500);
+      default -> {}
     }
   }
 
@@ -176,22 +172,14 @@ public class FrontEndOperation {
     int y2 = (int) Math.floor(height * maxYRatio);
 
     switch (direction) {
-      case UP:
-        W3cActions.swipe(driver, new Point(halfX, y2), new Point(halfX, y), 500);
-        break;
-      case DOWN:
-        W3cActions.swipe(driver, new Point(halfX, y), new Point(halfX, y2), 500);
-        break;
-      case LEFT:
-        W3cActions.swipe(
-            driver, new Point(Math.max(0, width - 10), halfY), new Point(10, halfY), 500);
-        break;
-      case RIGHT:
-        W3cActions.swipe(
-            driver, new Point(10, halfY), new Point(Math.max(0, width - 10), halfY), 500);
-        break;
-      default:
-        break;
+      case UP -> W3cActions.swipe(driver, new Point(halfX, y2), new Point(halfX, y), 500);
+      case DOWN -> W3cActions.swipe(driver, new Point(halfX, y), new Point(halfX, y2), 500);
+      case LEFT -> W3cActions.swipe(
+          driver, new Point(Math.max(0, width - 10), halfY), new Point(10, halfY), 500);
+      case RIGHT -> W3cActions.swipe(
+          driver, new Point(10, halfY), new Point(Math.max(0, width - 10), halfY), 500);
+      default -> {
+      }
     }
 
     waitForAnimationToFinish();

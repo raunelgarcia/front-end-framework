@@ -35,7 +35,7 @@ public class DriverConfiguration {
       return currentDriver;
     }
     if (Objects.nonNull(getProvider()) && getProvider().equalsIgnoreCase("SauceLabs")) {
-      currentDriver = Saucelabs.getSauceDriver();
+      currentDriver = SaucelabsDriverConfiguration.getSauceDriver();
     } else {
       if (isWeb()) {
         Dimension windowResolution = ScreenResolution.getResolutionFromEnv();
@@ -76,27 +76,25 @@ public class DriverConfiguration {
     String browser = LocalEnviroment.getBrowser();
 
     switch (browser) {
-      case "edge":
+      case "edge" -> {
         EdgeOptions edgeOptions = new EdgeOptions();
         edgeOptions.addArguments("--lang=" + LocalEnviroment.getLanguage());
         driver = new EdgeDriver(edgeOptions);
-        break;
-      case "firefox":
+      }
+      case "firefox" -> {
         FirefoxProfile profile = new FirefoxProfile();
         profile.setPreference("intl.accept_languages", LocalEnviroment.getLanguage());
         FirefoxOptions firefoxOptions = new FirefoxOptions();
         firefoxOptions.setProfile(profile);
         driver = new FirefoxDriver(firefoxOptions);
-        break;
-      case "safari":
-        driver = new SafariDriver();
-        break;
-      default:
+      }
+      case "safari" -> driver = new SafariDriver();
+      default -> {
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--lang=" + LocalEnviroment.getLanguage());
         chromeOptions.addArguments("--disable-search-engine-choice-screen");
         driver = new ChromeDriver(chromeOptions);
-        break;
+      }
     }
 
     return driver;
