@@ -241,8 +241,8 @@ Environment.
     - Description: Represents the version of the device being tested for mobile testing on SauceLabs. If left blank, the
       default value is `.*`, which means the latest version of any available device. If left blank while using an
       emulator, the default value is `current_major`, which means it will use the latest version. You can also specify
-      the version if needed, having in mind that 14.0 is the smaller version for iOS, and 8.0 is the smaller version for
-      Android.
+      the version if needed, having in mind that you should write the exact version, for example the shortest versions
+      you should use are '8.0' for Android and '14.0' for iOS.
 
 Ensure to set these variables according to your testing requirements before executing the tests.
 
@@ -323,7 +323,7 @@ Platform=IOS;Provider=SauceLabs;DeviceName=iPhone
 | AppVersion    |                             |
 
 Case 3: With SauceLabs, simulator.
-Platform=IOS;Provider=SauceLabs;DeviceName=simulator;AppIdentifier=com.saucelabs.mydemoapp.android;User=;AccessToken=;AppVersion=;PlatformVersion=;
+Platform=IOS;Provider=SauceLabs;DeviceName=simulator;AppIdentifier=com.saucelabs.mydemoapp.ios;User=;AccessToken=;AppVersion=;PlatformVersion=;
 
 | Campo           | Valor                       |
 |-----------------|-----------------------------|

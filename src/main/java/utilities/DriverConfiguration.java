@@ -1,10 +1,9 @@
 package utilities;
 
 import static utilities.Constants.DRIVER_URL;
-import static utilities.LocalEnviroment.getProvider;
-import static utilities.LocalEnviroment.isAndroid;
-import static utilities.LocalEnviroment.isWeb;
+import static utilities.LocalEnviroment.*;
 
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import java.io.InputStream;
@@ -24,6 +23,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.yaml.snakeyaml.Yaml;
 
@@ -62,6 +62,7 @@ public class DriverConfiguration {
         }
       }
     }
+    showSauceLabsLink();
     return currentDriver;
   }
 
@@ -174,5 +175,20 @@ public class DriverConfiguration {
     }
 
     return base;
+  }
+
+  public static void showSauceLabsLink() {
+    WebDriver driver = getDriver();
+    String sessionId;
+    if (isWeb()) {
+      sessionId = ((RemoteWebDriver) driver).getSessionId().toString();
+    } else {
+      AppiumDriver driverMobile = (AppiumDriver) driver;
+      sessionId = driverMobile.getSessionId().toString();
+    }
+    Logger.infoMessage(
+        "Link of the SauceLabs Test: "
+            .concat("https://app.eu-central-1.saucelabs.com/tests/")
+            .concat(sessionId));
   }
 }
