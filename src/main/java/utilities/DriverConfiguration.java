@@ -3,7 +3,6 @@ package utilities;
 import static utilities.Constants.DRIVER_URL;
 import static utilities.LocalEnviroment.*;
 
-import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import java.io.InputStream;
@@ -62,7 +61,7 @@ public class DriverConfiguration {
         }
       }
     }
-    showSauceLabsLink();
+    showSauceLabsLink(currentDriver);
     return currentDriver;
   }
 
@@ -175,18 +174,11 @@ public class DriverConfiguration {
     return base;
   }
 
-  public static void showSauceLabsLink() {
-    WebDriver driver = getDriver();
-    String sessionId;
-    if (isWeb()) {
-      sessionId = ((RemoteWebDriver) driver).getSessionId().toString();
-    } else {
-      AppiumDriver driverMobile = (AppiumDriver) driver;
-      sessionId = driverMobile.getSessionId().toString();
-    }
-    Logger.infoMessage(
-        "Link of the SauceLabs Test: "
-            .concat("https://app.eu-central-1.saucelabs.com/tests/")
+  public static void showSauceLabsLink(WebDriver driver) {
+    String sessionId = ((RemoteWebDriver) driver).getSessionId().toString();
+
+    Logger.infoMessage("SauceLabs test session: "
+            .concat(Constants.SAUCELABS_SESSION_URL)
             .concat(sessionId));
   }
 }
