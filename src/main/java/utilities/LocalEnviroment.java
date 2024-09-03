@@ -54,7 +54,7 @@ public class LocalEnviroment {
             appiumVersion = "2.11.0";
           } else {
             Logger.infoMessage(
-                "The version specified is not available for Android, the smaller one is 8.0");
+                "The version you've specified for Android is smaller than 8.0, you should consider using a latest version");
           }
         }
         case "ios" -> {
@@ -62,7 +62,7 @@ public class LocalEnviroment {
             appiumVersion = "2.0.0";
           } else {
             Logger.infoMessage(
-                "The version specified is not available for iOS, the smaller one is 14.0");
+                "The version you've specified for iOS is smaller than 14.0, you should consider using a latest version");
           }
         }
       }
@@ -99,14 +99,16 @@ public class LocalEnviroment {
           if (isAndroid()) {
             deviceName = "Android GoogleAPI Emulator";
           } else {
-            Logger.infoMessage("Check for emulator and Android");
+            Logger.infoMessage(
+                "Check your capabilities DeviceName and Platform are emulator and Android, respectively");
           }
         }
         case "simulator" -> {
           if (isIOS()) {
             deviceName = "iPhone Simulator";
           } else {
-            Logger.infoMessage("Check for simulator and iOS");
+            Logger.infoMessage(
+                "Check your capabilities DeviceName and Platform are simulator and iOS, respectively");
           }
         }
         default -> Logger.infoMessage("DeviceName does not match 'emulator' or 'simulator'");
@@ -121,11 +123,6 @@ public class LocalEnviroment {
       if (isVirtualDevice()) {
         platformVersion = "current_major";
       } else {
-        return ".*";
-      }
-
-    } else {
-      if (!isVirtualDevice()) {
         if (isAndroid()) {
           platformVersion = ANDROID_VERSION_REGEX;
         } else {

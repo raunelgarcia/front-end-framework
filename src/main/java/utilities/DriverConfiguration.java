@@ -1,9 +1,7 @@
 package utilities;
 
 import static utilities.Constants.DRIVER_URL;
-import static utilities.LocalEnviroment.getProvider;
-import static utilities.LocalEnviroment.isAndroid;
-import static utilities.LocalEnviroment.isWeb;
+import static utilities.LocalEnviroment.*;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
@@ -24,6 +22,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.yaml.snakeyaml.Yaml;
 
@@ -62,6 +61,7 @@ public class DriverConfiguration {
         }
       }
     }
+    showSauceLabsLink(currentDriver);
     return currentDriver;
   }
 
@@ -172,5 +172,13 @@ public class DriverConfiguration {
     }
 
     return base;
+  }
+
+  public static void showSauceLabsLink(WebDriver driver) {
+    String sessionId = ((RemoteWebDriver) driver).getSessionId().toString();
+
+    Logger.infoMessage("SauceLabs test session: "
+            .concat(Constants.SAUCELABS_SESSION_URL)
+            .concat(sessionId));
   }
 }

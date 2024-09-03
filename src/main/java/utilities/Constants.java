@@ -43,4 +43,6 @@ public class Constants {
   public static final String NETWORK_LOG_CLEAN_COMMAND_MAC = "rm -rf ./network-logs/";
   public static final String NETWORK_LOG_CLEAN_COMMAND_WIN = "rd /s /q .\\network-logs\\";
   public static final String NETWORK_LOG_CLEAN_COMMAND_ANDROID = "adb logcat -c";
+  public static final String SAUCELABS_SESSION_URL =
+      "https://app.eu-central-1.saucelabs.com/tests/";
 }
