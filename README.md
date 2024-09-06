@@ -19,8 +19,10 @@ Make sure you have Maven installed, Git and Java jdk 11 or superior.
 Have a GitHub account with a Personal Access Token.
 
 IntelliJ Idea Community: https://www.jetbrains.com/idea/download/?section=windows
+(The one at the bottom of the page, not the Ultimade)
 
 Maven: https://maven.apache.org/download.cgi
+(Download the Binary zip archive)
 
 Java: https://www.java.com/es/download/ie_manual.jsp
 
@@ -32,13 +34,17 @@ To download the required Maven packages from GitHub Packages, follow these steps
 
 Step 1: Generate a new Personal Access Token
 
-Go to your personal GitHub account and create a new token with read packages permission.
-Copy your token for the following step.
+Navigate to your personal GitHub account and go to Settings.
+Once the page fully loads, scroll down to the Developer settings section.
+Click on Personal Access tokens, then select Tokens (classic).
+Follow the prompts to generate a new token, ensuring that you grant it the read
+permission.
+Once the token is generated, make sure to save the key securely, as you won't be able to see it again.
 
 Step 2: Configure GitHub authentication
 
 Create or update your `settings.xml` file in the `.m2` directory (usually located in your home
-directory) with the following content:
+directory (path: C:/Users/UserName/.m2)) with the following content:
 
 ```xml
 
@@ -58,14 +64,14 @@ directory) with the following content:
 ```
 
 Replace YOUR_GITHUB_USERNAME with your GitHub username and YOUR_GITHUB_TOKEN with a personal access
-token generated from your GitHub account with read:packages permissions.
+token(the one you safe before) generated from your GitHub account with read:packages permissions.
 
 ### Install User Certificate in Git
 
 Open the following
 link: https://everisgroup.sharepoint.com/sites/Zscaler/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FZscaler%2FShared%20Documents%2FKnown%20Issues%2FFixes%2FWindows&viewid=a2c69b76%2Dc9ca%2D4e54%2D987b%2D3c3835a729e3
 Locate the file named "Zscaler_USER_EnvironmentVariables.exe", download it to your computer and execute it.
-
+Ensure you execute the process with Administrator privileges to guarantee all necessary permissions are granted.
 ## Setting Up Appium Environment
 
 Step 1: Install Node.js
@@ -91,18 +97,16 @@ In case you are using iOS you should run the following command instead:
 Step 3: Install Appium Dependencies
 
 Appium has specific dependencies for different mobile development platforms. Install the necessary
-dependencies based on
-the platform you want to automate tests for.
+dependencies based on the platform you want to automate tests for.
 In the next lines you will install this different dependencies.
 
 ### Android
 
 Install Android Studio following the instructions on https://developer.android.com/studio/install.
-Set up `ANDROID_HOME` and `JAVA_HOME` environment variables correctly in user variables.
+Set up `ANDROID_HOME` and `JAVA_HOME` environment variables correctly in user variables.You must also do the same for maven.
 
 If you are using Windows you should have: `C:\Users\your_username\AppData\Local\Android\Sdk` as `ANDROID_HOME`,
-`C:\Users\your_username\.jdks\your_installedJDK` as `JAVA_HOME` and `%ANDROID_HOME%\platform-tools` as a new route in
-the variable `Path`.
+`C:\Users\your_username\.jdks\your_installedJDK` as `JAVA_HOME`,'C:\Program Files\apache-maven-3.9.9' as 'M2_HOME' and inside the route in the variable 'Path' you must also add `%ANDROID_HOME%\platform-tools` and '%M2_HOME%\bin'.
 
 Step 4: Set Up Emulators or Physical Devices
 
@@ -132,6 +136,7 @@ Run on terminal the command: `appium` to start appium server
 Open the following
 link: https://everisgroup.sharepoint.com/sites/Zscaler/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FZscaler%2FShared%20Documents%2FKnown%20Issues%2FFixes%2FWindows&viewid=a2c69b76%2Dc9ca%2D4e54%2D987b%2D3c3835a729e3
 Locate the file named "Zscaler_ADMIN_Update_Java_CACERTS.exe ", download it to your computer and execute it.
+Be sure to execute it with Administrator privileges again, as you did before, to avoid any potential issues in the future.
 
 ### Configuration Steps
 
@@ -148,8 +153,8 @@ Navigate to the directory where you cloned the repository and select it.
 ### Configure SDK
 
 Go to File > Project Structure
-Click on the project SDK field. If the Amazon Correto SDK in not listed, select Add SDK > Download JDK. Select Amazon
-Corretto, version 11.
+Click on the project SDK field. If the Amazon Correto SDK is not listed, select Add SDK > Download JDK. Select Amazon
+Corretto, version 11, if you can’t find the exact one, use at least the same version to prevent any issues.
 Apply and confirm the configuration
 
 ### Add google java plugin
@@ -383,8 +388,7 @@ src/test/resources contains apks, ipas and properties files for handle multilang
 ### Using Allure Reports
 
 If you want to generate reports with Allure, the framework is ready for it. Beforehand, some
-preliminary configurations
-need to be done.
+preliminary configurations need to be done.
 
 Install Allure in the project using on terminal the
 command `npm install --save-dev allure-commandline`
