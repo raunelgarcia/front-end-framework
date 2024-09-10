@@ -2,8 +2,6 @@ package saucelabs.api;
 
 import static org.hamcrest.Matchers.is;
 
-import org.hamcrest.Matcher;
-import org.hamcrest.Matchers;
 import utilities.FrontEndOperation;
 
 public class ApiUtils {
