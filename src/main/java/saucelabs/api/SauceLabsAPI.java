@@ -13,5 +13,13 @@ public interface SauceLabsAPI {
   @Path("/v1/storage/files")
   @Produces(MediaType.APPLICATION_JSON)
   Response getV1StorageFiles(
-          @HeaderParam("Authorization") String authorization, @QueryParam("q") String appId, @QueryParam("kind") String kind, @QueryParam("per_page") Integer perPage);
+      @HeaderParam("Authorization") String authorization,
+      @QueryParam("q") String appId,
+      @QueryParam("kind") String kind,
+      @QueryParam("per_page") Integer perPage);
+
+  @GET
+  @Path("v1/rdc/devices")
+  @Produces(MediaType.APPLICATION_JSON)
+  Response getVerifyDeviceExists(@HeaderParam("Authorization") String authorization);
 }

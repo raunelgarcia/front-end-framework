@@ -177,8 +177,7 @@ public class DriverConfiguration {
   public static void showSauceLabsLink(WebDriver driver) {
     String sessionId = ((RemoteWebDriver) driver).getSessionId().toString();
 
-    Logger.infoMessage("SauceLabs test session: "
-            .concat(Constants.SAUCELABS_SESSION_URL)
-            .concat(sessionId));
+    Logger.infoMessage(
+        "SauceLabs test session: ".concat(Constants.SAUCELABS_SESSION_URL).concat(sessionId));
   }
 }
