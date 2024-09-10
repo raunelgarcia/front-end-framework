@@ -19,7 +19,7 @@ Make sure you have Maven installed, Git and Java jdk 11 or superior.
 Have a GitHub account with a Personal Access Token.
 
 IntelliJ Idea Community: https://www.jetbrains.com/idea/download/?section=windows
-(The one at the bottom of the page, not the Ultimade)
+(The one at the bottom of the page, not the Ultimate)
 
 Maven: https://maven.apache.org/download.cgi
 (Download the Binary zip archive)
