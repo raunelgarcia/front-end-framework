@@ -161,6 +161,9 @@ public class SaucelabsDriverConfiguration {
       caps.setCapability("appium:platformVersion", platformVersion);
     }
     caps.setCapability("appium:automationName", automationName);
+    if (!LocalEnviroment.isVirtualDevice()) {
+      caps.setCapability("appium:newCommandTimeout", 90);
+    }
 
     MutableCapabilities sauceOptions = new MutableCapabilities();
     sauceOptions.setCapability("appiumVersion", getAppiumVersion());
