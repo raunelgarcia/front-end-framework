@@ -6,7 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import saucelabs.api.Response;
 import saucelabs.client.SauceLabsClient;
+import saucelabs.dto.AppBrowserResponse;
+import saucelabs.dto.AppBrowserVersion;
 import saucelabs.dto.AppStorageResponse;
+import java.util.List;
+
+import utilities.Constants;
+import utilities.DriverConfiguration;
+import utilities.LocalEnviroment;;
 
 @Service
 public class SauceLabsService {
@@ -19,21 +26,34 @@ public class SauceLabsService {
   }
 
   /**
-   * Retrieves app storage files from Sauce Labs using the given authorization and query.
+   * Retrieves app storage files from Sauce Labs using the given authorization and
+   * query.
    *
    * @param authorization The authorization token
-   * @param query The query string
-   * @param kind The kind of platform (android or ios)
-   * @param perPage The number of items per page
+   * @param query         The query string
+   * @param kind          The kind of platform (android or ios)
+   * @param perPage       The number of items per page
    * @return A Response object wrapping the AppStorageItemsResponse
    */
   public Response<AppStorageResponse> getV1StorageFiles(
       String authorization, String query, String kind, Integer perPage) {
-    // Perform the API call using SauceLabsClient and wrap the result in a Response object
+    // Perform the API call using SauceLabsClient and wrap the result in a Response
+    // object
     return sauceLabsClient.call(
         () -> sauceLabsClient.getAPI().getV1StorageFiles(authorization, query, kind, perPage),
         Optional.empty(), // No direct class provided, we'll use GenericType
-        new GenericType<AppStorageResponse>() {} // Use GenericType for complex types
-        );
+        new GenericType<AppStorageResponse>() {
+        } // Use GenericType for complex types
+    );
   }
+
+  public Response<AppBrowserResponse> getBrowserVersion(String authorization) {
+
+    return sauceLabsClient.call(
+            () -> sauceLabsClient.getAPI().getWebDriverPlatforms(authorization, "webdriver"),
+            Optional.empty(), // No direct class provided, we'll use GenericType
+            new GenericType<AppBrowserResponse>() {} // Use GenericType for complex types
+    );
+  }
+
 }

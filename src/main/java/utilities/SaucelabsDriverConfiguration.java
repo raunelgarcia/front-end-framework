@@ -24,6 +24,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import saucelabs.api.ApiUtils;
 import saucelabs.api.Response;
 import saucelabs.client.SauceLabsClient;
+import saucelabs.dto.AppBrowserResponse;
 import saucelabs.dto.AppStorageItemMetadataResponse;
 import saucelabs.dto.AppStorageResponse;
 import saucelabs.service.SauceLabsService;
@@ -238,4 +239,28 @@ public class SaucelabsDriverConfiguration {
       }
     }
   }
+
+  public static String setVersionBrowser(AppBrowserResponse browserVersion){
+
+    return "";
+  }
 }
+/*  public static String getSaucelabsAppId(
+      String authorization, String appId, String kind, String version) {
+
+    Optional.ofNullable(appId)
+        .filter(id -> !id.isBlank())
+        .orElseThrow(
+            () -> new IllegalArgumentException("AppIdentifier must be not null and not empty"));
+
+    SauceLabsService sauceLabsService = new SauceLabsService(new SauceLabsClient());
+    Response<AppStorageResponse> response =
+        sauceLabsService.getV1StorageFiles(authorization, appId, kind.toLowerCase(), 10);
+    ApiUtils.checkStatusCode(response.getStatus(), SC_OK);
+
+    return response.getPayload().getItems().stream()
+        .filter(item -> isValidApp(item.getMetadata(), version))
+        .findFirst()
+        .orElseThrow(() -> new IllegalArgumentException("Version not found: ".concat(version)))
+        .getId();
+  }*/

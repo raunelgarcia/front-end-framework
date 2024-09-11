@@ -25,9 +25,14 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.yaml.snakeyaml.Yaml;
+import saucelabs.service.SauceLabsService;
+import saucelabs.client.SauceLabsClient;
+import utilities.*;
 
 public class DriverConfiguration {
   private static WebDriver currentDriver;
+  private static SauceLabsClient client = new SauceLabsClient();
+  private static SauceLabsService service = new SauceLabsService(client);
 
   public static WebDriver getDriver() {
     if (currentDriver != null) {
@@ -87,7 +92,10 @@ public class DriverConfiguration {
         firefoxOptions.setProfile(profile);
         driver = new FirefoxDriver(firefoxOptions);
       }
-      case "safari" -> driver = new SafariDriver();
+      case "safari" -> {
+        // No es común definir la versión de Safari, pero puedes adaptar si es necesario.
+        driver = new SafariDriver();
+      }
       default -> {
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--lang=" + LocalEnviroment.getLanguage());
@@ -177,8 +185,7 @@ public class DriverConfiguration {
   public static void showSauceLabsLink(WebDriver driver) {
     String sessionId = ((RemoteWebDriver) driver).getSessionId().toString();
 
-    Logger.infoMessage("SauceLabs test session: "
-            .concat(Constants.SAUCELABS_SESSION_URL)
-            .concat(sessionId));
+    Logger.infoMessage(
+        "SauceLabs test session: ".concat(Constants.SAUCELABS_SESSION_URL).concat(sessionId));
   }
 }
