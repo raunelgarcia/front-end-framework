@@ -28,6 +28,7 @@ import org.yaml.snakeyaml.Yaml;
 
 public class DriverConfiguration {
   private static WebDriver currentDriver;
+  public static String SLsession;
 
   public static WebDriver getDriver() {
     if (currentDriver != null) {
@@ -61,7 +62,9 @@ public class DriverConfiguration {
         }
       }
     }
-    showSauceLabsLink(currentDriver);
+    SLsession = showSauceLabsLink(currentDriver);
+    Logger.infoMessage(
+        "SauceLabs test session: ".concat(Constants.SAUCELABS_SESSION_URL).concat(SLsession));
     return currentDriver;
   }
 
@@ -174,11 +177,7 @@ public class DriverConfiguration {
     return base;
   }
 
-  public static void showSauceLabsLink(WebDriver driver) {
-    String sessionId = ((RemoteWebDriver) driver).getSessionId().toString();
-
-    Logger.infoMessage("SauceLabs test session: "
-            .concat(Constants.SAUCELABS_SESSION_URL)
-            .concat(sessionId));
+  public static String showSauceLabsLink(WebDriver driver) {
+    return ((RemoteWebDriver) driver).getSessionId().toString();
   }
 }
