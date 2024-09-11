@@ -169,6 +169,10 @@ public class LocalEnviroment {
     return (getDeviceName().contains("Emulator") || getDeviceName().contains("Simulator"));
   }
 
+  public static boolean isSaucelabs() {
+    return Objects.nonNull(getProvider()) && getProvider().equalsIgnoreCase("SauceLabs");
+  }
+
   public static boolean checkPlatformVersion(String regex) {
     return (getPlatformVersion().matches(regex)
         || getPlatformVersion().equalsIgnoreCase(".*")
