@@ -1,7 +1,10 @@
 package utilities;
 
-import static utilities.LocalEnviroment.isAndroid;
+import static utilities.Constants.SAUCELABS_SESSION_URL;
+import static utilities.DriverConfiguration.*;
+import static utilities.LocalEnviroment.*;
 
+import com.google.common.collect.ImmutableMap;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
@@ -11,9 +14,17 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import org.openqa.selenium.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 public class AllureReport {
   private static String descriptionHtml = "";
@@ -23,10 +34,11 @@ public class AllureReport {
     descriptionHtml = setTestDescription();
     Allure.descriptionHtml(descriptionHtml);
     descriptionHtml = "";
+    allureEnvironmentWriter(setAllureParameters());
   }
 
   private static String setTestDescription() {
-    WebDriver driver = DriverConfiguration.getDriver();
+    WebDriver driver = getDriver();
     StringBuilder description = new StringBuilder();
     AppiumDriver driverMobile;
     String os = null;
@@ -127,4 +139,95 @@ public class AllureReport {
       Allure.getLifecycle().updateTestCase(testResult -> testResult.setStatus(Status.FAILED));
     }
   }
+
+  public static void allureEnvironmentWriter(ImmutableMap<String, String> environmentValuesSet)  {
+    try {
+      DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+      DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+      Document doc = docBuilder.newDocument();
+      Element environment = doc.createElement("environment");
+      doc.appendChild(environment);
+      environmentValuesSet.forEach((k, v) -> {
+        Element parameter = doc.createElement("parameter");
+        Element key = doc.createElement("key");
+        Element value = doc.createElement("value");
+        key.appendChild(doc.createTextNode(k));
+        value.appendChild(doc.createTextNode(v));
+        parameter.appendChild(key);
+        parameter.appendChild(value);
+        environment.appendChild(parameter);
+      });
+
+      TransformerFactory transformerFactory = TransformerFactory.newInstance();
+      Transformer transformer = transformerFactory.newTransformer();
+      DOMSource source = new DOMSource(doc);
+      File allureResultsDir = new File( System.getProperty("user.dir")
+              + "/target/allure-results");
+      if (!allureResultsDir.exists()) allureResultsDir.mkdirs();
+      StreamResult result = new StreamResult(
+              new File( System.getProperty("user.dir")
+                      + "/target/allure-results/environment.xml"));
+      transformer.transform(source, result);
+      Logger.infoMessage("Allure environment data saved.");
+    } catch (ParserConfigurationException pce) {
+      pce.printStackTrace();
+    } catch (TransformerException tfe) {
+      tfe.printStackTrace();
+    }
+  }
+
+  public static ImmutableMap<String, String> setAllureParameters() {
+    ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
+    builder.put("Accessibility", String.valueOf(LocalEnviroment.getAccessibility()));
+    builder.put("Platform", LocalEnviroment.getPlatform());
+    builder.put("Provider", LocalEnviroment.getProvider());
+
+    if (LocalEnviroment.isSauceLabs()) {
+      addSauceLabsParameters(builder);
+    } else {
+      builder.put("Udid", LocalEnviroment.getUdid());
+      switch (LocalEnviroment.getPlatform().toLowerCase()) {
+        case "android" -> addAndroidParameters(builder);
+
+        case "ios" -> addIosParameters(builder);
+
+        case "web" -> addWebParameters(builder);
+      }
+    }
+    return builder.build();
+  }
+
+  public static void addWebParameters(ImmutableMap.Builder<String, String> builder) {
+    builder.put("Application", DriverConfiguration.setURL())
+    .put("Browser", LocalEnviroment.getBrowser().concat(" (".concat(((HasCapabilities) getDriver()).getCapabilities().getBrowserVersion()).concat(")")))
+    .put("Resolution", LocalEnviroment.getResolution());
+  }
+
+  public static void addSauceLabsParameters(ImmutableMap.Builder<String, String> builder) {
+    builder.put("SauceLabs test session", SAUCELABS_SESSION_URL.concat(SLsession));
+    if (LocalEnviroment.isMobile()) {
+      AppiumDriver driverMobile = (AppiumDriver) getDriver();
+      builder.put("AppIdentifier", LocalEnviroment.getAppIdentifier())
+      .put("AppVersion", SaucelabsDriverConfiguration.appVersion)
+      .put("DeviceName", LocalEnviroment.getDeviceName())
+      .put("PlatformVersion", driverMobile.getCapabilities().getCapability("platformVersion").toString());
+    }else{
+      addWebParameters(builder);
+    }
+  }
+
+  public static void addAndroidParameters(ImmutableMap.Builder<String, String> builder) {
+    if (FrontEndOperation.isNullOrEmpty(LocalEnviroment.getApp())) {
+      builder.put("AppActivity", LocalEnviroment.getAppActivity())
+      .put("AppIdentifier", LocalEnviroment.getAppIdentifier());
+    } else {
+      builder.put("App", LocalEnviroment.getApp());
+    }
+  }
+
+  public static void addIosParameters(ImmutableMap.Builder<String, String> builder) {
+    builder.put("AppIdentifier", LocalEnviroment.getAppIdentifier());
+  }
 }
+
+
