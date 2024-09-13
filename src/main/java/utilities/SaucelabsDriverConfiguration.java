@@ -295,23 +295,26 @@ public class SaucelabsDriverConfiguration {
     switch (LocalEnviroment.getBrowser()) {
       case "edge":
         {
-          if(Integer.parseInt(LocalEnviroment.getBrowserVersion())<95){
-            throw new RuntimeException("For Edge browsers, ensure that the version is greater than 95.");
+          if (Integer.parseInt(LocalEnviroment.getBrowserVersion()) < 95) {
+            throw new RuntimeException(
+                "For Edge browsers, ensure that the version is greater than 95.");
           }
         }
       case "firefox":
         {
           {
-            if(Integer.parseInt(LocalEnviroment.getBrowserVersion())<95){
-              throw new RuntimeException("For Firefox browsers, ensure that the version is greater than 95.");
+            if (Integer.parseInt(LocalEnviroment.getBrowserVersion()) < 95) {
+              throw new RuntimeException(
+                  "For Firefox browsers, ensure that the version is greater than 95.");
             }
           }
         }
       case "chrome":
         {
           {
-            if(Integer.parseInt(LocalEnviroment.getBrowserVersion())<90){
-              throw new RuntimeException("For Chrome browsers, ensure that the version is greater than 90.");
+            if (Integer.parseInt(LocalEnviroment.getBrowserVersion()) < 90) {
+              throw new RuntimeException(
+                  "For Chrome browsers, ensure that the version is greater than 90.");
             }
           }
         }

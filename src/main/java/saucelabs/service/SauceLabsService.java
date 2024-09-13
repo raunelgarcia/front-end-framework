@@ -12,7 +12,8 @@ import java.util.List;
 
 import utilities.Constants;
 import utilities.DriverConfiguration;
-import utilities.LocalEnviroment;;
+import utilities.LocalEnviroment;
+;
 
 @Service
 public class SauceLabsService {
@@ -25,13 +26,12 @@ public class SauceLabsService {
   }
 
   /**
-   * Retrieves app storage files from Sauce Labs using the given authorization and
-   * query.
+   * Retrieves app storage files from Sauce Labs using the given authorization and query.
    *
    * @param authorization The authorization token
-   * @param query         The query string
-   * @param kind          The kind of platform (android or ios)
-   * @param perPage       The number of items per page
+   * @param query The query string
+   * @param kind The kind of platform (android or ios)
+   * @param perPage The number of items per page
    * @return A Response object wrapping the AppStorageItemsResponse
    */
   public Response<AppStorageResponse> getV1StorageFiles(
@@ -41,18 +41,16 @@ public class SauceLabsService {
     return sauceLabsClient.call(
         () -> sauceLabsClient.getAPI().getV1StorageFiles(authorization, query, kind, perPage),
         Optional.empty(), // No direct class provided, we'll use GenericType
-        new GenericType<AppStorageResponse>() {
-        } // Use GenericType for complex types
-    );
+        new GenericType<AppStorageResponse>() {} // Use GenericType for complex types
+        );
   }
 
   public Response<List<AppBrowserVersion>> getBrowserVersion(String authorization) {
 
     return sauceLabsClient.call(
-            () -> sauceLabsClient.getAPI().getWebDriverPlatforms(authorization, "webdriver"),
-            Optional.empty(), // No direct class provided, we'll use GenericType
-            new GenericType<List<AppBrowserVersion>>() {} // Use GenericType for complex types
-    );
+        () -> sauceLabsClient.getAPI().getWebDriverPlatforms(authorization, "webdriver"),
+        Optional.empty(), // No direct class provided, we'll use GenericType
+        new GenericType<List<AppBrowserVersion>>() {} // Use GenericType for complex types
+        );
   }
-
 }
