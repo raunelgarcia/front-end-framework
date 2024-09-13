@@ -40,6 +40,7 @@ public class DriverConfiguration {
     }
     if (Objects.nonNull(getProvider()) && getProvider().equalsIgnoreCase("SauceLabs")) {
       currentDriver = SaucelabsDriverConfiguration.getSauceDriver();
+      showSauceLabsLink(currentDriver);
     } else {
       if (isWeb()) {
         Dimension windowResolution = ScreenResolution.getResolutionFromEnv();
@@ -66,7 +67,6 @@ public class DriverConfiguration {
         }
       }
     }
-    showSauceLabsLink(currentDriver);
     return currentDriver;
   }
 
@@ -78,7 +78,6 @@ public class DriverConfiguration {
   private static WebDriver configureWebDriver() {
     WebDriver driver;
     String browser = LocalEnviroment.getBrowser();
-
     switch (browser) {
       case "edge" -> {
         EdgeOptions edgeOptions = new EdgeOptions();
