@@ -170,7 +170,14 @@ public class LocalEnviroment {
   }
 
   public static String getBrowserVersion() {
-    return null;
+    String version = System.getenv("BrowserVersion");
+    // Si la variable es null o está vacía, devuelve "latest"
+    if(FrontEndOperation.isNullOrEmpty(version)) {
+      System.out.println(version);
+      return "latest";
+    }
+    // Si tiene un valor, devuelve el valor en minúsculas
+    return version.toLowerCase();
   }
 
   public static boolean checkPlatformVersion(String regex) {
