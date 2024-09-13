@@ -21,5 +21,5 @@ public interface SauceLabsAPI {
   @GET
   @Path("v1/rdc/devices")
   @Produces(MediaType.APPLICATION_JSON)
-  Response getVerifyDeviceExists(@HeaderParam("Authorization") String authorization);
+  Response getAllDevices(@HeaderParam("Authorization") String authorization);
 }

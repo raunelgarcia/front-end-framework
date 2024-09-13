@@ -9,7 +9,6 @@ import saucelabs.api.Response;
 import saucelabs.client.SauceLabsClient;
 import saucelabs.dto.AppStorageResponse;
 import saucelabs.dto.AppStorageUserResponse;
-import utilities.LocalEnviroment;
 
 @Service
 public class SauceLabsService {
@@ -45,22 +44,13 @@ public class SauceLabsService {
    * @param authorization The authorization token
    * @return A Response object wrapping the AppStorageUserResponse
    */
-  public boolean getVerifyDeviceExists(String authorization) {
+  public Response<List<AppStorageUserResponse>> getAllDevices(String authorization) {
 
-    Response<List<AppStorageUserResponse>> response =
-        sauceLabsClient.call(
-            () -> {
-              return sauceLabsClient.getAPI().getVerifyDeviceExists(authorization);
-            },
-            Optional.empty(),
-            new GenericType<List<AppStorageUserResponse>>() {});
-
-    for (int pos = 0; pos < response.getPayload().size() - 1; pos++) {
-      if (response.getPayload().get(pos).getName().equals(LocalEnviroment.getDeviceName())) {
-        return true;
-      }
-    }
-
-    return false;
+    return sauceLabsClient.call(
+        () -> {
+          return sauceLabsClient.getAPI().getAllDevices(authorization);
+        },
+        Optional.empty(),
+        new GenericType<List<AppStorageUserResponse>>() {});
   }
 }

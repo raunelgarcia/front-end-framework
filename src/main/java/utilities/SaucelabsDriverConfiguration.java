@@ -11,6 +11,7 @@ import io.appium.java_client.ios.IOSDriver;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -26,6 +27,7 @@ import saucelabs.api.Response;
 import saucelabs.client.SauceLabsClient;
 import saucelabs.dto.AppStorageItemMetadataResponse;
 import saucelabs.dto.AppStorageResponse;
+import saucelabs.dto.AppStorageUserResponse;
 import saucelabs.service.SauceLabsService;
 
 public class SaucelabsDriverConfiguration {
@@ -66,6 +68,30 @@ public class SaucelabsDriverConfiguration {
         .findFirst()
         .orElseThrow(() -> new IllegalArgumentException("Version not found: ".concat(version)))
         .getId();
+  }
+
+  /**
+   * Verifies if a device exists in Sauce Labs
+   *
+   * <p>This method fetches the app's devices from Sauce Labs, filters the results to check if a
+   * device with the specified name exists the name of device, and returns whether it exists.
+   *
+   * @param authorization The authorization token required to access the Sauce Labs API.
+   * @return Boolean indicating wether the device exists
+   */
+  public static boolean getVerifyDeviceExist(String authorization) {
+
+    SauceLabsService sauceLabsService = new SauceLabsService(new SauceLabsClient());
+    Response<List<AppStorageUserResponse>> response = sauceLabsService.getAllDevices(authorization);
+    ApiUtils.checkStatusCode(response.getStatus(), SC_OK);
+
+    for (AppStorageUserResponse device : response.getPayload()) {
+      if (device.getName().equals(LocalEnviroment.getDeviceName())) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   /**
