@@ -1,12 +1,15 @@
 package utilities;
 
-import static utilities.Constants.DRIVER_URL;
+import static utilities.Constants.*;
+import static utilities.FrontEndOperation.isNullOrEmpty;
 import static utilities.LocalEnviroment.*;
+import static utilities.SaucelabsDriverConfiguration.*;
+import static utilities.ScreenResolution.getResolutionFromEnv;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import java.io.InputStream;
-import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.Map;
@@ -21,47 +24,90 @@ import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
+import org.openqa.selenium.safari.SafariOptions;
 import org.yaml.snakeyaml.Yaml;
 
 public class DriverConfiguration {
   private static WebDriver currentDriver;
 
-  public static WebDriver getDriver() {
-    if (currentDriver != null) {
-      return currentDriver;
-    }
-    if (Objects.nonNull(getProvider()) && getProvider().equalsIgnoreCase("SauceLabs")) {
-      currentDriver = SaucelabsDriverConfiguration.getSauceDriver();
-    } else {
-      if (isWeb()) {
-        Dimension windowResolution = ScreenResolution.getResolutionFromEnv();
-        String url = setURL();
+  public static MutableCapabilities getMobileCapabilities() {
+    MutableCapabilities caps = new MutableCapabilities();
+    caps.setCapability("platformName", getPlatform());
+    caps.setCapability("appium:automationName", isAndroid() ? "UiAutomator2" : "XCUITest");
+    caps.setCapability("language", getLanguageCode());
+    caps.setCapability(
+        "locale", isAndroid() ? getCountryCode() : getLanguageCode() + "_" + getCountryCode());
 
-        WebDriver driver = configureWebDriver();
-        driver.manage().window().setSize(windowResolution);
-        driver.get(url);
-        currentDriver = driver;
-      } else if (isAndroid()) {
-        try {
-          URL url = new URL(DRIVER_URL);
-          currentDriver = new AndroidDriver(url, fillCapabilities());
-        } catch (MalformedURLException e) {
-          throw new RuntimeException(e);
+    if (!isVirtualDevice()) {
+      caps.setCapability("appium:newCommandTimeout", 90);
+    }
+
+    if (isSaucelabs()) {
+      String appStorage =
+          getSaucelabsAppId(AUTHORIZATION, getAppIdentifier(), getPlatform(), getAppVersion());
+      caps.setCapability("appium:app", "storage:" + appStorage);
+      caps.setCapability("appium:deviceName", getDeviceName());
+      caps.setCapability("appium:platformVersion", getPlatformVersion());
+      caps.setCapability("sauce:options", getSauceOptions());
+    } else {
+      caps.setCapability("udid", getUdid());
+      caps.setCapability("noReset", true);
+      if (isAndroid()) {
+        caps.setCapability("appPackage", getAppIdentifier());
+        String apk = getApp();
+        if (!isNullOrEmpty(apk)) {
+          caps.setCapability(
+              "app", Paths.get(Constants.RESOURCE_PATH + apk).toAbsolutePath().toString());
+        } else {
+          caps.setCapability("appActivity", getAppActivity());
         }
       } else {
-        try {
-          URL url = new URL(DRIVER_URL);
-          currentDriver = new IOSDriver(url, fillCapabilities());
-
-        } catch (MalformedURLException e) {
-          throw new RuntimeException(e);
-        }
+        caps.setCapability("bundleId", getAppIdentifier());
       }
     }
-    showSauceLabsLink(currentDriver);
+
+    return caps;
+  }
+
+  public static URL getDriverURL() {
+    try {
+      URI uri = new URI(isSaucelabs() ? SAUCELABS_TESTS_URL : DRIVER_URL);
+      return uri.toURL();
+    } catch (Exception e) {
+      // Handle exception, such as MalformedURLException or URISyntaxException
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+  public static WebDriver getDriver() {
+    if (Objects.nonNull(currentDriver)) {
+      return currentDriver;
+    }
+    URL driverURL = Objects.requireNonNull(getDriverURL());
+    if (isWeb()) {
+      Dimension windowResolution = getResolutionFromEnv();
+      String url = setURL();
+
+      WebDriver driver = configureWebDriver();
+
+      driver.manage().window().setSize(windowResolution);
+      driver.get(url);
+      currentDriver = driver;
+    } else {
+
+      MutableCapabilities caps = getMobileCapabilities();
+      if (isAndroid()) {
+        currentDriver = new AndroidDriver(driverURL, caps);
+      } else {
+        currentDriver = new IOSDriver(driverURL, caps);
+      }
+    }
+    if (isSaucelabs()) {
+      showSauceLabsLink(currentDriver);
+    }
     return currentDriver;
   }
 
@@ -72,84 +118,56 @@ public class DriverConfiguration {
 
   private static WebDriver configureWebDriver() {
     WebDriver driver;
-    String browser = LocalEnviroment.getBrowser();
+    String browser = getBrowser();
+    String language = getLanguage();
+    URL driverURL = Objects.requireNonNull(getDriverURL());
 
     switch (browser) {
       case "edge" -> {
         EdgeOptions edgeOptions = new EdgeOptions();
-        edgeOptions.addArguments("--lang=" + LocalEnviroment.getLanguage());
-        driver = new EdgeDriver(edgeOptions);
+        edgeOptions.addArguments("--lang=" + language);
+        if (isSaucelabs()) {
+          setSauceWebCapabilities(edgeOptions);
+          driver = new RemoteWebDriver(driverURL, edgeOptions);
+        } else {
+          driver = new EdgeDriver(edgeOptions);
+        }
       }
       case "firefox" -> {
         FirefoxProfile profile = new FirefoxProfile();
-        profile.setPreference("intl.accept_languages", LocalEnviroment.getLanguage());
+        profile.setPreference("intl.accept_languages", language);
         FirefoxOptions firefoxOptions = new FirefoxOptions();
         firefoxOptions.setProfile(profile);
-        driver = new FirefoxDriver(firefoxOptions);
+        if (isSaucelabs()) {
+          setSauceWebCapabilities(firefoxOptions);
+          driver = new RemoteWebDriver(driverURL, firefoxOptions);
+        } else {
+          driver = new FirefoxDriver(firefoxOptions);
+        }
       }
-      case "safari" -> driver = new SafariDriver();
+      case "safari" -> {
+        SafariOptions safariOptions = new SafariOptions();
+        if (isSaucelabs()) {
+          setSauceWebCapabilities(safariOptions);
+          driver = new RemoteWebDriver(driverURL, safariOptions);
+        } else {
+          driver = new SafariDriver(safariOptions);
+        }
+      }
+
       default -> {
         ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("--lang=" + LocalEnviroment.getLanguage());
-        chromeOptions.addArguments("--disable-search-engine-choice-screen");
-        driver = new ChromeDriver(chromeOptions);
+        chromeOptions.addArguments("--lang=" + language, "--disable-search-engine-choice-screen");
+        if (isSaucelabs()) {
+          setSauceWebCapabilities(chromeOptions);
+          driver = new RemoteWebDriver(getDriverURL(), chromeOptions);
+        } else {
+          driver = new ChromeDriver(chromeOptions);
+        }
       }
     }
 
     return driver;
-  }
-
-  private static MutableCapabilities fillCapabilities() throws IllegalArgumentException {
-    Map<String, Map<String, String>> environment;
-    Map<String, String> capabilities;
-    MutableCapabilities filledCapabilities = new DesiredCapabilities();
-
-    filledCapabilities.setCapability("platformName", LocalEnviroment.getPlatform());
-    filledCapabilities.setCapability("udid", LocalEnviroment.getUdid());
-    if (isAndroid()) {
-      environment = loadCapabilitiesMobile(Constants.ANDROID_CONFIG);
-      capabilities = environment.get("capabilitiesAndroid");
-      filledCapabilities.setCapability("appPackage", LocalEnviroment.getAppIdentifier());
-      filledCapabilities.setCapability("language", LocalEnviroment.getLanguageCode());
-      filledCapabilities.setCapability("locale", LocalEnviroment.getCountryCode());
-      String apk = LocalEnviroment.getApp();
-      if (Objects.nonNull(apk) && !apk.isEmpty()) {
-        filledCapabilities.setCapability(
-            "app", Paths.get(Constants.RESOURCE_PATH + apk).toAbsolutePath().toString());
-      } else {
-        filledCapabilities.setCapability("appActivity", LocalEnviroment.getAppActivity());
-      }
-    } else {
-      environment = loadCapabilitiesMobile(Constants.IOS_CONFIG);
-      capabilities = environment.get("capabilitiesiOS");
-      filledCapabilities.setCapability("bundleId", LocalEnviroment.getAppIdentifier());
-    }
-
-    if (Objects.isNull(capabilities)) {
-      throw new IllegalArgumentException("Capabilities are not set");
-    }
-
-    for (Map.Entry<String, String> entry : capabilities.entrySet()) {
-      String capabilityName = entry.getKey();
-      String capabilityValue = entry.getValue();
-      if (Objects.nonNull(capabilityValue) && !capabilityValue.isEmpty()) {
-        filledCapabilities.setCapability(capabilityName, capabilityValue);
-      } else {
-        throw new IllegalArgumentException("Capabilities cannot be blank");
-      }
-    }
-
-    return filledCapabilities;
-  }
-
-  public static Map<String, Map<String, String>> loadCapabilitiesMobile(String path) {
-    Yaml yaml = new Yaml();
-    try (InputStream inputStream =
-        DriverConfiguration.class.getClassLoader().getResourceAsStream(path)) {
-      return yaml.load(inputStream);
-    } catch (Exception e) {
-      throw new IllegalStateException("Failed to load or parse the YAML file", e);
-    }
   }
 
   public static Map<String, Map<String, String>> loadCapabilitiesWeb() {
@@ -163,10 +181,10 @@ public class DriverConfiguration {
   }
 
   public static String setURL() {
-    String base = LocalEnviroment.getApplicationUrl();
+    String base = getApplicationUrl();
 
     if (base.contains("{country}")) {
-      String newUrl = base.replace("{country}", LocalEnviroment.getLanguageCode());
+      String newUrl = base.replace("{country}", getLanguageCode());
 
       return newUrl;
     }

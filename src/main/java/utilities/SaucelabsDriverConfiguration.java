@@ -1,9 +1,6 @@
 package utilities;
 
 import static org.apache.http.HttpStatus.SC_OK;
-import static utilities.Constants.AUTHORIZATION;
-import static utilities.Constants.SAUCELABS_TESTS_URL;
-import static utilities.DriverConfiguration.setURL;
 import static utilities.LocalEnviroment.*;
 
 import io.appium.java_client.android.AndroidDriver;
@@ -15,13 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.MutableCapabilities;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.edge.EdgeOptions;
-import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import saucelabs.api.ApiUtils;
 import saucelabs.api.Response;
 import saucelabs.client.SauceLabsClient;
@@ -138,130 +129,30 @@ public class SaucelabsDriverConfiguration {
     boolean versionMatches =
         "latest".equalsIgnoreCase(version) || getVersion(metadata).equals(version);
 
-    boolean iosCheck =
-        LocalEnviroment.isAndroid()
-            || metadata.getIs_simulator() == LocalEnviroment.isVirtualDevice();
+    boolean iosCheck = isAndroid() || metadata.getIs_simulator() == isVirtualDevice();
     return versionMatches && iosCheck;
   }
 
-  public static WebDriver getSauceDriver() {
-    if (isWeb()) {
-      Dimension windowResolution = ScreenResolution.getResolutionFromEnv();
-      String url = setURL();
-      WebDriver driver = configureSauceWeb();
-      driver.manage().window().setSize(windowResolution);
-      driver.get(url);
-      return driver;
-    } else if (isAndroid()) {
-      return configureSauceAndroid();
-    } else if (isIOS()) {
-      return configureSauceIOS();
-    }
-    return null;
-  }
-
-  public static MutableCapabilities configureCommonCapabilities(
-      String platformName,
-      String app,
-      String deviceName,
-      String platformVersion,
-      String automationName) {
-    MutableCapabilities caps = new MutableCapabilities();
-    caps.setCapability("platformName", platformName);
-    caps.setCapability("appium:app", app);
-    if (!FrontEndOperation.isNullOrEmpty(deviceName)) {
-      caps.setCapability("appium:deviceName", deviceName);
-    }
-    if (!FrontEndOperation.isNullOrEmpty(platformVersion)) {
-      caps.setCapability("appium:platformVersion", platformVersion);
-    }
-    caps.setCapability("appium:automationName", automationName);
-
+  public static MutableCapabilities getSauceOptions() {
     MutableCapabilities sauceOptions = new MutableCapabilities();
     sauceOptions.setCapability("appiumVersion", getAppiumVersion());
     sauceOptions.setCapability("username", getUser());
     sauceOptions.setCapability("accessKey", getAccessToken());
     sauceOptions.setCapability("build", "selenium-build-VNFHT");
-    sauceOptions.setCapability("name", platformName + "_Test");
+    sauceOptions.setCapability("name", getPlatform() + "_Test");
 
-    caps.setCapability("sauce:options", sauceOptions);
-
-    return caps;
+    return sauceOptions;
   }
 
-  public static IOSDriver configureSauceIOS() {
-    String appStorage =
-        getSaucelabsAppId(AUTHORIZATION, getAppIdentifier(), getPlatform(), getAppVersion());
-
-    MutableCapabilities caps =
-        configureCommonCapabilities(
-            "iOS", "storage:" + appStorage, getDeviceName(), getPlatformVersion(), "XCUITest");
-
-    URL url;
-    try {
-      url = new URL(SAUCELABS_TESTS_URL);
-    } catch (MalformedURLException e) {
-      throw new RuntimeException(e);
+  public static void setSauceWebCapabilities(MutableCapabilities capabilities) {
+    if (!getBrowser().equalsIgnoreCase("safari")) {
+      capabilities.setCapability("platformName", "Windows 11");
+    } else {
+      capabilities.setCapability("platformName", "macOS 13");
     }
-    return new IOSDriver(url, caps);
-  }
-
-  public static AndroidDriver configureSauceAndroid() {
-    String appStorage =
-        getSaucelabsAppId(AUTHORIZATION, getAppIdentifier(), getPlatform(), getAppVersion());
-
-    MutableCapabilities caps =
-        configureCommonCapabilities(
-            "Android",
-            "storage:" + appStorage,
-            getDeviceName(),
-            getPlatformVersion(),
-            "UiAutomator2");
-    URL url;
-    try {
-      url = new URL(SAUCELABS_TESTS_URL);
-    } catch (MalformedURLException e) {
-      throw new RuntimeException(e);
-    }
-    return new AndroidDriver(url, caps);
-  }
-
-  public static WebDriver configureSauceWeb() {
-    Map<String, Object> sauceOptions = new HashMap<>();
-    sauceOptions.put("username", getUser());
-    sauceOptions.put("accessKey", getAccessToken());
-    sauceOptions.put("build", "selenium-build-VNFHT");
-    sauceOptions.put("name", "First Demo Test");
-    sauceOptions.put("extendedDebugging", true);
-    URL url;
-    try {
-      url = new URL(SAUCELABS_TESTS_URL);
-    } catch (MalformedURLException e) {
-      throw new RuntimeException(e);
-    }
-    String browser = getBrowser();
-    switch (browser) {
-      case "edge" -> {
-        EdgeOptions edgeOptions = new EdgeOptions();
-        edgeOptions.setPlatformName("Windows 11");
-        edgeOptions.setBrowserVersion("latest");
-        edgeOptions.setCapability("sauce:options", sauceOptions);
-        return new RemoteWebDriver(url, edgeOptions);
-      }
-      case "firefox" -> {
-        FirefoxOptions firefoxOptions = new FirefoxOptions();
-        firefoxOptions.setPlatformName("Windows 11");
-        firefoxOptions.setBrowserVersion("latest");
-        firefoxOptions.setCapability("sauce:options", sauceOptions);
-        return new RemoteWebDriver(url, firefoxOptions);
-      }
-      default -> {
-        ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.setPlatformName("Windows 11");
-        chromeOptions.setBrowserVersion("latest");
-        chromeOptions.setCapability("sauce:options", sauceOptions);
-        return new RemoteWebDriver(url, chromeOptions);
-      }
-    }
+    capabilities.setCapability("browserVersion", "latest");
+    MutableCapabilities sauceOptions = getSauceOptions();
+    sauceOptions.setCapability("extendedDebugging", true);
+    capabilities.setCapability("sauce:options", sauceOptions);
   }
 }
