@@ -107,7 +107,9 @@ public class DriverConfiguration {
       }
     }
     if (isSaucelabs()) {
-      showSauceLabsLink(currentDriver);
+      SLsession = getSauceLabsLink(currentDriver);
+      Logger.infoMessage(
+              "SauceLabs test session: ".concat(Constants.SAUCELABS_SESSION_URL).concat(SLsession));
     }
     return currentDriver;
   }
@@ -193,7 +195,7 @@ public class DriverConfiguration {
     return base;
   }
 
-  public static String showSauceLabsLink(WebDriver driver) {
+  public static String getSauceLabsLink(WebDriver driver) {
     return ((RemoteWebDriver) driver).getSessionId().toString();
   }
 }
