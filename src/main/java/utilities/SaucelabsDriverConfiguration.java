@@ -8,9 +8,12 @@ import static utilities.LocalEnviroment.*;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+
+import java.lang.Runtime.Version;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -24,7 +27,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import saucelabs.api.ApiUtils;
 import saucelabs.api.Response;
 import saucelabs.client.SauceLabsClient;
-import saucelabs.dto.AppBrowserResponse;
+import saucelabs.dto.AppBrowserVersion;
 import saucelabs.dto.AppStorageItemMetadataResponse;
 import saucelabs.dto.AppStorageResponse;
 import saucelabs.service.SauceLabsService;
@@ -214,53 +217,104 @@ public class SaucelabsDriverConfiguration {
     } catch (MalformedURLException e) {
       throw new RuntimeException(e);
     }
-    String browser = getBrowser();
-    switch (browser) {
+    switch (getBrowser()) {
       case "edge" -> {
         EdgeOptions edgeOptions = new EdgeOptions();
         edgeOptions.setPlatformName("Windows 11");
-        edgeOptions.setBrowserVersion("latest");
+        edgeOptions.setBrowserVersion(setVersionBrowser());
         edgeOptions.setCapability("sauce:options", sauceOptions);
         return new RemoteWebDriver(url, edgeOptions);
       }
       case "firefox" -> {
         FirefoxOptions firefoxOptions = new FirefoxOptions();
         firefoxOptions.setPlatformName("Windows 11");
-        firefoxOptions.setBrowserVersion("latest");
+        firefoxOptions.setBrowserVersion(setVersionBrowser());
         firefoxOptions.setCapability("sauce:options", sauceOptions);
         return new RemoteWebDriver(url, firefoxOptions);
       }
       default -> {
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.setPlatformName("Windows 11");
-        chromeOptions.setBrowserVersion("latest");
+        chromeOptions.setBrowserVersion(setVersionBrowser());
         chromeOptions.setCapability("sauce:options", sauceOptions);
         return new RemoteWebDriver(url, chromeOptions);
       }
     }
   }
 
-  public static String setVersionBrowser(AppBrowserResponse browserVersion){
+  public static String setVersionBrowser() {
+    String browser;
+    checkValidVersion();
+    SauceLabsService sauceLabsService = new SauceLabsService(new SauceLabsClient());
+    if (getBrowser().equalsIgnoreCase("edge")) {
+      browser = "MicrosoftEdge";
+    } else {
+      browser = LocalEnviroment.getBrowser();
+    }
+    Response<List<AppBrowserVersion>> response = sauceLabsService.getBrowserVersion(AUTHORIZATION);
+    AppBrowserVersion[] browserVersionArray =
+        response.getPayload().toArray(new AppBrowserVersion[0]);
+    for (AppBrowserVersion Versions : browserVersionArray) {
+      if (isMatchingVersion(Versions, browser, LocalEnviroment.getBrowserVersion())) {
+        Logger.infoMessage(
+            "The suggested version is Available: \n"
+                + "Operating System: "
+                + Versions.getOs()
+                + "\nSuggested Version: "
+                + Versions.getShort_version()
+                + "\nBrowser Name: "
+                + Versions.getApi_name());
+        return LocalEnviroment.getBrowserVersion();
+      } else if (LocalEnviroment.getBrowserVersion().equalsIgnoreCase("latest")
+          && Objects.equals(Versions.getOs(), "Windows 11")
+          && Objects.equals(Versions.getApi_name(), browser)) {
+        Logger.infoMessage(
+            "The suggested version is Available: \n"
+                + "Operating System: "
+                + Versions.getOs()
+                + "\nSuggested Version: "
+                + "latest"
+                + "\nBrowser Name: "
+                + Versions.getApi_name());
+        return LocalEnviroment.getBrowserVersion();
+      }
+    }
+    Logger.errorMessage(
+        "The suggested Version is not available, check if the Enviroments Variables are correct.");
+    throw new RuntimeException("The version you specified was not found or is invalid.");
+  }
 
-    return "";
+  public static boolean isMatchingVersion(
+      AppBrowserVersion versionObj, String browser, String version) {
+    return Objects.equals(versionObj.getApi_name(), browser)
+        && Objects.equals(versionObj.getShort_version(), version)
+        && Objects.equals(versionObj.getOs(), "Windows 11");
+  }
+
+  public static void checkValidVersion() {
+    switch (LocalEnviroment.getBrowser()) {
+      case "edge":
+        {
+          if(Integer.parseInt(LocalEnviroment.getBrowserVersion())<95){
+            throw new RuntimeException("For Edge browsers, ensure that the version is greater than 95.");
+          }
+        }
+      case "firefox":
+        {
+          {
+            if(Integer.parseInt(LocalEnviroment.getBrowserVersion())<95){
+              throw new RuntimeException("For Firefox browsers, ensure that the version is greater than 95.");
+            }
+          }
+        }
+      case "chrome":
+        {
+          {
+            if(Integer.parseInt(LocalEnviroment.getBrowserVersion())<90){
+              throw new RuntimeException("For Chrome browsers, ensure that the version is greater than 90.");
+            }
+          }
+        }
+    }
   }
 }
-/*  public static String getSaucelabsAppId(
-      String authorization, String appId, String kind, String version) {
-
-    Optional.ofNullable(appId)
-        .filter(id -> !id.isBlank())
-        .orElseThrow(
-            () -> new IllegalArgumentException("AppIdentifier must be not null and not empty"));
-
-    SauceLabsService sauceLabsService = new SauceLabsService(new SauceLabsClient());
-    Response<AppStorageResponse> response =
-        sauceLabsService.getV1StorageFiles(authorization, appId, kind.toLowerCase(), 10);
-    ApiUtils.checkStatusCode(response.getStatus(), SC_OK);
-
-    return response.getPayload().getItems().stream()
-        .filter(item -> isValidApp(item.getMetadata(), version))
-        .findFirst()
-        .orElseThrow(() -> new IllegalArgumentException("Version not found: ".concat(version)))
-        .getId();
-  }*/
