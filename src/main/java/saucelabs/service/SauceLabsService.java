@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import saucelabs.api.Response;
 import saucelabs.client.SauceLabsClient;
-import saucelabs.dto.AppBrowserResponse;
 import saucelabs.dto.AppBrowserVersion;
 import saucelabs.dto.AppStorageResponse;
 import java.util.List;
@@ -47,12 +46,12 @@ public class SauceLabsService {
     );
   }
 
-  public Response<AppBrowserResponse> getBrowserVersion(String authorization) {
+  public Response<List<AppBrowserVersion>> getBrowserVersion(String authorization) {
 
     return sauceLabsClient.call(
             () -> sauceLabsClient.getAPI().getWebDriverPlatforms(authorization, "webdriver"),
             Optional.empty(), // No direct class provided, we'll use GenericType
-            new GenericType<AppBrowserResponse>() {} // Use GenericType for complex types
+            new GenericType<List<AppBrowserVersion>>() {} // Use GenericType for complex types
     );
   }
 
