@@ -174,12 +174,13 @@ public class FrontEndOperation {
     switch (direction) {
       case UP -> W3cActions.swipe(driver, new Point(halfX, y2), new Point(halfX, y), 500);
       case DOWN -> W3cActions.swipe(driver, new Point(halfX, y), new Point(halfX, y2), 500);
-      case LEFT -> W3cActions.swipe(
-          driver, new Point(Math.max(0, width - 10), halfY), new Point(10, halfY), 500);
-      case RIGHT -> W3cActions.swipe(
-          driver, new Point(10, halfY), new Point(Math.max(0, width - 10), halfY), 500);
-      default -> {
-      }
+      case LEFT ->
+          W3cActions.swipe(
+              driver, new Point(Math.max(0, width - 10), halfY), new Point(10, halfY), 500);
+      case RIGHT ->
+          W3cActions.swipe(
+              driver, new Point(10, halfY), new Point(Math.max(0, width - 10), halfY), 500);
+      default -> {}
     }
 
     waitForAnimationToFinish();
