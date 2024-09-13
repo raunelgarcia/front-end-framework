@@ -23,3 +23,4 @@ public interface SauceLabsAPI {
   @Produces(MediaType.APPLICATION_JSON)
   Response getAllDevices(@HeaderParam("Authorization") String authorization);
 }
+
