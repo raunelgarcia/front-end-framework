@@ -1,6 +1,7 @@
 package utilities;
 
 import static utilities.Constants.*;
+import static utilities.FrontEndOperation.isNullOrEmpty;
 import static utilities.LocalEnviroment.*;
 import static utilities.SaucelabsDriverConfiguration.*;
 import static utilities.ScreenResolution.getResolutionFromEnv;
@@ -36,14 +37,16 @@ public class DriverConfiguration {
     caps.setCapability("platformName", getPlatform());
     caps.setCapability("appium:automationName", isAndroid() ? "UiAutomator2" : "XCUITest");
     caps.setCapability("language", getLanguageCode());
-    caps.setCapability("locale", isAndroid() ? getCountryCode() : getLanguageCode() + "_" + getCountryCode());
+    caps.setCapability(
+        "locale", isAndroid() ? getCountryCode() : getLanguageCode() + "_" + getCountryCode());
 
     if (!isVirtualDevice()) {
       caps.setCapability("appium:newCommandTimeout", 90);
     }
 
     if (isSaucelabs()) {
-      String appStorage = getSaucelabsAppId(AUTHORIZATION, getAppIdentifier(), getPlatform(), getAppVersion());
+      String appStorage =
+          getSaucelabsAppId(AUTHORIZATION, getAppIdentifier(), getPlatform(), getAppVersion());
       caps.setCapability("appium:app", "storage:" + appStorage);
       caps.setCapability("appium:deviceName", getDeviceName());
       caps.setCapability("appium:platformVersion", getPlatformVersion());
@@ -54,8 +57,9 @@ public class DriverConfiguration {
       if (isAndroid()) {
         caps.setCapability("appPackage", getAppIdentifier());
         String apk = getApp();
-        if (apk != null && !apk.isEmpty()) {
-          caps.setCapability("app", Paths.get(Constants.RESOURCE_PATH + apk).toAbsolutePath().toString());
+        if (!isNullOrEmpty(apk) && !apk.isEmpty()) {
+          caps.setCapability(
+              "app", Paths.get(Constants.RESOURCE_PATH + apk).toAbsolutePath().toString());
         } else {
           caps.setCapability("appActivity", getAppActivity());
         }
@@ -66,7 +70,6 @@ public class DriverConfiguration {
 
     return caps;
   }
-
 
   public static URL getDriverURL() {
     try {
@@ -80,7 +83,7 @@ public class DriverConfiguration {
   }
 
   public static WebDriver getDriver() {
-    if (currentDriver != null) {
+    if (Objects.nonNull(currentDriver)) {
       return currentDriver;
     }
     URL driverURL = Objects.requireNonNull(getDriverURL());
@@ -93,13 +96,12 @@ public class DriverConfiguration {
       driver.manage().window().setSize(windowResolution);
       driver.get(url);
       currentDriver = driver;
-    } else  {
+    } else {
 
       MutableCapabilities caps = getMobileCapabilities();
       if (isAndroid()) {
         currentDriver = new AndroidDriver(driverURL, caps);
-      }
-      else {
+      } else {
         currentDriver = new IOSDriver(driverURL, caps);
       }
     }
@@ -139,8 +141,7 @@ public class DriverConfiguration {
         if (isSaucelabs()) {
           setSauceWebCapabilities(firefoxOptions);
           driver = new RemoteWebDriver(driverURL, firefoxOptions);
-        }
-        else {
+        } else {
           driver = new FirefoxDriver(firefoxOptions);
         }
       }
@@ -149,8 +150,7 @@ public class DriverConfiguration {
         if (isSaucelabs()) {
           setSauceWebCapabilities(safariOptions);
           driver = new RemoteWebDriver(driverURL, safariOptions);
-        }
-        else {
+        } else {
           driver = new SafariDriver(safariOptions);
         }
       }
@@ -161,8 +161,7 @@ public class DriverConfiguration {
         if (isSaucelabs()) {
           setSauceWebCapabilities(chromeOptions);
           driver = new RemoteWebDriver(getDriverURL(), chromeOptions);
-        }
-        else {
+        } else {
           driver = new ChromeDriver(chromeOptions);
         }
       }
@@ -196,8 +195,7 @@ public class DriverConfiguration {
   public static void showSauceLabsLink(WebDriver driver) {
     String sessionId = ((RemoteWebDriver) driver).getSessionId().toString();
 
-    Logger.infoMessage("SauceLabs test session: "
-            .concat(Constants.SAUCELABS_SESSION_URL)
-            .concat(sessionId));
+    Logger.infoMessage(
+        "SauceLabs test session: ".concat(Constants.SAUCELABS_SESSION_URL).concat(sessionId));
   }
 }
