@@ -57,7 +57,7 @@ public class DriverConfiguration {
       if (isAndroid()) {
         caps.setCapability("appPackage", getAppIdentifier());
         String apk = getApp();
-        if (!isNullOrEmpty(apk) && !apk.isEmpty()) {
+        if (!isNullOrEmpty(apk)) {
           caps.setCapability(
               "app", Paths.get(Constants.RESOURCE_PATH + apk).toAbsolutePath().toString());
         } else {

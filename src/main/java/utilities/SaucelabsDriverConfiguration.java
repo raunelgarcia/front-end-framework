@@ -113,10 +113,9 @@ public class SaucelabsDriverConfiguration {
   }
 
   public static void setSauceWebCapabilities(MutableCapabilities capabilities) {
-    if (!getBrowser().equals("safari")) {
+    if (!getBrowser().equalsIgnoreCase("safari")) {
       capabilities.setCapability("platformName", "Windows 11");
-    }
-    else {
+    } else {
       capabilities.setCapability("platformName", "macOS 13");
     }
     capabilities.setCapability("browserVersion", "latest");
@@ -124,5 +123,4 @@ public class SaucelabsDriverConfiguration {
     sauceOptions.setCapability("extendedDebugging", true);
     capabilities.setCapability("sauce:options", sauceOptions);
   }
-
 }
