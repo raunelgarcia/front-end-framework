@@ -39,7 +39,7 @@ public class AllureReport {
   }
 
   private static String setTestDescription() {
-    String platformName = (String) capabilities.getCapability("platformName");
+    String platformName = capabilities.getCapability("platformName").toString();
     String language = LocalEnviroment.getLanguage();
 
     UnescapedText description =
@@ -176,7 +176,7 @@ public class AllureReport {
   public static ImmutableMap<String, String> setAllureParameters() {
     ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
     builder.put("Accessibility", String.valueOf(LocalEnviroment.getAccessibility()));
-    String platformName = (String) capabilities.getCapability("platformName");
+    String platformName = capabilities.getCapability("platformName").toString();
     builder.put("Platform", platformName);
     builder.put("Provider", LocalEnviroment.getProvider());
 
