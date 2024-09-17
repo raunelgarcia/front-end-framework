@@ -22,7 +22,7 @@ public interface SauceLabsAPI {
   @GET
   @Path("/rest/v1/info/platforms/{automation_api}")
   @Produces(MediaType.APPLICATION_JSON)
-  Response getWebDriverPlatforms(
+  Response getV1InfoPlatformsAutomationApi(
       @HeaderParam("Authorization") String authorization,
       @PathParam("automation_api") String automation_api);
 }

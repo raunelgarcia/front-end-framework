@@ -58,7 +58,7 @@ public class SauceLabsService {
 
   public Response<List<AppBrowserVersion>> getBrowserVersion(String authorization) {
     return sauceLabsClient.call(
-        () -> sauceLabsClient.getAPI().getWebDriverPlatforms(authorization, "webdriver"),
+        () -> sauceLabsClient.getAPI().getV1InfoPlatformsAutomationApi(authorization, "webdriver"),
         Optional.empty(),
         new GenericType<List<AppBrowserVersion>>() {});
   }
