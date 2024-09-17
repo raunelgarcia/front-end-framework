@@ -1,18 +1,22 @@
 package utilities;
 
 import static org.apache.http.HttpStatus.SC_OK;
+import static utilities.Constants.AUTHORIZATION;
 import static utilities.LocalEnviroment.*;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import org.openqa.selenium.MutableCapabilities;
 import saucelabs.api.ApiUtils;
 import saucelabs.api.Response;
 import saucelabs.client.SauceLabsClient;
+import saucelabs.dto.AppBrowserVersion;
 import saucelabs.dto.AppStorageItemMetadataResponse;
 import saucelabs.dto.AppStorageItemsResponse;
 import saucelabs.dto.AppStorageResponse;
 import saucelabs.service.SauceLabsService;
+import saucelabs.dto.AppBrowserVersion;
 
 public class SaucelabsDriverConfiguration {
 
@@ -129,9 +133,82 @@ public class SaucelabsDriverConfiguration {
     } else {
       capabilities.setCapability("platformName", "macOS 13");
     }
-    capabilities.setCapability("browserVersion", "latest");
+
+    capabilities.setCapability("browserVersion", setVersionBrowser());
     MutableCapabilities sauceOptions = getSauceOptions();
     sauceOptions.setCapability("extendedDebugging", true);
     capabilities.setCapability("sauce:options", sauceOptions);
+  }
+
+  public static String setVersionBrowser() {
+    String browser;
+    checkValidVersion();
+    SauceLabsService sauceLabsService = new SauceLabsService(new SauceLabsClient());
+    if (getBrowser().equalsIgnoreCase("edge")) {
+      browser = "MicrosoftEdge";
+    } else {
+      browser = LocalEnviroment.getBrowser();
+    }
+    Response<List<AppBrowserVersion>> response = sauceLabsService.getBrowserVersion(AUTHORIZATION);
+    AppBrowserVersion[] browserVersionArray =
+        response.getPayload().toArray(new AppBrowserVersion[0]);
+    for (AppBrowserVersion Versions : browserVersionArray) {
+      if (isMatchingVersion(Versions, browser, LocalEnviroment.getBrowserVersion())) {
+        Logger.infoMessage(
+            "The suggested version is Available: \n"
+                + "Operating System: "
+                + Versions.getOs()
+                + "\nSuggested Version: "
+                + Versions.getShort_version()
+                + "\nBrowser Name: "
+                + Versions.getApi_name());
+        return LocalEnviroment.getBrowserVersion();
+      } else if (LocalEnviroment.getBrowserVersion().equalsIgnoreCase("latest")
+          && Objects.equals(Versions.getOs(), "Windows 11")
+          && Objects.equals(Versions.getApi_name(), browser)) {
+        Logger.infoMessage(
+            "The suggested version is Available: \n"
+                + "Operating System: "
+                + Versions.getOs()
+                + "\nSuggested Version: "
+                + "latest"
+                + "\nBrowser Name: "
+                + Versions.getApi_name());
+        return LocalEnviroment.getBrowserVersion();
+      }
+    }
+    Logger.errorMessage(
+        "The suggested Version is not available, check if the Enviroments Variables are correct.");
+    throw new RuntimeException("The version you specified was not found or is invalid.");
+  }
+
+  public static boolean isMatchingVersion(
+      AppBrowserVersion versionObj, String browser, String version) {
+    return Objects.equals(versionObj.getApi_name(), browser)
+        && Objects.equals(versionObj.getShort_version(), version)
+        && Objects.equals(versionObj.getOs(), "Windows 11");
+  }
+
+  public static void checkValidVersion() {
+    switch (LocalEnviroment.getBrowser()) {
+      case "edge", "firefox":
+        {
+          if (!LocalEnviroment.getBrowserVersion().equalsIgnoreCase("latest")
+              && Integer.parseInt(LocalEnviroment.getBrowserVersion()) < 95) {
+            throw new RuntimeException(
+                "For " + getBrowser() + ", ensure that the version is greater than 95.");
+          }
+        }
+      case "chrome":
+        {
+          {
+            if (!LocalEnviroment.getBrowserVersion().equalsIgnoreCase("latest")
+                && Integer.parseInt(LocalEnviroment.getBrowserVersion()) < 90) {
+              throw new RuntimeException(
+                  "For Chrome browsers, ensure that the version is greater than 90.");
+            }
+          }
+        }
+    }
   }
 }

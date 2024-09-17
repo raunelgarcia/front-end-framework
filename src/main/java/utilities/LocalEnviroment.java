@@ -220,4 +220,12 @@ public class LocalEnviroment {
   public static String getCountryCode() {
     return getLanguage().split("-")[1];
   }
+
+  public static String getBrowserVersion() {
+    String version = System.getenv("BrowserVersion");
+    if (FrontEndOperation.isNullOrEmpty(version)) {
+      return "latest";
+    }
+    return version.toLowerCase();
+  }
 }
