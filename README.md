@@ -248,6 +248,11 @@ Environment.
       emulator, the default value is `current_major`, which means it will use the latest version. You can also specify
       the version if needed, having in mind that you should write the exact version, for example the shortest versions
       you should use are '8.0' for Android and '14.0' for iOS.
+-BrowserVerion:
+   - Description: Representation of the version to be used in the test on Sauce Labs. The variable is taken as a String,
+      and the version must be specified in its short form. Using any other format may result in the suggested version not
+      being found. If the version provided is null,it will be automatically assigned the value 'latest', which signifies
+      that the test will be run with the most recent version available.
 
 Ensure to set these variables according to your testing requirements before executing the tests.
 
