@@ -72,8 +72,10 @@ public class SaucelabsDriverConfiguration {
     Response<List<AppStorageUserResponse>> response = sauceLabsService.getAllDevices(authorization);
     ApiUtils.checkStatusCode(response.getStatus(), SC_OK);
 
+    String deviceNameLocalEnvironment = LocalEnviroment.getDeviceName();
+
     for (AppStorageUserResponse device : response.getPayload()) {
-      if (device.getName().equals(LocalEnviroment.getDeviceName())) {
+      if (device.getName().equals(deviceNameLocalEnvironment)) {
         return true;
       }
     }
