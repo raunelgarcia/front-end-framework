@@ -114,9 +114,8 @@ public class AllureReport {
         return (String) capabilities.getCapability("appium:deviceName");
       }
       return (String) capabilities.getCapability("appium:testobject_device_name");
-    }
-    else {
-        return (String) capabilities.getCapability("appium:deviceModel");
+    } else {
+      return (String) capabilities.getCapability("appium:deviceModel");
     }
   }
 
@@ -231,7 +230,7 @@ public class AllureReport {
           .put("DeviceName", getDeviceName())
           .put(
               "PlatformVersion",
-                  (String) driver.getCapabilities().getCapability("appium:platformVersion"));
+              (String) driver.getCapabilities().getCapability("appium:platformVersion"));
     } else {
       addWebParameters(builder);
     }
@@ -251,10 +250,5 @@ public class AllureReport {
   public static void addIosParameters(ImmutableMap.Builder<String, String> builder) {
     String appIdentifier = getAppIdentifier();
     builder.put("AppIdentifier", appIdentifier);
-  }
-
-  public static void main(String[] args) {
-    System.out.println(driver.getCapabilities());
-    System.out.println(setTestDescription());
   }
 }
