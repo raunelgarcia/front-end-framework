@@ -39,7 +39,7 @@ public class AllureReport {
   }
 
   private static String setTestDescription() {
-    String platformName = capabilities.getCapability("platformName").toString();
+    String platformName = (String) capabilities.getCapability("platformName");
     String language = LocalEnviroment.getLanguage();
 
     UnescapedText description =
@@ -49,8 +49,8 @@ public class AllureReport {
             p(b("Language: "), text(language)));
 
     if (LocalEnviroment.isMobile()) {
-      String deviceName = capabilities.getCapability("appium:deviceName").toString();
-      String platformVersion = capabilities.getCapability("appium:platformVersion").toString();
+      String deviceName = (String) capabilities.getCapability("appium:deviceName");
+      String platformVersion = (String) capabilities.getCapability("appium:platformVersion");
       description =
           join(
               description,
@@ -58,7 +58,7 @@ public class AllureReport {
               p(b("Platform Version: "), text(platformVersion)),
               p(b("Udid: "), text(getUdid())));
 
-      String appActivity = capabilities.getCapability("appium:appActivity").toString();
+      String appActivity = (String) capabilities.getCapability("appium:appActivity");
       if (!FrontEndOperation.isNullOrEmpty(appActivity)) {
         description = join(description, p(b("App Activity: "), text(appActivity)));
       }
@@ -76,7 +76,7 @@ public class AllureReport {
       description =
           join(
               description,
-              p(b("Browser: "), text(capabilities.getCapability("browserName").toString())),
+              p(b("Browser: "), text((String) capabilities.getCapability("browserName"))),
               p(b("Url: "), text(driver.getCurrentUrl())),
               p(b("Resolution: "), text(driver.manage().window().getSize().toString())),
               p(b("Accessibility: "), text(String.valueOf(LocalEnviroment.getAccessibility()))),
@@ -176,7 +176,7 @@ public class AllureReport {
   public static ImmutableMap<String, String> setAllureParameters() {
     ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
     builder.put("Accessibility", String.valueOf(LocalEnviroment.getAccessibility()));
-    String platformName = capabilities.getCapability("platformName").toString();
+    String platformName = (String) capabilities.getCapability("platformName");
     builder.put("Platform", platformName);
     builder.put("Provider", LocalEnviroment.getProvider());
 
@@ -218,10 +218,10 @@ public class AllureReport {
       builder
           .put("AppIdentifier", appIdentifier)
           .put("AppVersion", SaucelabsDriverConfiguration.appVersion)
-          .put("DeviceName", driver.getCapabilities().getCapability("appium:deviceName").toString())
+          .put("DeviceName", (String) driver.getCapabilities().getCapability("appium:deviceName"))
           .put(
               "PlatformVersion",
-              driver.getCapabilities().getCapability("appium:platformVersion").toString());
+                  (String) driver.getCapabilities().getCapability("appium:platformVersion"));
     } else {
       addWebParameters(builder);
     }
