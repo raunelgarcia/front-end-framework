@@ -49,12 +49,11 @@ public class AllureReport {
             p(b("Language: "), text(language)));
 
     if (LocalEnviroment.isMobile()) {
-      String deviceName = (String) capabilities.getCapability("appium:deviceName");
       String platformVersion = (String) capabilities.getCapability("appium:platformVersion");
       description =
           join(
               description,
-              p(b("Device Name: "), text(deviceName)),
+              p(b("Device Name: "), text(getDeviceName())),
               p(b("Platform Version: "), text(platformVersion)),
               p(b("Udid: "), text(getUdid())));
 
@@ -68,9 +67,8 @@ public class AllureReport {
         description = join(description, p(b("App Identifier: "), text(appIdentifier)));
       }
 
-      String apk = getApp();
-      if (!FrontEndOperation.isNullOrEmpty(apk)) {
-        description = join(description, p(b("App: "), text(apk)));
+      if (!FrontEndOperation.isNullOrEmpty(getApp())) {
+        description = join(description, p(b("App: "), text(getApp())));
       }
     } else {
       description =
@@ -108,6 +106,18 @@ public class AllureReport {
 
   private static String getApp() {
     return (String) capabilities.getCapability("appium:app");
+  }
+
+  private static String getDeviceName() {
+    if (LocalEnviroment.isSaucelabs()) {
+      if (LocalEnviroment.isVirtualDevice()) {
+        return (String) capabilities.getCapability("appium:deviceName");
+      }
+      return (String) capabilities.getCapability("appium:testobject_device_name");
+    }
+    else {
+        return (String) capabilities.getCapability("appium:deviceModel");
+    }
   }
 
   public static void addComparation(String comparationMessage, boolean success) {
@@ -218,7 +228,7 @@ public class AllureReport {
       builder
           .put("AppIdentifier", appIdentifier)
           .put("AppVersion", SaucelabsDriverConfiguration.appVersion)
-          .put("DeviceName", (String) driver.getCapabilities().getCapability("appium:deviceName"))
+          .put("DeviceName", getDeviceName())
           .put(
               "PlatformVersion",
                   (String) driver.getCapabilities().getCapability("appium:platformVersion"));
@@ -241,5 +251,10 @@ public class AllureReport {
   public static void addIosParameters(ImmutableMap.Builder<String, String> builder) {
     String appIdentifier = getAppIdentifier();
     builder.put("AppIdentifier", appIdentifier);
+  }
+
+  public static void main(String[] args) {
+    System.out.println(driver.getCapabilities());
+    System.out.println(setTestDescription());
   }
 }
