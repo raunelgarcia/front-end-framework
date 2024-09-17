@@ -10,7 +10,7 @@ import java.io.InputStreamReader;
 
 public class NetworkLogs {
   public static void getNetworkLogs() {
-    if (LocalEnviroment.isAndroid()) getAndroidLogs();
+    if (LocalEnviroment.isAndroid() && !LocalEnviroment.isSaucelabs()) getAndroidLogs();
     // TODO create logs from other platforms
   }
 
