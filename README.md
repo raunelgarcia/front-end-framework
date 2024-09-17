@@ -258,7 +258,7 @@ Environment.
      and proceed to search in webConfiguration.yaml located within the resources directory. There, compare the URL name with
      the one received in the environment variables. If they match, return the URL; otherwise, report an error.
 -AppiumVersion:
-   - Description:The first step is to check if the device is an emulator using isVirtualDevice(). If it is not an emulator,
+   - Description: The first step is to check if the device is an emulator using isVirtualDevice(). If it is not an emulator,
      the method simply returns the latest version. If isVirtualDevice() returns true, the platform is then checked using
      getPlatform(local variable). If the platform is Android, the method verifies the platform version using checkPlatformVersion.
      If this check is successful, it returns the Appium version 2.11.0. If the check fails, a message is displayed indicating that
