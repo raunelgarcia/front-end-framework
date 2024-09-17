@@ -1,10 +1,6 @@
 package saucelabs.api;
 
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.HeaderParam;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
@@ -22,4 +18,11 @@ public interface SauceLabsAPI {
   @Path("v1/rdc/devices")
   @Produces(MediaType.APPLICATION_JSON)
   Response getAllDevices(@HeaderParam("Authorization") String authorization);
+
+  @GET
+  @Path("/rest/v1/info/platforms/{automation_api}")
+  @Produces(MediaType.APPLICATION_JSON)
+  Response getWebDriverPlatforms(
+      @HeaderParam("Authorization") String authorization,
+      @PathParam("automation_api") String automation_api);
 }
