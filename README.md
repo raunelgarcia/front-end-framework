@@ -254,7 +254,7 @@ Environment.
       of that browser. There are three options when entering the version: it can be null, empty, or you can specify the desired
      version. In the case of the first two, it will automatically be assigned a value of 'latest' to execute with the latest
      available version. In the case of the third option, the specified version is processed and passed through a filter which decides
-     if it is correct or not.For the method to filter correctly, the version must be passed in the short format. Otherwise,
+     if it is correct or not.For the method to filter correctly, the version must be passed in the short format(18 not 18.X). Otherwise,
      the method will not be able to find the version and will return an error.
 
 Ensure to set these variables according to your testing requirements before executing the tests.
