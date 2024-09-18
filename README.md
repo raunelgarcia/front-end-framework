@@ -249,10 +249,16 @@ Environment.
       the version if needed, having in mind that you should write the exact version, for example the shortest versions
       you should use are '8.0' for Android and '14.0' for iOS.
 -BrowserVerion:
-   - Description: Representation of the version to be used in the test on Sauce Labs. The variable is taken as a String,
-      and the version must be specified in its short form. Using any other format may result in the suggested version not
-      being found. If the version provided is null,it will be automatically assigned the value 'latest', which signifies
-      that the test will be run with the most recent version available.
+   - Description:
+     This variable serves as a target for running a test on SauceLabsWeb using a specific browser and the desired version
+      of that browser. There are three options when entering the version: it can be null, empty, or you can specify the desired
+     version. In the case of the first two, it will automatically be assigned a value of 'latest' to execute with the latest
+     available version. In the case of the third option, the specified version is processed and passed through a filter in
+     the setVersionBrowser() method. This method receives a response from the API with the different browsers and their versions,
+     and if both the browser and version entered are found in that response, the version will be considered valid. Otherwise,
+     it will return an error message stating that the version is not available in SauceLabs, and the test process will be stopped.
+     For the method to filter correctly, the version must be passed in a short format, meaning it must follow a simple format, such
+     as: 100 (for example). Otherwise, the method will not be able to find the version and will return an error.
 
 Ensure to set these variables according to your testing requirements before executing the tests.
 
