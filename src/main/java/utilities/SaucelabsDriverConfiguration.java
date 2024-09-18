@@ -5,6 +5,7 @@ import static utilities.Constants.AUTHORIZATION;
 import static utilities.LocalEnviroment.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 import org.openqa.selenium.MutableCapabilities;
@@ -15,8 +16,8 @@ import saucelabs.dto.AppBrowserVersion;
 import saucelabs.dto.AppStorageItemMetadataResponse;
 import saucelabs.dto.AppStorageItemsResponse;
 import saucelabs.dto.AppStorageResponse;
+import saucelabs.dto.AppStorageUserResponse;
 import saucelabs.service.SauceLabsService;
-import saucelabs.dto.AppBrowserVersion;
 
 public class SaucelabsDriverConfiguration {
 
@@ -66,6 +67,34 @@ public class SaucelabsDriverConfiguration {
 
   public static String getStoredAppVersion() {
     return appVersion;
+  }
+
+  /**
+   * Verifies if a device exists in Sauce Labs
+   *
+   * <p>This method fetches the app's devices from Sauce Labs, filters the results to check if a
+   * device with the specified name exists the name of device, and returns whether it exists.
+   *
+   * @param authorization The authorization token required to access the Sauce Labs API.
+   * @return Boolean indicating whether the device exists
+   */
+  public static boolean getVerifyDeviceNameExist(
+      String authorization, String deviceNameLocalEnvironment) {
+
+    SauceLabsService sauceLabsService = new SauceLabsService(new SauceLabsClient());
+    Response<List<AppStorageUserResponse>> response =
+        sauceLabsService.getV1RdcDevices(authorization);
+    ApiUtils.checkStatusCode(response.getStatus(), SC_OK);
+
+    for (AppStorageUserResponse device : response.getPayload()) {
+
+      if (device.getName().equals(deviceNameLocalEnvironment)) {
+        return true;
+      }
+    }
+
+    throw new NoSuchElementException(
+        "The device with name '" + deviceNameLocalEnvironment + "' was not found.");
   }
 
   /**

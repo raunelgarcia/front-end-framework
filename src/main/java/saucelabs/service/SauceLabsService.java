@@ -1,7 +1,6 @@
 package saucelabs.service;
 
 import jakarta.ws.rs.core.GenericType;
-
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +9,7 @@ import saucelabs.api.Response;
 import saucelabs.client.SauceLabsClient;
 import saucelabs.dto.AppBrowserVersion;
 import saucelabs.dto.AppStorageResponse;
+import saucelabs.dto.AppStorageUserResponse;
 
 @Service
 public class SauceLabsService {
@@ -32,12 +32,27 @@ public class SauceLabsService {
    */
   public Response<AppStorageResponse> getV1StorageFiles(
       String authorization, String query, String kind, Integer perPage) {
-    // Perform the API call using SauceLabsClient and wrap the result in a Response object
+    // Perform the API call using SauceLabsClient and wrap the result in a Response
+    // object
     return sauceLabsClient.call(
         () -> sauceLabsClient.getAPI().getV1StorageFiles(authorization, query, kind, perPage),
         Optional.empty(), // No direct class provided, we'll use GenericType
         new GenericType<AppStorageResponse>() {} // Use GenericType for complex types
         );
+  }
+
+  /**
+   * @param authorization The authorization token
+   * @return A Response object wrapping the AppStorageUserResponse
+   */
+  public Response<List<AppStorageUserResponse>> getV1RdcDevices(String authorization) {
+
+    return sauceLabsClient.call(
+        () -> {
+          return sauceLabsClient.getAPI().getV1RdcDevices(authorization);
+        },
+        Optional.empty(),
+        new GenericType<List<AppStorageUserResponse>>() {});
   }
 
   public Response<List<AppBrowserVersion>> getBrowserVersion(String authorization) {

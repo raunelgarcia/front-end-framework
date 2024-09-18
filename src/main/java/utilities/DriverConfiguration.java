@@ -30,8 +30,8 @@ import org.openqa.selenium.safari.SafariOptions;
 import org.yaml.snakeyaml.Yaml;
 
 public class DriverConfiguration {
-  private static WebDriver currentDriver;
   public static String SLsession;
+  private static WebDriver currentDriver;
 
   public static MutableCapabilities getMobileCapabilities() {
     MutableCapabilities caps = new MutableCapabilities();
@@ -109,7 +109,7 @@ public class DriverConfiguration {
     if (isSaucelabs()) {
       SLsession = getSauceLabsLink(currentDriver);
       Logger.infoMessage(
-              "SauceLabs test session: ".concat(Constants.SAUCELABS_SESSION_URL).concat(SLsession));
+          "SauceLabs test session: ".concat(Constants.SAUCELABS_SESSION_URL).concat(SLsession));
     }
     return currentDriver;
   }

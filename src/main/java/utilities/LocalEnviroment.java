@@ -1,6 +1,7 @@
 package utilities;
 
 import static utilities.Constants.*;
+import static utilities.SaucelabsDriverConfiguration.getVerifyDeviceNameExist;
 
 import java.util.Map;
 import java.util.Objects;
@@ -98,20 +99,26 @@ public class LocalEnviroment {
         case "emulator" -> {
           if (isAndroid()) {
             deviceName = "Android GoogleAPI Emulator";
+            Logger.infoMessage("Device name is: " + deviceName);
           } else {
-            Logger.infoMessage(
+            Logger.errorMessage(
                 "Check your capabilities DeviceName and Platform are emulator and Android, respectively");
           }
         }
         case "simulator" -> {
           if (isIOS()) {
             deviceName = "iPhone Simulator";
+            Logger.infoMessage("Device name is: " + deviceName);
           } else {
-            Logger.infoMessage(
+            Logger.errorMessage(
                 "Check your capabilities DeviceName and Platform are simulator and iOS, respectively");
           }
         }
-        default -> Logger.infoMessage("DeviceName does not match 'emulator' or 'simulator'");
+        default -> {
+          if (getVerifyDeviceNameExist(Constants.AUTHORIZATION, deviceName)) {
+            Logger.infoMessage("Device name is: " + deviceName);
+          }
+        }
       }
     }
     return deviceName;
