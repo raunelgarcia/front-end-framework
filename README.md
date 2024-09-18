@@ -253,17 +253,6 @@ Environment.
       and the version must be specified in its short form. Using any other format may result in the suggested version not
       being found. If the version provided is null,it will be automatically assigned the value 'latest', which signifies
       that the test will be run with the most recent version available.
--ApplicationUrl:
-   - Description: In this local environment, retrieve the value of the application name (another local variable)
-     and proceed to search in webConfiguration.yaml located within the resources directory. There, compare the URL name with
-     the one received in the environment variables. If they match, return the URL; otherwise, report an error.
--AppiumVersion:
-   - Description: The first step is to check if the device is an emulator using isVirtualDevice(). If it is not an emulator,
-     the method simply returns the latest version. If isVirtualDevice() returns true, the platform is then checked using
-     getPlatform(local variable). If the platform is Android, the method verifies the platform version using checkPlatformVersion.
-     If this check is successful, it returns the Appium version 2.11.0. If the check fails, a message is displayed indicating that
-     the specified version cannot be less than 8.0. For iOS, the same verification is performed. If the check is successful, the
-     Appium version is set to 2.0.0. Otherwise, the message indicates that the specified version is less than 14.0.
 
 Ensure to set these variables according to your testing requirements before executing the tests.
 
@@ -359,7 +348,7 @@ Platform=IOS;Provider=SauceLabs;DeviceName=simulator;AppIdentifier=com.saucelabs
 
 ### Web Variables
 
-Accessibility=true;Platform=Web;Application=mrc;Browser=chrome;Resolution=1920x1200;Provider=SauceLabs;User=;AccessToken=;
+Accessibility=true;Platform=Web;Application=mrc;Browser=chrome;Resolution=1920x1200;Provider=SauceLabs;User=;AccessToken=;BrowserVersion=latest;
 
 | Campo         | Valor     |
 |---------------|-----------|
@@ -371,6 +360,7 @@ Accessibility=true;Platform=Web;Application=mrc;Browser=chrome;Resolution=1920x1
 | Provider      | SauceLabs |
 | User          |           |
 | AccessToken   |           |
+| BrowserVersion|  latest   |
 
 ### Install Dependencies:
 
