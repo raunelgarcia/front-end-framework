@@ -248,6 +248,14 @@ Environment.
       emulator, the default value is `current_major`, which means it will use the latest version. You can also specify
       the version if needed, having in mind that you should write the exact version, for example the shortest versions
       you should use are '8.0' for Android and '14.0' for iOS.
+-BrowserVerion:
+   - Description:
+     This variable serves as a target for running a test on SauceLabsWeb using a specific browser and the desired version
+      of that browser. There are three options when entering the version: it can be null, empty, or you can specify the desired
+     version. In the case of the first two, it will automatically be assigned a value of 'latest' to execute with the latest
+     available version. In the case of the third option, the specified version is processed and passed through a filter which decides
+     if it is correct or not.For the method to filter correctly, the version must be passed in the short format(18 not 18.X). Otherwise,
+     the method will not be able to find the version and will return an error.
 
 Ensure to set these variables according to your testing requirements before executing the tests.
 
@@ -343,7 +351,7 @@ Platform=IOS;Provider=SauceLabs;DeviceName=simulator;AppIdentifier=com.saucelabs
 
 ### Web Variables
 
-Accessibility=true;Platform=Web;Application=mrc;Browser=chrome;Resolution=1920x1200;Provider=SauceLabs;User=;AccessToken=;
+Accessibility=true;Platform=Web;Application=mrc;Browser=chrome;Resolution=1920x1200;Provider=SauceLabs;User=;AccessToken=;BrowserVersion=latest;
 
 | Campo         | Valor     |
 |---------------|-----------|
@@ -355,6 +363,7 @@ Accessibility=true;Platform=Web;Application=mrc;Browser=chrome;Resolution=1920x1
 | Provider      | SauceLabs |
 | User          |           |
 | AccessToken   |           |
+| BrowserVersion|  latest   |
 
 ### Install Dependencies:
 
