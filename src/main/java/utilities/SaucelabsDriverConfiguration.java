@@ -13,6 +13,7 @@ import saucelabs.api.Response;
 import saucelabs.client.SauceLabsClient;
 import saucelabs.dto.AppBrowserVersion;
 import saucelabs.dto.AppStorageItemMetadataResponse;
+import saucelabs.dto.AppStorageItemsResponse;
 import saucelabs.dto.AppStorageResponse;
 import saucelabs.service.SauceLabsService;
 import saucelabs.dto.AppBrowserVersion;
@@ -37,6 +38,8 @@ public class SaucelabsDriverConfiguration {
    * @throws IllegalArgumentException If the app ID is null, blank, or if the specified version is
    *     not found.
    */
+  public static String appVersion;
+
   public static String getSaucelabsAppId(
       String authorization, String appId, String kind, String version) {
 
@@ -50,11 +53,19 @@ public class SaucelabsDriverConfiguration {
         sauceLabsService.getV1StorageFiles(authorization, appId, kind.toLowerCase(), 10);
     ApiUtils.checkStatusCode(response.getStatus(), SC_OK);
 
-    return response.getPayload().getItems().stream()
-        .filter(item -> isValidApp(item.getMetadata(), version))
-        .findFirst()
-        .orElseThrow(() -> new IllegalArgumentException("Version not found: ".concat(version)))
-        .getId();
+    AppStorageItemsResponse selectedItem =
+        response.getPayload().getItems().stream()
+            .filter(item -> isValidApp(item.getMetadata(), version))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("Version not found: ".concat(version)));
+
+    appVersion = getVersion(selectedItem.getMetadata());
+
+    return selectedItem.getId();
+  }
+
+  public static String getStoredAppVersion() {
+    return appVersion;
   }
 
   /**
