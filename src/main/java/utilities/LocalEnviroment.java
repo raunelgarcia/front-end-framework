@@ -93,7 +93,6 @@ public class LocalEnviroment {
   public static String getDeviceName() {
     String deviceName = System.getenv("DeviceName");
     if (FrontEndOperation.isNullOrEmpty(deviceName)) {
-      Logger.infoMessage("Device name is null or empty");
       return ".*";
     } else {
       switch (deviceName.toLowerCase()) {

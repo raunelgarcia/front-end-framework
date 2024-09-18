@@ -30,8 +30,8 @@ import org.openqa.selenium.safari.SafariOptions;
 import org.yaml.snakeyaml.Yaml;
 
 public class DriverConfiguration {
-  private static WebDriver currentDriver;
   public static String SLsession;
+  private static WebDriver currentDriver;
 
   public static MutableCapabilities getMobileCapabilities() {
     MutableCapabilities caps = new MutableCapabilities();

@@ -26,10 +26,10 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 public class AllureReport {
-  private static String descriptionHtml = "";
-  private static UnescapedText checks;
   private static final RemoteWebDriver driver = (RemoteWebDriver) getDriver();
   private static final Capabilities capabilities = driver.getCapabilities();
+  private static String descriptionHtml = "";
+  private static UnescapedText checks;
 
   public static void fillReportInfo() {
     descriptionHtml = setTestDescription();
