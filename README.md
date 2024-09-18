@@ -253,12 +253,9 @@ Environment.
      This variable serves as a target for running a test on SauceLabsWeb using a specific browser and the desired version
       of that browser. There are three options when entering the version: it can be null, empty, or you can specify the desired
      version. In the case of the first two, it will automatically be assigned a value of 'latest' to execute with the latest
-     available version. In the case of the third option, the specified version is processed and passed through a filter in
-     the setVersionBrowser() method. This method receives a response from the API with the different browsers and their versions,
-     and if both the browser and version entered are found in that response, the version will be considered valid. Otherwise,
-     it will return an error message stating that the version is not available in SauceLabs, and the test process will be stopped.
-     For the method to filter correctly, the version must be passed in a short format, meaning it must follow a simple format, such
-     as: 100 (for example). Otherwise, the method will not be able to find the version and will return an error.
+     available version. In the case of the third option, the specified version is processed and passed through a filter which decides
+     if it is correct or not.For the method to filter correctly, the version must be passed in the short format. Otherwise,
+     the method will not be able to find the version and will return an error.
 
 Ensure to set these variables according to your testing requirements before executing the tests.
 
