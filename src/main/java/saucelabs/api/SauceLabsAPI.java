@@ -17,7 +17,7 @@ public interface SauceLabsAPI {
   @GET
   @Path("v1/rdc/devices")
   @Produces(MediaType.APPLICATION_JSON)
-  Response getAllDevices(@HeaderParam("Authorization") String authorization);
+  Response getV1RdcDevices(@HeaderParam("Authorization") String authorization);
 
   @GET
   @Path("/rest/v1/info/platforms/{automation_api}")

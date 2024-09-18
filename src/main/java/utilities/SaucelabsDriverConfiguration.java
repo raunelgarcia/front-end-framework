@@ -5,6 +5,7 @@ import static utilities.Constants.AUTHORIZATION;
 import static utilities.LocalEnviroment.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 import org.openqa.selenium.MutableCapabilities;
@@ -64,23 +65,25 @@ public class SaucelabsDriverConfiguration {
    * device with the specified name exists the name of device, and returns whether it exists.
    *
    * @param authorization The authorization token required to access the Sauce Labs API.
-   * @return Boolean indicating wether the device exists
+   * @return Boolean indicating whether the device exists
    */
-  public static boolean getVerifyDeviceExist(String authorization) {
+  public static boolean getVerifyDeviceNameExist(
+      String authorization, String deviceNameLocalEnvironment) {
 
     SauceLabsService sauceLabsService = new SauceLabsService(new SauceLabsClient());
-    Response<List<AppStorageUserResponse>> response = sauceLabsService.getAllDevices(authorization);
+    Response<List<AppStorageUserResponse>> response =
+        sauceLabsService.getV1RdcDevices(authorization);
     ApiUtils.checkStatusCode(response.getStatus(), SC_OK);
 
-    String deviceNameLocalEnvironment = LocalEnviroment.getDeviceName();
-
     for (AppStorageUserResponse device : response.getPayload()) {
+
       if (device.getName().equals(deviceNameLocalEnvironment)) {
         return true;
       }
     }
 
-    return false;
+    throw new NoSuchElementException(
+        "The device with name '" + deviceNameLocalEnvironment + "' was not found.");
   }
 
   /**

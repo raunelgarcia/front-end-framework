@@ -1,7 +1,6 @@
 package saucelabs.service;
 
 import jakarta.ws.rs.core.GenericType;
-
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,11 +45,11 @@ public class SauceLabsService {
    * @param authorization The authorization token
    * @return A Response object wrapping the AppStorageUserResponse
    */
-  public Response<List<AppStorageUserResponse>> getAllDevices(String authorization) {
+  public Response<List<AppStorageUserResponse>> getV1RdcDevices(String authorization) {
 
     return sauceLabsClient.call(
         () -> {
-          return sauceLabsClient.getAPI().getAllDevices(authorization);
+          return sauceLabsClient.getAPI().getV1RdcDevices(authorization);
         },
         Optional.empty(),
         new GenericType<List<AppStorageUserResponse>>() {});
