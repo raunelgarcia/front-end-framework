@@ -2,6 +2,8 @@ package utilities;
 
 import static org.apache.http.HttpStatus.SC_OK;
 import static utilities.Constants.AUTHORIZATION;
+import static utilities.DriverConfiguration.ANSI_CYAN;
+import static utilities.DriverConfiguration.ANSI_GREEN;
 import static utilities.LocalEnviroment.*;
 
 import java.util.List;
@@ -40,6 +42,8 @@ public class SaucelabsDriverConfiguration {
    *     not found.
    */
   public static String appVersion;
+
+  public static final String ANSI_PURPLE = "\u001B[35m";
 
   public static String getSaucelabsAppId(
       String authorization, String appId, String kind, String version) {
@@ -146,11 +150,36 @@ public class SaucelabsDriverConfiguration {
   }
 
   public static MutableCapabilities getSauceOptions() {
+    Logger.infoMessage(ANSI_CYAN + "Estoy en la función getSauceOptions()" + ANSI_RESET);
     MutableCapabilities sauceOptions = new MutableCapabilities();
+    Logger.infoMessage(
+            ANSI_PURPLE
+            + "Antes de hacer sauceOptions.setCapability(\"appiumVersion\", getAppiumVersion()); "
+            + ANSI_RESET);
     sauceOptions.setCapability("appiumVersion", getAppiumVersion());
+
+    Logger.infoMessage(
+            ANSI_PURPLE
+            + "Antes de hacer sauceOptions.setCapability(\"username\", getUser());"
+            + ANSI_RESET);
     sauceOptions.setCapability("username", getUser());
+
+    Logger.infoMessage(
+            ANSI_PURPLE
+            + "Antes de hacer sauceOptions.setCapability(\"accessKey\", getAccessToken());"
+            + ANSI_RESET);
     sauceOptions.setCapability("accessKey", getAccessToken());
+
+    Logger.infoMessage(
+            ANSI_PURPLE
+            + "Antes de hacer sauceOptions.setCapability(\"build\", \"selenium-build-VNFHT\");"
+            + ANSI_RESET);
     sauceOptions.setCapability("build", "selenium-build-VNFHT");
+    
+    Logger.infoMessage(
+            ANSI_PURPLE
+            + "Antes de hacer sauceOptions.setCapability(\"name\", getPlatform() + \"_Test\");"
+            + ANSI_RESET);
     sauceOptions.setCapability("name", getPlatform() + "_Test");
 
     return sauceOptions;
