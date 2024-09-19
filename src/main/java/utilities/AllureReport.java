@@ -97,15 +97,20 @@ public class AllureReport {
   }
 
   private static String getAppIdentifier() {
-    return (String)
-        capabilities.getCapability(
-            capabilities.getCapabilityNames().contains("appium:appPackage")
-                ? "appium:appPackage"
-                : "appium:bundleId");
+    String appIdentifier =
+        (String)
+            capabilities.getCapability(
+                capabilities.getCapabilityNames().contains("appium:appPackage")
+                    ? "appium:appPackage"
+                    : "appium:bundleId");
+    return FrontEndOperation.isNullOrEmpty(appIdentifier)
+        ? LocalEnviroment.getAppIdentifier()
+        : appIdentifier;
   }
 
   private static String getApp() {
-    return (String) capabilities.getCapability("appium:app");
+    String app = (String) capabilities.getCapability("appium:app");
+    return FrontEndOperation.isNullOrEmpty(app) ? "" : app.substring(app.lastIndexOf("/") + 1);
   }
 
   private static String getDeviceName() {
@@ -192,7 +197,6 @@ public class AllureReport {
     if (LocalEnviroment.isSaucelabs()) {
       addSauceLabsParameters(builder);
     } else {
-      builder.put("Udid", getUdid());
       switch (platformName.toLowerCase()) {
         case "android" -> addAndroidParameters(builder);
 
@@ -223,32 +227,34 @@ public class AllureReport {
   public static void addSauceLabsParameters(ImmutableMap.Builder<String, String> builder) {
     builder.put("SauceLabs test session", SAUCELABS_SESSION_URL.concat(SLsession));
     if (LocalEnviroment.isMobile()) {
-      String appIdentifier = getAppIdentifier();
+      if (!FrontEndOperation.isNullOrEmpty(getApp())) {
+        builder.put("App", getApp());
+      }
       builder
-          .put("AppIdentifier", appIdentifier)
+          .put("AppIdentifier", getAppIdentifier())
           .put("AppVersion", SaucelabsDriverConfiguration.appVersion)
           .put("DeviceName", getDeviceName())
           .put(
               "PlatformVersion",
-              (String) driver.getCapabilities().getCapability("appium:platformVersion"));
+              (String) driver.getCapabilities().getCapability("appium:platformVersion"))
+          .put("Udid", getUdid());
     } else {
       addWebParameters(builder);
     }
   }
 
   public static void addAndroidParameters(ImmutableMap.Builder<String, String> builder) {
-    String app = getApp();
-    if (FrontEndOperation.isNullOrEmpty(app)) {
+    builder.put("Udid", getUdid());
+    if (FrontEndOperation.isNullOrEmpty(getApp())) {
       String appActivity = (String) capabilities.getCapability("appium:appActivity");
-      String appIdentifier = getAppIdentifier();
-      builder.put("AppActivity", appActivity).put("AppIdentifier", appIdentifier);
+      builder.put("AppActivity", appActivity).put("AppIdentifier", getAppIdentifier());
     } else {
-      builder.put("App", app);
+      builder.put("App", getApp());
     }
   }
 
   public static void addIosParameters(ImmutableMap.Builder<String, String> builder) {
-    String appIdentifier = getAppIdentifier();
-    builder.put("AppIdentifier", appIdentifier);
+    builder.put("Udid", getUdid());
+    builder.put("AppIdentifier", getAppIdentifier());
   }
 }
