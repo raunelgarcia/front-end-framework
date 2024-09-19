@@ -1,16 +1,12 @@
 package utilities;
 
 import static utilities.Constants.*;
-import static utilities.DriverConfiguration.ANSI_CYAN;
 import static utilities.SaucelabsDriverConfiguration.getVerifyDeviceNameExist;
 
 import java.util.Map;
 import java.util.Objects;
 
 public class LocalEnviroment {
-
-  public static final String ANSI_RED = "\u001B[31m";
-  public static final String ANSI_RESET = "\u001B[0m";
 
   protected static String deviceNameValue = getDeviceName();
 
@@ -52,21 +48,12 @@ public class LocalEnviroment {
     return System.getenv("AccessToken");
   }
 
-  public static final String ANSI_YELLOW = "\u001B[33m";
-
   public static String getAppiumVersion() {
-    Logger.infoMessage(ANSI_CYAN + "Estoy en la función getAppiumVersion()" + ANSI_RESET);
-
     String appiumVersion = null;
-    Logger.infoMessage(ANSI_YELLOW + "Antes de la condiccion isVirtualDevice()" + ANSI_RESET);
+
     if (isVirtualDevice()) {
-      Logger.infoMessage(ANSI_YELLOW + "Antes del switch isVirtualDevice()" + ANSI_RESET);
       switch (getPlatform().toLowerCase()) {
         case "android" -> {
-          Logger.infoMessage(
-              ANSI_YELLOW
-                  + "Antes de la condiccion checkPlatformVersion(ANDROID_VERSION_REGEX)"
-                  + ANSI_RESET);
           if (checkPlatformVersion(ANDROID_VERSION_REGEX)) {
             appiumVersion = "2.11.0";
           } else {
@@ -75,11 +62,6 @@ public class LocalEnviroment {
           }
         }
         case "ios" -> {
-          Logger.infoMessage(
-              ANSI_YELLOW
-                  + "Antes de la condiccion checkPlatformVersion(IOS_VERSION_REGEX)"
-                  + ANSI_RESET);
-
           if (checkPlatformVersion(IOS_VERSION_REGEX)) {
             appiumVersion = "2.0.0";
           } else {
@@ -113,7 +95,6 @@ public class LocalEnviroment {
 
   public static String getDeviceName() {
     String deviceName = System.getenv("DeviceName");
-    Logger.infoMessage(ANSI_RED + "Estoy en la función getDeviceName()" + ANSI_RESET);
     if (FrontEndOperation.isNullOrEmpty(deviceName)) {
       return ".*";
     } else {

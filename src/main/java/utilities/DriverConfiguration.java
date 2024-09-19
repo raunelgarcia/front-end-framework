@@ -33,10 +33,6 @@ public class DriverConfiguration {
   public static String SLsession;
   private static WebDriver currentDriver;
 
-  public static final String ANSI_RESET = "\u001B[0m";
-  public static final String ANSI_CYAN = "\u001B[36m";
-  public static final String ANSI_GREEN = "\u001B[32m";
-
   public static MutableCapabilities getMobileCapabilities() {
     MutableCapabilities caps = new MutableCapabilities();
     caps.setCapability("platformName", getPlatform());
@@ -50,37 +46,12 @@ public class DriverConfiguration {
     }
 
     if (isSaucelabs()) {
-      Logger.infoMessage(ANSI_CYAN + "Estoy en la función getMobileCapabilities()" + ANSI_RESET);
-
-      Logger.infoMessage(
-          ANSI_GREEN
-              + "Antes de hacer String appStorage = getSaucelabsAppId(AUTHORIZATION, getAppIdentifier(), getPlatform(), getAppVersion());"
-              + ANSI_RESET);
       String appStorage =
           getSaucelabsAppId(AUTHORIZATION, getAppIdentifier(), getPlatform(), getAppVersion());
 
-      Logger.infoMessage(
-          ANSI_GREEN
-              + "Antes de hacer caps.setCapability(\"appium:app\", \"storage:\" + appStorage);"
-              + ANSI_RESET);
       caps.setCapability("appium:app", "storage:" + appStorage);
-
-      Logger.infoMessage(
-          ANSI_GREEN
-              + "Antes de hacer caps.setCapability(\"appium:deviceName\", getDeviceName());" + " deviceNameValue "
-              + ANSI_RESET);
       caps.setCapability("appium:deviceName", LocalEnviroment.deviceNameValue);
-
-      Logger.infoMessage(
-          ANSI_GREEN
-              + "Antes de hacer caps.setCapability(\"appium:platformVersion\", getPlatformVersion());"
-              + ANSI_RESET);
       caps.setCapability("appium:platformVersion", getPlatformVersion());
-
-      Logger.infoMessage(
-          ANSI_GREEN
-              + "Antes de hacer caps.setCapability(\"sauce:options\", getSauceOptions());"
-              + ANSI_RESET);
       caps.setCapability("sauce:options", getSauceOptions());
     } else {
       caps.setCapability("udid", getUdid());
