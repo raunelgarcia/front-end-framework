@@ -49,7 +49,7 @@ public class DriverConfiguration {
       String appStorage =
           getSaucelabsAppId(AUTHORIZATION, getAppIdentifier(), getPlatform(), getAppVersion());
       caps.setCapability("appium:app", "storage:" + appStorage);
-      caps.setCapability("appium:deviceName", getDeviceName());
+      caps.setCapability("appium:deviceName", deviceNameValue);
       caps.setCapability("appium:platformVersion", getPlatformVersion());
       caps.setCapability("sauce:options", getSauceOptions());
     } else {

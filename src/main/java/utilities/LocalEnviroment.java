@@ -8,6 +8,8 @@ import java.util.Objects;
 
 public class LocalEnviroment {
 
+  protected static String deviceNameValue = getDeviceName();
+
   public static String getPlatform() {
     return System.getenv("Platform");
   }
@@ -173,7 +175,7 @@ public class LocalEnviroment {
   }
 
   public static boolean isVirtualDevice() {
-    return (getDeviceName().contains("Emulator") || getDeviceName().contains("Simulator"));
+    return (deviceNameValue.contains("Emulator") || deviceNameValue.contains("Simulator"));
   }
 
   public static boolean isSaucelabs() {
