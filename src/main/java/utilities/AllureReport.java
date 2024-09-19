@@ -105,7 +105,8 @@ public class AllureReport {
   }
 
   private static String getApp() {
-    return (String) capabilities.getCapability("appium:app");
+    String app = (String) capabilities.getCapability("appium:app");
+    return FrontEndOperation.isNullOrEmpty(app) ? "" : app.substring(app.lastIndexOf("/") + 1);
   }
 
   private static String getDeviceName() {
@@ -192,7 +193,6 @@ public class AllureReport {
     if (LocalEnviroment.isSaucelabs()) {
       addSauceLabsParameters(builder);
     } else {
-      builder.put("Udid", getUdid());
       switch (platformName.toLowerCase()) {
         case "android" -> addAndroidParameters(builder);
 
@@ -224,6 +224,10 @@ public class AllureReport {
     builder.put("SauceLabs test session", SAUCELABS_SESSION_URL.concat(SLsession));
     if (LocalEnviroment.isMobile()) {
       String appIdentifier = getAppIdentifier();
+      if (FrontEndOperation.isNullOrEmpty(appIdentifier)) {
+        builder.put("App", getApp());
+        appIdentifier = LocalEnviroment.getAppIdentifier();
+      }
       builder
           .put("AppIdentifier", appIdentifier)
           .put("AppVersion", SaucelabsDriverConfiguration.appVersion)
@@ -237,6 +241,7 @@ public class AllureReport {
   }
 
   public static void addAndroidParameters(ImmutableMap.Builder<String, String> builder) {
+    builder.put("Udid", getUdid());
     String app = getApp();
     if (FrontEndOperation.isNullOrEmpty(app)) {
       String appActivity = (String) capabilities.getCapability("appium:appActivity");
@@ -248,6 +253,7 @@ public class AllureReport {
   }
 
   public static void addIosParameters(ImmutableMap.Builder<String, String> builder) {
+    builder.put("Udid", getUdid());
     String appIdentifier = getAppIdentifier();
     builder.put("AppIdentifier", appIdentifier);
   }
