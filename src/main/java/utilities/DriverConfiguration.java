@@ -14,6 +14,8 @@ import java.net.URL;
 import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Objects;
+
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.WebDriver;
@@ -196,6 +198,10 @@ public class DriverConfiguration {
   }
 
   public static String getSauceLabsLink(WebDriver driver) {
+    Capabilities capabilities = ((RemoteWebDriver) driver).getCapabilities();
+    if (capabilities.getCapabilityNames().contains("appium:testobject_test_report_api_url")) {
+      return capabilities.getCapability("appium:testobject_test_report_api_url").toString();
+    }
     return ((RemoteWebDriver) driver).getSessionId().toString();
   }
 }
