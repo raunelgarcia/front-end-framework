@@ -28,8 +28,8 @@ public class Constants {
   public static final String RESOURCE_PATH = "src/test/resources/";
   public static final String WEB_CONFIG = "yaml/webConfiguration.yaml";
   public static final String DRIVER_URL = "http://127.0.0.1:4723";
-  public static final String EXTENT_COMMAND_WIN = "cmd.exe /c mvn clean install ";
-  public static final String EXTENT_COMMAND_MAC = "sh -c mvn clean install ";
+  public static final String EXTENT_COMMAND_WIN = "cmd.exe /c mvn clean install && mvn extent:report && mvn extent:open";
+  public static final String EXTENT_COMMAND_MAC = "sh -c 'mvn clean install && mvn extent:report && mvn extent:open'";
   public static final String ACCESSIBILITY_REPORT_PATH = "target/java-a11y/";
   public static final String ALLOWED_RESOLUTIONS_PATH = "yaml/allowedResolutions.yaml";
   public static final String EXTENT_CLEAN_COMMAND_WIN = "cmd.exe /c \"rd /s /q .\\target\\extent-reports\\\"";
