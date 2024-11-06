@@ -1,13 +1,15 @@
 package utilities;
 
-import io.qameta.allure.Allure;
-import io.qameta.allure.model.Status;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+
+import com.aventstack.extentreports.Status;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+
+import static utilities.ExtentReport.createStep;
 
 public class JSExecutor {
 
@@ -16,12 +18,11 @@ public class JSExecutor {
       JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
       Object result = jsExecutor.executeScript(script, args);
 
-      Allure.step("JavaScrip executed correctly", Status.PASSED);
+      createStep("JSExecutor", "JavaScrip executed correctly", Status.PASS);
       Logger.infoMessage("JavaScrip results: " + result);
 
     } catch (Exception e) {
-
-      Allure.step("JavaScript Error: " + e.getMessage(), Status.FAILED);
+      createStep("JSExecutor", "JavaScript Error: ".concat(e.getMessage()), Status.FAIL);
       e.printStackTrace();
     }
   }
