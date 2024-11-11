@@ -202,6 +202,21 @@ public class FrontEndOperation {
 
   public static <T> void checkThat(String validation, T actual, Matcher<T> expected) {
     StringBuilder message = new StringBuilder();
+    message.append("Verifying that ").append(validation.toLowerCase()).append(")");
+    message.append("(expectation: ").append(expected.toString()).append(")");
+    message.append("(actual: ").append(actual.toString()).append(")");
+
+    try {
+      MatcherAssert.assertThat(message.toString(), actual, expected);
+      Logger.infoMessage(message.toString());
+    } catch (AssertionError error) {
+      Logger.errorMessage(message.toString());
+      throw error;
+    }
+  }
+
+  public static <T> void checkTest(String validation, T actual, Matcher<T> expected) {
+    StringBuilder message = new StringBuilder();
     message.append("Verifying that ").append(validation.toLowerCase()).append("<br>");
     message.append("(expectation: ").append(expected.toString()).append(")<br>");
     message.append("(actual: ").append(actual.toString()).append(")<br>");
