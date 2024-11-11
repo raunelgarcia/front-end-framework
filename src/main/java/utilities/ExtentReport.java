@@ -70,9 +70,11 @@ public class ExtentReport {
             }
             extent.setSystemInfo("AppIdentifier", getAppIdentifier());
             extent.setSystemInfo("AppVersion", SaucelabsDriverConfiguration.appVersion);
+            if(!LocalEnviroment.isVirtualDevice()){
+                extent.setSystemInfo("Udid", getUdid());
+            }
             extent.setSystemInfo("Device Name", getDeviceName());
             extent.setSystemInfo("Platform Version", (String) driver.getCapabilities().getCapability("appium:platformVersion"));
-            extent.setSystemInfo("Udid", getUdid());
         } else {
             addWebParameters(extent);
         }
