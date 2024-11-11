@@ -28,12 +28,13 @@ public class Constants {
   public static final String RESOURCE_PATH = "src/test/resources/";
   public static final String WEB_CONFIG = "yaml/webConfiguration.yaml";
   public static final String DRIVER_URL = "http://127.0.0.1:4723";
-  public static final String EXTENT_COMMAND_WIN = "cmd.exe /c mvn clean install && mvn extent:report && mvn extent:open";
-  public static final String EXTENT_COMMAND_MAC = "sh -c 'mvn clean install && mvn extent:report && mvn extent:open'";
+  public static final String REPORT_PATH = System.getProperty("user.dir").concat("/target/report.html");
+  public static final String EXTENT_COMMAND_WIN = "start \"\" \"".concat(REPORT_PATH).concat("\"");
+  public static final String EXTENT_COMMAND_MAC = "open \"".concat(REPORT_PATH).concat("\"");
   public static final String ACCESSIBILITY_REPORT_PATH = "target/java-a11y/";
   public static final String ALLOWED_RESOLUTIONS_PATH = "yaml/allowedResolutions.yaml";
-  public static final String EXTENT_CLEAN_COMMAND_WIN = "cmd.exe /c \"rd /s /q .\\target\\extent-reports\\\"";
-  public static final String EXTENT_CLEAN_COMMAND_MAC = "rm -rf ./target/extent-reports/";
+  public static final String EXTENT_CLEAN_COMMAND_WIN = "del \"".concat(REPORT_PATH).concat("\"");
+  public static final String EXTENT_CLEAN_COMMAND_MAC = "rm \"".concat(REPORT_PATH).concat("\"");
   public static final String NETWORK_LOG_CLEAN_COMMAND_MAC = "rm -rf ./network-logs/";
   public static final String NETWORK_LOG_CLEAN_COMMAND_WIN = "rd /s /q .\\network-logs\\";
   public static final String NETWORK_LOG_CLEAN_COMMAND_ANDROID = "adb logcat -c";

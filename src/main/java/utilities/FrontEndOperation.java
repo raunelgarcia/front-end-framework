@@ -208,9 +208,9 @@ public class FrontEndOperation {
 
     try {
       MatcherAssert.assertThat(message.toString(), actual, expected);
-      ExtentReport.addComparation(message.toString(), true);
+      ExtentReport.addComparative(message.toString(), true);
     } catch (AssertionError error) {
-      ExtentReport.addComparation(message.toString(), false);
+      ExtentReport.addComparative(message.toString(), false);
       throw error;
     }
   }

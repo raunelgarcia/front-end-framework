@@ -46,7 +46,7 @@ public class NetworkLogs {
         e.printStackTrace();
       }
 
-      ExtentReport.attachTextFileToExtentReport(outputFile);
+      ExtentReport.attachTextFileToReport(outputFile);
 
       process.waitFor();
       reader.close();

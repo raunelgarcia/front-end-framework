@@ -9,8 +9,6 @@ import com.aventstack.extentreports.Status;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 
-import static utilities.ExtentReport.createStep;
-
 public class JSExecutor {
 
   public static void executeScript(WebDriver driver, String script, Object... args) {
@@ -18,11 +16,11 @@ public class JSExecutor {
       JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
       Object result = jsExecutor.executeScript(script, args);
 
-      createStep("JSExecutor", "JavaScrip executed correctly", Status.PASS);
+      ExtentReport.addMessage(Status.PASS, "JavaScrip executed correctly");
       Logger.infoMessage("JavaScrip results: " + result);
 
     } catch (Exception e) {
-      createStep("JSExecutor", "JavaScript Error: ".concat(e.getMessage()), Status.FAIL);
+      ExtentReport.addThrowable(e);
       e.printStackTrace();
     }
   }

@@ -2,168 +2,155 @@ package utilities;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
-import com.google.common.collect.ImmutableMap;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+import lombok.Getter;
+import org.apache.commons.codec.binary.Base64;
 import org.openqa.selenium.*;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Paths;
 
 import static utilities.Constants.SAUCELABS_SESSION_URL;
 import static utilities.DriverConfiguration.SLsession;
 import static utilities.DriverConfiguration.getDriver;
-import static utilities.LocalEnviroment.*;
 
 public class ExtentReport {
-    private static final RemoteWebDriver driver = (RemoteWebDriver) getDriver();
-    private static final Capabilities capabilities = driver.getCapabilities();
-    private static final ExtentReports extent = new ExtentReports();
-    private static ExtentTest mainTest;
-    private static final StringBuilder checks = new StringBuilder();
 
-    public static void startTest(String testName) {
-        mainTest = extent.createTest(testName);
+    private static RemoteWebDriver driver = (RemoteWebDriver) getDriver();
+    private static  Capabilities capabilities = driver.getCapabilities();
+    @Getter
+    private static ExtentReports extent;
+    public static ExtentTest test;
+
+    public static void addMessage(Status status, String message) {
+        switch (status){
+            case PASS -> test.pass(message);
+            case FAIL -> test.fail(message);
+            case INFO -> test.info(message);
+            case WARNING -> test.warning(message);
+            default -> throw new RuntimeException("Status not found");
+        }
     }
 
-    public static void createStep(String stepName, String stepDescription, Status status) {
-        ExtentTest step = mainTest.createNode(stepName);
-        step.log(status, stepDescription);
+    public static void addThrowable(Throwable t) {
+        test.fail(t);
     }
 
-    public static void attachEnvironmentInfo(ImmutableMap<String, String> environmentValuesSet) {
-        ExtentTest envTest = mainTest.createNode("Environment Variables");
-        environmentValuesSet.forEach((key, value) -> envTest.log(Status.INFO, key + ": " + value));
-    }
+    public static ExtentReports setUpReport() {
+        ExtentSparkReporter spark = new ExtentSparkReporter("target/report.html");
+        extent = new ExtentReports();
+        extent.attachReporter(spark);
 
-    public static ImmutableMap<String, String> setEnvironmentParameters() {
-        ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
-        builder.put("Accessibility", String.valueOf(LocalEnviroment.getAccessibility()));
+        extent.setSystemInfo("Accessibility", String.valueOf(LocalEnviroment.getAccessibility()));
         String platformName = capabilities.getCapability("platformName").toString();
-        builder.put("Platform", platformName);
-        builder.put("Provider", LocalEnviroment.getProvider());
+        extent.setSystemInfo("Platform", platformName);
+        extent.setSystemInfo("Provider", LocalEnviroment.getProvider());
 
+        if(LocalEnviroment.isSaucelabs()){
+            addSauceLabsParameters(extent);
+        } else {
+            switch (platformName.toLowerCase()){
+                case "android" -> addAndroidParameters(extent);
+                case "ios" -> addIosParameters(extent);
+                default -> addWebParameters(extent);
+            }
+        }
+        return extent;
+    }
+
+    private static void addSauceLabsParameters(ExtentReports extent){
+        extent.setSystemInfo("Sauce Labs Session", "<a href='".concat(SAUCELABS_SESSION_URL.concat(SLsession)).concat("' target='_blank'>").concat(SAUCELABS_SESSION_URL.concat(SLsession)).concat("</a>"));
+        if (LocalEnviroment.isMobile()) {
+            if (FrontEndOperation.isNullOrEmpty(getApp())) {
+                extent.setSystemInfo("App", getApp());
+            }
+            extent.setSystemInfo("AppIdentifier", getAppIdentifier());
+            extent.setSystemInfo("AppVersion", SaucelabsDriverConfiguration.appVersion);
+            extent.setSystemInfo("Device Name", getDeviceName());
+            extent.setSystemInfo("Platform Version", (String) driver.getCapabilities().getCapability("appium:platformVersion"));
+            extent.setSystemInfo("Udid", getUdid());
+        } else {
+            addWebParameters(extent);
+        }
+    }
+
+    private static void addWebParameters(ExtentReports extent){
+        extent.setSystemInfo("Application", "<a href='".concat(DriverConfiguration.setURL()).concat("' target='_blank'>").concat(DriverConfiguration.setURL()).concat("</a>"));
+        extent.setSystemInfo("Browser", capabilities.getCapability("browserName").toString().
+                concat(" (").concat(((HasCapabilities) getDriver()).getCapabilities().getBrowserVersion().concat(")")));
+        extent.setSystemInfo("Resolution", driver.manage().window().getSize().toString());
+    }
+
+    private static void addAndroidParameters(ExtentReports extent){
+        extent.setSystemInfo("Udid", getUdid());
+        if(FrontEndOperation.isNullOrEmpty(getApp())){
+            extent.setSystemInfo("AppActivity", (String) capabilities.getCapability("appium:appActivity"));
+            extent.setSystemInfo("AppIdentifier", getAppIdentifier());
+        } else {
+            extent.setSystemInfo("App", getApp());
+        }
+    }
+
+    private static void addIosParameters(ExtentReports extent){
+        extent.setSystemInfo("Udid", getUdid());
+        extent.setSystemInfo("AppIdentifier", getAppIdentifier());
+    }
+
+    private static String getUdid() {
+        return (String)
+                capabilities.getCapability(
+                        capabilities.getCapabilityNames().contains("appium:udid")
+                                ? "appium:udid"
+                                : "appium:deviceUDID");
+    }
+
+    private static String getAppIdentifier() {
+        String appIdentifier =
+                (String)
+                        capabilities.getCapability(
+                                capabilities.getCapabilityNames().contains("appium:appPackage")
+                                        ? "appium:appPackage"
+                                        : "appium:bundleId");
+        return FrontEndOperation.isNullOrEmpty(appIdentifier)
+                ? LocalEnviroment.getAppIdentifier()
+                : appIdentifier;
+    }
+
+    private static String getApp() {
+        String app = (String) capabilities.getCapability("appium:app");
+        return FrontEndOperation.isNullOrEmpty(app) ? "" : app.substring(app.lastIndexOf("/") + 1);
+    }
+
+    private static String getDeviceName() {
         if (LocalEnviroment.isSaucelabs()) {
-            addSauceLabsParameters(builder);
-        } else {
-            switch (platformName.toLowerCase()) {
-                case "android" -> addAndroidParameters(builder);
-                case "ios" -> addIosParameters(builder);
-                default -> addWebParameters(builder);
+            if (LocalEnviroment.isVirtualDevice()) {
+                return (String) capabilities.getCapability("appium:deviceName");
             }
-        }
-        return builder.build();
-    }
-
-    private static void addWebParameters(ImmutableMap.Builder<String, String> builder) {
-        builder.put("Application", DriverConfiguration.setURL())
-                .put("Browser", capabilities.getCapability("browserName") + " (" +
-                        ((RemoteWebDriver) getDriver()).getCapabilities().getBrowserVersion() + ")")
-                .put("Resolution", driver.manage().window().getSize().toString());
-    }
-
-    // Adds Sauce Labs-specific parameters
-    private static void addSauceLabsParameters(ImmutableMap.Builder<String, String> builder) {
-        builder.put("SauceLabs test session", SAUCELABS_SESSION_URL.concat(SLsession));
-        if (LocalEnviroment.isMobile()) {
-            builder.put("App", getApp());
-            builder.put("AppIdentifier", getAppIdentifier())
-                    .put("AppVersion", SaucelabsDriverConfiguration.appVersion)
-                    .put("DeviceName", getDeviceName())
-                    .put("PlatformVersion", (String) driver.getCapabilities().getCapability("appium:platformVersion"))
-                    .put("Udid", getUdid());
+            return (String) capabilities.getCapability("appium:testobject_device_name");
         } else {
-            addWebParameters(builder);
+            return (String) capabilities.getCapability("appium:deviceModel");
         }
     }
 
-    // Adds Android-specific parameters
-    private static void addAndroidParameters(ImmutableMap.Builder<String, String> builder) {
-        builder.put("Udid", getUdid());
-        String appActivity = (String) capabilities.getCapability("appium:appActivity");
-        builder.put("AppActivity", appActivity).put("AppIdentifier", getAppIdentifier());
-        builder.put("App", getApp());
-    }
-
-    // Adds iOS-specific parameters
-    private static void addIosParameters(ImmutableMap.Builder<String, String> builder) {
-        builder.put("Udid", getUdid()).put("AppIdentifier", getAppIdentifier());
-    }
-
-    // Attaches network log file to the report
-    public static void attachTextFileToExtentReport(File file) {
-        ExtentTest networkLogTest = mainTest.createNode("Network Logs");
-        try {
-            String content = new String(java.nio.file.Files.readAllBytes(Paths.get(file.toURI())));
-            networkLogTest.log(Status.INFO, "Network Log Content:\n" + content);
-        } catch (IOException e) {
-            networkLogTest.log(Status.FAIL, "Failed to attach network logs: " + e.getMessage());
+    public static void addComparative(String comparativeMessage, boolean success) {
+        if (success) {
+            test.pass(comparativeMessage);
+        } else {
+            test.fail(comparativeMessage);
         }
     }
 
-    // Attaches screenshot to the report
+    public static void attachTextFileToReport(File file) {
+        test.info("Network Lof File: <a href='".concat(file.getAbsolutePath()).concat("'>Download Log</a>"));
+    }
+
     public static void attachScreenshot(WebDriver driver) {
-        ExtentTest screenshotTest = mainTest.createNode("Screenshots");
         if (driver instanceof TakesScreenshot) {
-            String base64Screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
-            screenshotTest.log(Status.FAIL, "Screenshot on Failure")
-                    .addScreenCaptureFromBase64String(base64Screenshot);
-        } else {
-            screenshotTest.log(Status.WARNING, "Driver does not support screenshots");
+            byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+            String base64Screenshot = Base64.encodeBase64String(screenshot);
+            test.fail(MediaEntityBuilder.createScreenCaptureFromBase64String(base64Screenshot).build());
         }
-    }
-
-    // Adds comparison result with styled background color based on success or failure
-    public static void addComparation(String comparationMessage, boolean success) {
-        checks.append("<h4 style='background-color: ")
-                .append(success ? "#97cc64" : "#fd5a3e")
-                .append("; padding: 8px; color: #fff;'>")
-                .append(comparationMessage)
-                .append("</h4>");
-        ExtentTest comparisonNode = mainTest.createNode("Comparison Results");
-        comparisonNode.log(success ? Status.PASS : Status.FAIL, comparationMessage);
-    }
-
-    public static void fillReportInfo() {
-        String platformName = capabilities.getCapability("platformName").toString();
-        String language = LocalEnviroment.getLanguage();
-        ExtentTest environmentNode = mainTest.createNode("Test Environment");
-        environmentNode.log(Status.INFO, "Platform: " + platformName);
-        environmentNode.log(Status.INFO, "Language: " + language);
-
-        if (LocalEnviroment.isMobile()) {
-            String platformVersion = (String) capabilities.getCapability("appium:platformVersion");
-            environmentNode.log(Status.INFO, "Device Name: " + getDeviceName());
-            environmentNode.log(Status.INFO, "Platform Version: " + platformVersion);
-            environmentNode.log(Status.INFO, "Udid: " + getUdid());
-
-            String appActivity = (String) capabilities.getCapability("appium:appActivity");
-            if (!FrontEndOperation.isNullOrEmpty(appActivity)) {
-                environmentNode.log(Status.INFO, "App Activity: " + appActivity);
-            }
-
-            String appIdentifier = getAppIdentifier();
-            if (!FrontEndOperation.isNullOrEmpty(appIdentifier)) {
-                environmentNode.log(Status.INFO, "App Identifier: " + appIdentifier);
-            }
-
-            if (!FrontEndOperation.isNullOrEmpty(getApp())) {
-                environmentNode.log(Status.INFO, "App: " + getApp());
-            }
-        } else {
-            environmentNode.log(Status.INFO, "Browser: " + capabilities.getCapability("browserName"));
-            environmentNode.log(Status.INFO, "URL: " + driver.getCurrentUrl());
-            environmentNode.log(Status.INFO, "Resolution: " + driver.manage().window().getSize().toString());
-            environmentNode.log(Status.INFO, "Accessibility: " + LocalEnviroment.getAccessibility());
-            environmentNode.log(Status.INFO, "Operating System: " + platformName);
-        }
-        mainTest.log(Status.INFO, checks.toString());
-        checks.setLength(0); // Clear checks after appending
-    }
-
-    // Ends the test and flushes the report
-    public static void endTest() {
-        extent.flush();
     }
 }
