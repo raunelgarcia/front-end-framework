@@ -46,7 +46,7 @@ public class NetworkLogs {
         e.printStackTrace();
       }
 
-      AllureReport.attachTextFileToAllureReport(outputFile);
+      ExtentReport.attachTextFileToReport(outputFile);
 
       process.waitFor();
       reader.close();

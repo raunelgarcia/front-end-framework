@@ -1,5 +1,7 @@
 package utilities;
 
+import static org.hamcrest.Matchers.is;
+
 import exceptions.FrameworkTimeoutException;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
@@ -197,7 +199,19 @@ public class FrontEndOperation {
   }
 
   public static boolean compareTexts(WebElement element, String textCode) {
-    return element.getText().equalsIgnoreCase(textCode);
+    StringBuilder message = new StringBuilder();
+    message.append("Comparing the following texts").append("<br>");
+    message.append("element's: (").append(element.getText()).append(")<br>");
+    message.append("expected: (").append(textCode).append(")<br>");
+
+    try{
+      MatcherAssert.assertThat(message.toString(), element.getText().equalsIgnoreCase(textCode), is(true));
+      ExtentReport.addComparative(message.toString(), true);
+      return true;
+    } catch (AssertionError e) {
+      ExtentReport.addComparative(message.toString(), false);
+      throw e;
+    }
   }
 
   public static <T> void checkThat(String validation, T actual, Matcher<T> expected) {
@@ -208,9 +222,9 @@ public class FrontEndOperation {
 
     try {
       MatcherAssert.assertThat(message.toString(), actual, expected);
-      AllureReport.addComparation(message.toString(), true);
+      ExtentReport.addComparative(message.toString(), true);
     } catch (AssertionError error) {
-      AllureReport.addComparation(message.toString(), false);
+      ExtentReport.addComparative(message.toString(), false);
       throw error;
     }
   }
