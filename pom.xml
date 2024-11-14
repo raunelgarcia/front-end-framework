@@ -5,7 +5,7 @@
 
     <groupId>org.nttdata</groupId>
     <artifactId>front-end-framework</artifactId>
-    <version>5.5.5</version>
+    <version>1.0.4</version>
     <packaging>jar</packaging>
 
     <name>front-end-framework</name>
@@ -28,6 +28,7 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
             <version>5.10.2</version>
+            <scope>test</scope>
 
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
@@ -35,14 +36,14 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <version>5.10.2</version>
-
+            <scope>test</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <version>5.10.2</version>
-
+            <scope>test</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
         <dependency>
@@ -189,7 +190,7 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.13.2</version>
-
+            <scope>test</scope>
         </dependency>
     </dependencies>
     <build>

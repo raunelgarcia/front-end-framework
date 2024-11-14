@@ -1,20 +1,19 @@
 package utilities;
 
+import static utilities.Constants.SAUCELABS_SESSION_URL;
+import static utilities.DriverConfiguration.SLsession;
+import static utilities.DriverConfiguration.getDriver;
+
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+import java.io.File;
 import lombok.Getter;
 import org.apache.commons.codec.binary.Base64;
 import org.openqa.selenium.*;
 import org.openqa.selenium.remote.RemoteWebDriver;
-
-import java.io.File;
-
-import static utilities.Constants.SAUCELABS_SESSION_URL;
-import static utilities.DriverConfiguration.SLsession;
-import static utilities.DriverConfiguration.getDriver;
 
 public class ExtentReport {
 

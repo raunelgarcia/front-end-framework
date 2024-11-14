@@ -1,5 +1,7 @@
 package utilities;
 
+import static org.hamcrest.Matchers.is;
+
 import exceptions.FrameworkTimeoutException;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
@@ -26,8 +28,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utilities.enums.Direction;
-
-import static org.hamcrest.Matchers.is;
 
 public class FrontEndOperation {
   private static <T> T doWithTryCatch(Supplier<T> action, T otherWise) {
