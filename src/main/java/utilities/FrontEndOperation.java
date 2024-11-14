@@ -27,6 +27,8 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utilities.enums.Direction;
 
+import static org.hamcrest.Matchers.is;
+
 public class FrontEndOperation {
   private static <T> T doWithTryCatch(Supplier<T> action, T otherWise) {
     try {
@@ -197,25 +199,22 @@ public class FrontEndOperation {
   }
 
   public static boolean compareTexts(WebElement element, String textCode) {
-    return element.getText().equalsIgnoreCase(textCode);
-  }
-
-  public static <T> void checkThat(String validation, T actual, Matcher<T> expected) {
     StringBuilder message = new StringBuilder();
-    message.append("Verifying that ").append(validation.toLowerCase());
-    message.append("(expectation: ").append(expected.toString()).append(")");
-    message.append("(actual: ").append(actual.toString()).append(")");
+    message.append("Comparing the following texts").append("<br>");
+    message.append("element's: (").append(element.getText()).append(")<br>");
+    message.append("expected: (").append(textCode).append(")<br>");
 
-    try {
-      MatcherAssert.assertThat(message.toString(), actual, expected);
-      Logger.infoMessage(message.toString());
-    } catch (AssertionError error) {
-      Logger.errorMessage(message.toString());
-      throw error;
+    try{
+      MatcherAssert.assertThat(message.toString(), element.getText().equalsIgnoreCase(textCode), is(true));
+      ExtentReport.addComparative(message.toString(), true);
+      return true;
+    } catch (AssertionError e) {
+      ExtentReport.addComparative(message.toString(), false);
+      throw e;
     }
   }
 
-  public static <T> void checkTest(String validation, T actual, Matcher<T> expected) {
+  public static <T> void checkThat(String validation, T actual, Matcher<T> expected) {
     StringBuilder message = new StringBuilder();
     message.append("Verifying that ").append(validation.toLowerCase()).append("<br>");
     message.append("(expectation: ").append(expected.toString()).append(")<br>");

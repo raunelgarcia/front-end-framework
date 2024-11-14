@@ -7,8 +7,6 @@ import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import lombok.Getter;
 import org.apache.commons.codec.binary.Base64;
-import org.hamcrest.Matcher;
-import org.hamcrest.MatcherAssert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
