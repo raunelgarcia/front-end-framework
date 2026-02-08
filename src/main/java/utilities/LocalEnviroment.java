@@ -11,47 +11,43 @@ public class LocalEnviroment {
   protected static String deviceNameValue = getDeviceName();
 
   public static String getPlatform() {
-    return System.getenv("Platform");
+    return getEnv("Platform");
   }
 
   public static String getProvider() {
-    return System.getenv("Provider");
+    return getEnv("Provider");
   }
 
   public static String getApplication() {
-    return Objects.nonNull(System.getenv("Application"))
-        ? System.getenv("Application").toLowerCase()
-        : "";
+    return getEnvOrDefault("Application", "").toLowerCase();
   }
 
   public static String getBrowser() {
-    if (!FrontEndOperation.isNullOrEmpty(System.getenv("Browser"))) {
-      return System.getenv("Browser").toLowerCase();
-    } else {
-      return "chrome";
-    }
+    return getEnvOrDefault("Browser", "chrome").toLowerCase();
   }
 
   public static String getResolution() {
-    return System.getenv("Resolution");
+    return getEnv("Resolution");
   }
 
   public static String getUdid() {
-    return System.getenv("Udid");
+    return getEnv("Udid");
   }
 
   public static String getUser() {
-    return System.getenv("User");
+    return getEnv("User");
   }
 
   public static String getAccessToken() {
-    return System.getenv("AccessToken");
+    return getEnv("AccessToken");
   }
 
   public static String getAppiumVersion() {
     String appiumVersion = null;
-    if (isVirtualDevice()) {
-      switch (getPlatform().toLowerCase()) {
+    String platform = getPlatform();
+
+    if (isVirtualDevice() && !FrontEndOperation.isNullOrEmpty(platform)) {
+      switch (platform.toLowerCase()) {
         case "android" -> {
           if (checkPlatformVersion(ANDROID_VERSION_REGEX)) {
             appiumVersion = "2.11.0";
@@ -76,24 +72,23 @@ public class LocalEnviroment {
   }
 
   public static String getApp() {
-    return System.getenv("App");
+    return getEnv("App");
   }
 
   public static String getAppIdentifier() {
-    return System.getenv("AppIdentifier");
+    return getEnv("AppIdentifier");
   }
 
   public static String getAppActivity() {
-    return System.getenv("AppActivity");
+    return getEnv("AppActivity");
   }
 
   public static boolean getAccessibility() {
-    return Objects.nonNull(System.getenv("Accessibility"))
-        && System.getenv("Accessibility").equalsIgnoreCase("true");
+    return "true".equalsIgnoreCase(getEnv("Accessibility"));
   }
 
   public static String getDeviceName() {
-    String deviceName = System.getenv("DeviceName");
+    String deviceName = getEnv("DeviceName");
     if (FrontEndOperation.isNullOrEmpty(deviceName)) {
       return ".*";
     } else {
@@ -127,7 +122,7 @@ public class LocalEnviroment {
   }
 
   public static String getPlatformVersion() {
-    String platformVersion = System.getenv("PlatformVersion");
+    String platformVersion = getEnv("PlatformVersion");
     if (FrontEndOperation.isNullOrEmpty(platformVersion)) {
       if (isVirtualDevice()) {
         platformVersion = "current_major";
@@ -143,7 +138,7 @@ public class LocalEnviroment {
   }
 
   public static String getAppVersion() {
-    String appVersion = System.getenv("AppVersion");
+    String appVersion = getEnv("AppVersion");
     if (FrontEndOperation.isNullOrEmpty(appVersion)) {
       return "latest";
     }
@@ -155,15 +150,15 @@ public class LocalEnviroment {
   }
 
   public static boolean isWeb() {
-    return System.getenv("Platform").equalsIgnoreCase("Web");
+    return "Web".equalsIgnoreCase(getPlatform());
   }
 
   public static boolean isAndroid() {
-    return System.getenv("Platform").equalsIgnoreCase("Android");
+    return "Android".equalsIgnoreCase(getPlatform());
   }
 
   public static boolean isIOS() {
-    return System.getenv("Platform").equalsIgnoreCase("iOS");
+    return "iOS".equalsIgnoreCase(getPlatform());
   }
 
   public static boolean isWindows() {
@@ -175,7 +170,8 @@ public class LocalEnviroment {
   }
 
   public static boolean isVirtualDevice() {
-    return (deviceNameValue.contains("Emulator") || deviceNameValue.contains("Simulator"));
+    String normalizedDeviceName = deviceNameValue.toLowerCase();
+    return normalizedDeviceName.contains("emulator") || normalizedDeviceName.contains("simulator");
   }
 
   public static boolean isSaucelabs() {
@@ -183,33 +179,26 @@ public class LocalEnviroment {
   }
 
   public static boolean checkPlatformVersion(String regex) {
-    return (getPlatformVersion().matches(regex)
-        || getPlatformVersion().equalsIgnoreCase(".*")
-        || getPlatformVersion().equalsIgnoreCase("current_major"));
+    String platformVersion = getPlatformVersion();
+    return (platformVersion.matches(regex)
+        || platformVersion.equalsIgnoreCase(".*")
+        || platformVersion.equalsIgnoreCase("current_major"));
   }
 
   public static String getApplicationUrl() throws IllegalArgumentException {
     Map<String, Map<String, String>> environment = DriverConfiguration.loadCapabilitiesWeb();
     Map<String, String> urls = environment.get("url");
-    String url = null;
+    String application = getApplication();
 
-    if (!urls.containsKey(getApplication()) || getApplication().isBlank()) {
+    if (application.isBlank() || !urls.containsKey(application)) {
       throw new IllegalArgumentException("Application not found");
     }
 
-    for (Map.Entry<String, String> entry : urls.entrySet()) {
-      String application = entry.getKey().toLowerCase();
-      String applicationUrl = entry.getValue();
-      if (Objects.equals(application, getApplication())) {
-        url = applicationUrl;
-        break;
-      }
-    }
-    return url;
+    return urls.get(application);
   }
 
   public static String getLanguage() {
-    String language = System.getenv("Language");
+    String language = getEnv("Language");
 
     if (FrontEndOperation.isNullOrEmpty(language)) {
       language = "es-ES";
@@ -231,10 +220,19 @@ public class LocalEnviroment {
   }
 
   public static String getBrowserVersion() {
-    String version = System.getenv("BrowserVersion");
+    String version = getEnv("BrowserVersion");
     if (FrontEndOperation.isNullOrEmpty(version)) {
       return "latest";
     }
     return version.toLowerCase();
+  }
+
+  private static String getEnv(String variable) {
+    return System.getenv(variable);
+  }
+
+  private static String getEnvOrDefault(String variable, String defaultValue) {
+    String envValue = getEnv(variable);
+    return FrontEndOperation.isNullOrEmpty(envValue) ? defaultValue : envValue;
   }
 }
