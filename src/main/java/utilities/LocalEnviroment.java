@@ -11,35 +11,35 @@ public class LocalEnviroment {
   protected static String deviceNameValue = getDeviceName();
 
   public static String getPlatform() {
-    return getEnv("Platform");
+    return getEnv("PLATFORM");
   }
 
   public static String getProvider() {
-    return getEnv("Provider");
+    return getEnv("PROVIDER");
   }
 
   public static String getApplication() {
-    return getEnvOrDefault("Application", "").toLowerCase();
+    return getEnvOrDefault("APPLICATION", "").toLowerCase();
   }
 
   public static String getBrowser() {
-    return getEnvOrDefault("Browser", "chrome").toLowerCase();
+    return getEnvOrDefault("BROWSER", "chrome").toLowerCase();
   }
 
   public static String getResolution() {
-    return getEnv("Resolution");
+    return getEnv("RESOLUTION");
   }
 
   public static String getUdid() {
-    return getEnv("Udid");
+    return getEnv("UDID");
   }
 
   public static String getUser() {
-    return getEnv("User");
+    return getEnv("SAUCELABS_USER");
   }
 
   public static String getAccessToken() {
-    return getEnv("AccessToken");
+    return getEnv("SAUCELABS_PASS");
   }
 
   public static String getAppiumVersion() {
@@ -72,23 +72,23 @@ public class LocalEnviroment {
   }
 
   public static String getApp() {
-    return getEnv("App");
+    return getEnv("APP");
   }
 
   public static String getAppIdentifier() {
-    return getEnv("AppIdentifier");
+    return getEnv("APP_IDENTIFIER");
   }
 
   public static String getAppActivity() {
-    return getEnv("AppActivity");
+    return getEnv("APP_ACTIVITY");
   }
 
   public static boolean getAccessibility() {
-    return "true".equalsIgnoreCase(getEnv("Accessibility"));
+    return "true".equalsIgnoreCase(getEnv("ACCESSIBILITY"));
   }
 
   public static String getDeviceName() {
-    String deviceName = getEnv("DeviceName");
+    String deviceName = getEnv("DEVICE_NAME");
     if (FrontEndOperation.isNullOrEmpty(deviceName)) {
       return ".*";
     } else {
@@ -122,7 +122,7 @@ public class LocalEnviroment {
   }
 
   public static String getPlatformVersion() {
-    String platformVersion = getEnv("PlatformVersion");
+    String platformVersion = getEnv("PLATFORM_VERSION");
     if (FrontEndOperation.isNullOrEmpty(platformVersion)) {
       if (isVirtualDevice()) {
         platformVersion = "current_major";
@@ -138,7 +138,7 @@ public class LocalEnviroment {
   }
 
   public static String getAppVersion() {
-    String appVersion = getEnv("AppVersion");
+    String appVersion = getEnv("APP_VERSION");
     if (FrontEndOperation.isNullOrEmpty(appVersion)) {
       return "latest";
     }
@@ -198,7 +198,7 @@ public class LocalEnviroment {
   }
 
   public static String getLanguage() {
-    String language = getEnv("Language");
+    String language = getEnv("LANGUAGE");
 
     if (FrontEndOperation.isNullOrEmpty(language)) {
       language = "es-ES";
@@ -220,7 +220,7 @@ public class LocalEnviroment {
   }
 
   public static String getBrowserVersion() {
-    String version = getEnv("BrowserVersion");
+    String version = getEnv("BROWSER_VERSION");
     if (FrontEndOperation.isNullOrEmpty(version)) {
       return "latest";
     }
