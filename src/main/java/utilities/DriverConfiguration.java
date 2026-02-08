@@ -19,7 +19,9 @@ import org.openqa.selenium.safari.SafariOptions;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.Map;
@@ -78,10 +80,8 @@ public class DriverConfiguration {
         try {
             URI uri = new URI(isSaucelabs() ? SAUCELABS_TESTS_URL : DRIVER_URL);
             return uri.toURL();
-        } catch (Exception e) {
-            // Handle exception, such as MalformedURLException or URISyntaxException
-            e.printStackTrace();
-            return null;
+        } catch (URISyntaxException | MalformedURLException e) {
+            throw new IllegalStateException("Invalid driver URL configuration", e);
         }
     }
 
@@ -89,7 +89,7 @@ public class DriverConfiguration {
         if (Objects.nonNull(currentDriver)) {
             return currentDriver;
         }
-        URL driverURL = Objects.requireNonNull(getDriverURL());
+        URL driverURL = getDriverURL();
         if (isWeb()) {
             Dimension windowResolution = getResolutionFromEnv();
             String url = setURL();
@@ -117,15 +117,17 @@ public class DriverConfiguration {
     }
 
     public static void quitDriver() {
-        currentDriver.quit();
-        currentDriver = null;
+        if (Objects.nonNull(currentDriver)) {
+            currentDriver.quit();
+            currentDriver = null;
+        }
     }
 
     private static WebDriver configureWebDriver() {
         WebDriver driver;
         String browser = getBrowser();
         String language = getLanguage();
-        URL driverURL = Objects.requireNonNull(getDriverURL());
+        URL driverURL = getDriverURL();
 
         switch (browser) {
             case "edge" -> {
@@ -165,7 +167,7 @@ public class DriverConfiguration {
                 chromeOptions.addArguments("--lang=" + language, "--disable-search-engine-choice-screen");
                 if (isSaucelabs()) {
                     setSauceWebCapabilities(chromeOptions);
-                    driver = new RemoteWebDriver(getDriverURL(), chromeOptions);
+                    driver = new RemoteWebDriver(driverURL, chromeOptions);
                 } else {
                     driver = new ChromeDriver(chromeOptions);
                 }
@@ -179,6 +181,9 @@ public class DriverConfiguration {
         Yaml yaml = new Yaml();
         try (InputStream inputStream =
                      DriverConfiguration.class.getClassLoader().getResourceAsStream(Constants.WEB_CONFIG)) {
+            if (Objects.isNull(inputStream)) {
+                throw new IllegalStateException("YAML configuration file not found: " + Constants.WEB_CONFIG);
+            }
             return yaml.load(inputStream);
         } catch (Exception e) {
             throw new IllegalStateException("Failed to load or parse the YAML file", e);

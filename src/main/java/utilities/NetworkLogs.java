@@ -4,55 +4,63 @@ import static utilities.LocalEnviroment.isWindows;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
+import java.util.stream.Collectors;
 
 public class NetworkLogs {
+  private static final String LOG_FILTER = "okhttp.OkHttpClient";
+
   public static void getNetworkLogs() {
     if (LocalEnviroment.isAndroid() && !LocalEnviroment.isSaucelabs()) getAndroidLogs();
     // TODO create logs from other platforms
   }
 
   private static void getAndroidLogs() {
+    String[] command =
+        isWindows()
+            ? new String[] {"cmd.exe", "/c", "adb logcat -d | findstr " + LOG_FILTER}
+            : new String[] {"bash", "-c", "adb logcat -d | grep " + LOG_FILTER};
+
+    ProcessBuilder processBuilder = new ProcessBuilder(command);
+    processBuilder.redirectErrorStream(true);
+
     try {
-      String[] command;
-      if (isWindows()) {
-        command = new String[] {"cmd.exe", "/c", "adb logcat -d | findstr okhttp.OkHttpClient"};
-      } else {
-        command = new String[] {"bash", "-c", "adb logcat -d | grep okhttp.OkHttpClient"};
-      }
-      ProcessBuilder processBuilder = new ProcessBuilder(command);
-      processBuilder.redirectErrorStream(true);
       Process process = processBuilder.start();
+      String output;
 
-      BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-      StringBuilder output = new StringBuilder();
-      String line;
-      while ((line = reader.readLine()) != null) {
-        output.append(line).append("\n");
+      try (BufferedReader reader =
+          new BufferedReader(new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8))) {
+        output = reader.lines().collect(Collectors.joining(System.lineSeparator()));
       }
 
-      File logsFolder = new File("network-logs");
-      if (!logsFolder.exists()) {
-        logsFolder.mkdir();
-      }
-      String fileName = "logs_" + System.currentTimeMillis() + ".txt";
-      File outputFile = new File(logsFolder, fileName);
-
-      try (FileWriter writer = new FileWriter(outputFile)) {
-        writer.write(output.toString());
-      } catch (IOException e) {
-        e.printStackTrace();
+      int exitCode = process.waitFor();
+      if (exitCode != 0) {
+        Logger.errorMessage("Failed to read Android network logs. Exit code: " + exitCode);
       }
 
-      ExtentReport.attachTextFileToReport(outputFile);
+      Path logsFolder = Path.of("network-logs");
+      Files.createDirectories(logsFolder);
 
-      process.waitFor();
-      reader.close();
+      Path outputPath = logsFolder.resolve("logs_" + System.currentTimeMillis() + ".txt");
+      Files.writeString(
+          outputPath,
+          output,
+          StandardCharsets.UTF_8,
+          StandardOpenOption.CREATE,
+          StandardOpenOption.TRUNCATE_EXISTING,
+          StandardOpenOption.WRITE);
 
-    } catch (IOException | InterruptedException e) {
-      e.printStackTrace();
+      ExtentReport.attachTextFileToReport(outputPath.toFile());
+    } catch (IOException e) {
+      Logger.errorMessage("Error getting Android network logs: " + e.getMessage());
+    } catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      Logger.errorMessage("Thread interrupted while getting Android network logs: " + e.getMessage());
     }
   }
 
