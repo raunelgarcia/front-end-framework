@@ -181,76 +181,75 @@ Environment.
 
 #### Environment Variables:
 
-- Platform:
-    - Possible values: Android, IOS, Web.
+- PLATFORM:
+    - Possible values: Android, iOS, Web.
     - Description: Specifies the platform for testing, whether it is Android, iOS or Web. Must be
       provided with valid values for the tests to function correctly.
-- Accessibility:
+- ACCESSIBILITY:
     - Possible values: true, false.
     - Description: indicates whether accessibility features are enabled during testing. The variable
-      can take the value of null or blank, in which case the Accessibility report will not be shown.
-- Browser:
+      can take the value of null or blank, in which case the `ACCESSIBILITY` report will not be shown.
+- BROWSER:
     - Possible values: Chrome, Firefox, Edge, Safari.
-    - Description: Defines the browser to be used for web testing. The 'Browser' variable can take the value of 'null',
+    - Description: Defines the browser to be used for web testing. The `BROWSER` variable can take the value of 'null',
       in which case the default browser used for testing is 'chrome'.
       If you are using Safari for MacOS, write this command for enable the automatization: `safaridriver --enable`
-- Application:
-    - Description: Should be the name of the web app being tested. Application cannot be
+- APPLICATION:
+    - Description: Should be the name of the web app being tested. `APPLICATION` cannot be
       null and must be provided with valid values for the tests to function correctly.
-- Resolution:
-    - Possibles values: the possibles values of the environment variable resolution are established
-      in the 'allowedResolution.yaml'.
+- RESOLUTION:
+    - Possible values: the valid values for `RESOLUTION` are established
+      in `allowedResolutions.yaml`.
     - Description: Specifies the screen resolution for web testing. If null or blank, a default
       resolution of 1024x768
       is set.
-- Language:
-    - Possibles values: en-GB, en-US, es-ES, fr-FR and others.
+- LANGUAGE:
+    - Possible values: en-GB, en-US, es-ES, fr-FR and others.
     - Description: Specifies the language of the test execution. If null or blank, the default
       language is es-ES.
-- App:
+- APP:
     - Description: Specifies the path or name of the APK or .IPA file to be installed and tested on
       an Mobile device.
-      The tests work if either the App field is set, or both AppPackage and AppActivity fields are
-      provided (only
-      Android).
-- AppActivity:
+      The tests work if either the `APP` field is set, or both `APP_IDENTIFIER` and `APP_ACTIVITY` fields are
+      provided (only Android).
+- APP_ACTIVITY:
     - Description: Represents the app activity for Android of the app being tested for mobile
       testing. The tests work if
-      both AppPackage and AppActivity fields are provided.
-- AppIdentifier:
-    - Description: For Android it represents the app package and for IOS it represents the bundleId
-      of the app being tested for mobile testing. The Android tests work if both AppPackage and AppActivity fields
+      both `APP_IDENTIFIER` and `APP_ACTIVITY` fields are provided.
+- APP_IDENTIFIER:
+    - Description: For Android it represents the app package and for iOS it represents the bundleId
+      of the app being tested for mobile testing. The Android tests work if both `APP_IDENTIFIER` and `APP_ACTIVITY` fields
       are provided.
-- AppVersion:
-    - Description: Represent the version of the app installed in SauceLabs specified in "AppIdentifier". If left blank,
+- APP_VERSION:
+    - Description: Represent the version of the app installed in SauceLabs specified in `APP_IDENTIFIER`. If left blank,
       the default value is `latest`, which means it will run the latest version of the app. You can also specify the
       version if wanted. This variable will be validated with a test execution on SauceLabs only.
-- Udid:
+- UDID:
     - Description: Represent the unique device identifier (UDID) of the device being tested for
       mobile testing.It can be obtained running on terminal `adb devices`. Must be provided with valid values for the
-      tests to function correctly. For Android, in the variable takes the value of 'null', the default value is the
-      current emulator Udid. For IOS, the Udid cannot be 'null'.
-- Provider:
-    - Possible values: Local and SauceLabs
+      tests to function correctly. For Android, if the variable takes the value of 'null', the default value is the
+      current emulator UDID. For iOS, the UDID cannot be 'null'.
+- PROVIDER:
+    - Possible values: Local and SauceLabs.
     - Description: Specifies the provider or environment to launch any test execution. Could be made
       on SauceLabs or Local Environment.
-- User:
+- SAUCELABS_USER:
     - Description: Represents the username of your SauceLabs Account.
-- AccessToken:
+- SAUCELABS_PASS:
     - Description: Represents the API access token of your SauceLabs Account.
-- DeviceName:
+- DEVICE_NAME:
     - Description: Represents the name of the device being tested for mobile testing on SauceLabs. If left blank, the
       default value is `.*`, which means any available device. If you want to use an emulator, you must
       write `emulator` for Android or `simulator` for iOS, and it will build up automatically.
-- PlatformVersion:
+- PLATFORM_VERSION:
     - Description: Represents the version of the device being tested for mobile testing on SauceLabs. If left blank, the
       default value is `.*`, which means the latest version of any available device. If left blank while using an
       emulator, the default value is `current_major`, which means it will use the latest version. You can also specify
       the version if needed, having in mind that you should write the exact version, for example the shortest versions
       you should use are '8.0' for Android and '14.0' for iOS.
--BrowserVerion:
+- BROWSER_VERSION:
    - Description:
-     This variable serves as a target for running a test on SauceLabsWeb using a specific browser and the desired version
+     This variable serves as a target for running a test on SauceLabs Web using a specific browser and the desired version
       of that browser. There are three options when entering the version: it can be null, empty, or you can specify the desired
      version. In the case of the first two, it will automatically be assigned a value of 'latest' to execute with the latest
      available version. In the case of the third option, the specified version is processed and passed through a filter which decides
@@ -261,109 +260,109 @@ Ensure to set these variables according to your testing requirements before exec
 
 ### Android Variables Example
 
-Case 1: With AppActivity and AppPackage, when you have installed the app.
-AppActivity=.activities.MainContainerActivity;AppIdentifier=com.iphonedroid.marca;Platform=Android;Udid=;Provider=;
+Case 1: With APP_ACTIVITY and APP_IDENTIFIER, when you have installed the app.
+APP_ACTIVITY=.activities.MainContainerActivity;APP_IDENTIFIER=com.iphonedroid.marca;PLATFORM=Android;UDID=;PROVIDER=;
 
 | Campo         | Valor                             |
 |---------------|-----------------------------------|
-| AppActivity   | .activities.MainContainerActivity |
-| AppIdentifier | com.iphonedroid.marca             |
-| Platform      | Android                           |
-| Udid          |                                   |
+| APP_ACTIVITY   | .activities.MainContainerActivity |
+| APP_IDENTIFIER | com.iphonedroid.marca             |
+| PLATFORM      | Android                           |
+| UDID          |                                   |
 
-Case 2: With App, when you don't have the app installed.  
-App=marca-com-7-0-20.apk;Platform=Android;Udid=;
+Case 2: With APP, when you don't have the app installed.  
+APP=marca-com-7-0-20.apk;PLATFORM=Android;UDID=;
 
 | Campo    | Valor                     |
 |----------|---------------------------| 
-| App      | com.iphonedroid.marca.apk | 
-| Platform | Android                   |
-| Udid     |                           |
+| APP      | com.iphonedroid.marca.apk | 
+| PLATFORM | Android                   |
+| UDID     |                           |
 
 Case 3: With SauceLabs, physical device.
-Platform=Android;Provider=SauceLabs;DeviceName=Samsung Galaxy
-S9;AppIdentifier=com.saucelabs.mydemoapp.android;User=;AccessToken=;AppVersion=latest;
+PLATFORM=Android;PROVIDER=SauceLabs;DEVICE_NAME=Samsung Galaxy
+S9;APP_IDENTIFIER=com.saucelabs.mydemoapp.android;SAUCELABS_USER=;SAUCELABS_PASS=;APP_VERSION=latest;
 
 | Campo         | Valor                           |
 |---------------|---------------------------------|
-| Platform      | Android                         |
-| Provider      | SauceLabs                       |
-| DeviceName    | Samsung Galaxy S9               |
-| AppIdentifier | com.saucelabs.mydemoapp.android |
-| User          |                                 |
-| AccessToken   |                                 |
-| AppVersion    | latest                          |
+| PLATFORM      | Android                         |
+| PROVIDER      | SauceLabs                       |
+| DEVICE_NAME   | Samsung Galaxy S9               |
+| APP_IDENTIFIER | com.saucelabs.mydemoapp.android |
+| SAUCELABS_USER |                                 |
+| SAUCELABS_PASS |                                 |
+| APP_VERSION    | latest                          |
 
 Case 4: With SauceLabs, emulator.
-Platform=Android;Provider=SauceLabs;DeviceName=emulator;AppIdentifier=com.saucelabs.mydemoapp.android;User=;AccessToken=;AppVersion=latest;PlatformVersion=;
+PLATFORM=Android;PROVIDER=SauceLabs;DEVICE_NAME=emulator;APP_IDENTIFIER=com.saucelabs.mydemoapp.android;SAUCELABS_USER=;SAUCELABS_PASS=;APP_VERSION=latest;PLATFORM_VERSION=;
 
 | Campo           | Valor                           |
 |-----------------|---------------------------------|
-| Platform        | Android                         |
-| Provider        | SauceLabs                       |
-| DeviceName      | emulator                        |
-| AppIdentifier   | com.saucelabs.mydemoapp.android |
-| User            |                                 |
-| AccessToken     |                                 |
-| AppVersion      | latest                          |
-| PlatformVersion |                                 |
+| PLATFORM        | Android                         |
+| PROVIDER        | SauceLabs                       |
+| DEVICE_NAME      | emulator                        |
+| APP_IDENTIFIER   | com.saucelabs.mydemoapp.android |
+| SAUCELABS_USER   |                                 |
+| SAUCELABS_PASS   |                                 |
+| APP_VERSION      | latest                          |
+| PLATFORM_VERSION |                                 |
 
 ### IOS Variables Example
 
-Case 1: With AppIdentifier.
+Case 1: With APP_IDENTIFIER.
 
-AppIdentifier=com.marca.marcador;Platform=IOS;Udid=A308507F-99BB-47A2-9A2D-06005CAAD428;Provider=;
+APP_IDENTIFIER=com.marca.marcador;PLATFORM=IOS;UDID=A308507F-99BB-47A2-9A2D-06005CAAD428;PROVIDER=;
 
 | Campo         | Valor                                |
 |---------------|--------------------------------------|
-| AppIdentifier | com.marca.marcador                   |
-| Platform      | IOS                                  |
-| Udid          | A308507F-99BB-47A2-9A2D-06005CAAD428 |
+| APP_IDENTIFIER | com.marca.marcador                   |
+| PLATFORM      | IOS                                  |
+| UDID          | A308507F-99BB-47A2-9A2D-06005CAAD428 |
 
 Case 2: With SauceLabs, physical device.
 
-Platform=IOS;Provider=SauceLabs;DeviceName=iPhone
-12;AppIdentifier=com.saucelabs.mydemoapp.ios;User=;AccessToken=;AppVersion=latest;
+PLATFORM=IOS;PROVIDER=SauceLabs;DEVICE_NAME=iPhone
+12;APP_IDENTIFIER=com.saucelabs.mydemoapp.ios;SAUCELABS_USER=;SAUCELABS_PASS=;APP_VERSION=latest;
 
 | Campo         | Valor                       |
 |---------------|-----------------------------|
-| Platform      | IOS                         |
-| Provider      | SauceLabs                   |
-| DeviceName    | iPhone 12                   |
-| AppIdentifier | com.saucelabs.mydemoapp.ios |
-| User          |                             |
-| AccessToken   |                             |
-| AppVersion    | latest                      |
+| PLATFORM      | IOS                         |
+| PROVIDER      | SauceLabs                   |
+| DEVICE_NAME    | iPhone 12                   |
+| APP_IDENTIFIER | com.saucelabs.mydemoapp.ios |
+| SAUCELABS_USER |                             |
+| SAUCELABS_PASS |                             |
+| APP_VERSION    | latest                      |
 
 Case 3: With SauceLabs, simulator.
-Platform=IOS;Provider=SauceLabs;DeviceName=simulator;AppIdentifier=com.saucelabs.mydemoapp.ios;User=;AccessToken=;AppVersion=latest;PlatformVersion=;
+PLATFORM=IOS;PROVIDER=SauceLabs;DEVICE_NAME=simulator;APP_IDENTIFIER=com.saucelabs.mydemoapp.ios;SAUCELABS_USER=;SAUCELABS_PASS=;APP_VERSION=latest;PLATFORM_VERSION=;
 
 | Campo           | Valor                       |
 |-----------------|-----------------------------|
-| Platform        | IOS                         |
-| Provider        | SauceLabs                   |
-| DeviceName      | simulator                   |
-| AppIdentifier   | com.saucelabs.mydemoapp.ios |
-| User            |                             |
-| AccessToken     |                             |
-| AppVersion      | latest                      |
-| PlatformVersion |                             |
+| PLATFORM        | IOS                         |
+| PROVIDER        | SauceLabs                   |
+| DEVICE_NAME      | simulator                   |
+| APP_IDENTIFIER   | com.saucelabs.mydemoapp.ios |
+| SAUCELABS_USER   |                             |
+| SAUCELABS_PASS   |                             |
+| APP_VERSION      | latest                      |
+| PLATFORM_VERSION |                             |
 
 ### Web Variables
 
-Accessibility=true;Platform=Web;Application=mrc;Browser=chrome;Resolution=1920x1200;Provider=SauceLabs;User=;AccessToken=;BrowserVersion=latest;
+ACCESSIBILITY=true;PLATFORM=Web;APPLICATION=mrc;BROWSER=chrome;RESOLUTION=1920x1200;PROVIDER=SauceLabs;SAUCELABS_USER=;SAUCELABS_PASS=;BROWSER_VERSION=latest;
 
 | Campo         | Valor     |
 |---------------|-----------|
-| Accessibility | true      |
-| Platform      | Web       |
-| Application   | mrc       |
-| Browser       | chrome    |
-| Resolution    | 1920x1200 |
-| Provider      | SauceLabs |
-| User          |           |
-| AccessToken   |           |
-| BrowserVersion|  latest   |
+| ACCESSIBILITY | true      |
+| PLATFORM      | Web       |
+| APPLICATION   | mrc       |
+| BROWSER       | chrome    |
+| RESOLUTION    | 1920x1200 |
+| PROVIDER      | SauceLabs |
+| SAUCELABS_USER |           |
+| SAUCELABS_PASS |           |
+| BROWSER_VERSION | latest   |
 
 ### Install Dependencies:
 
@@ -412,7 +411,7 @@ API requests made by the front end application and will be saved in network-logs
 
 ### Accessibility Reports
 
-When the "Accessibility" variable is set to "true", accessibility reports will be generated and
+When the `ACCESSIBILITY` variable is set to `true`, accessibility reports will be generated and
 saved in a folder
 named "target/java-a11y".These reports provide insights into the accessibility status of your
 application, helping to
